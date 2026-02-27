@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:partner/core/utils/ui_helpers.dart';
+import 'package:partner/ui/views/startup/startup_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-import 'package:partner/ui/common/ui_helpers.dart';
 
-import 'startup_viewmodel.dart';
-
-class StartupView extends StackedView<StartupViewModel> {
-  const StartupView({Key? key}) : super(key: key);
+class StartupView
+    extends StackedView<StartupViewModel> {
+  const StartupView({super.key});
 
   @override
   Widget builder(
@@ -21,17 +21,24 @@ class StartupView extends StackedView<StartupViewModel> {
           children: [
             Text(
               'STACKED',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.w900,
+              ),
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Loading ...', style: TextStyle(fontSize: 16)),
+                Text(
+                  'Loading ...',
+                  style: TextStyle(fontSize: 16),
+                ),
                 horizontalSpaceSmall,
                 SizedBox(
                   width: 16,
                   height: 16,
-                  child: CircularProgressIndicator(
+                  child:
+                      CircularProgressIndicator(
                     color: Colors.black,
                     strokeWidth: 6,
                   ),
@@ -45,9 +52,17 @@ class StartupView extends StackedView<StartupViewModel> {
   }
 
   @override
-  StartupViewModel viewModelBuilder(BuildContext context) => StartupViewModel();
+  StartupViewModel viewModelBuilder(
+    BuildContext context,
+  ) =>
+      StartupViewModel();
 
   @override
-  void onViewModelReady(StartupViewModel viewModel) => SchedulerBinding.instance
-      .addPostFrameCallback((timeStamp) => viewModel.runStartupLogic());
+  void onViewModelReady(
+    StartupViewModel viewModel,
+  ) =>
+      SchedulerBinding.instance
+          .addPostFrameCallback(
+        (_) => viewModel.runStartupLogic(),
+      );
 }

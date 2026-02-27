@@ -1,10 +1,11 @@
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class RegisterViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
+  final _navigationService =
+      locator<NavigationService>();
 
   void navigateToOtp() {
     _navigationService.navigateToVerifyOtpView();
@@ -15,6 +16,6 @@ class RegisterViewModel extends BaseViewModel {
   }
 
   void goBack() {
-    _navigationService.back();
+    _navigationService.back<dynamic>();
   }
 }

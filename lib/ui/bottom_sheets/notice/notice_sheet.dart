@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:partner/core/utils/ui_helpers.dart';
+import 'package:partner/ui/bottom_sheets/notice/notice_sheet_model.dart';
 import 'package:partner/ui/common/app_colors.dart';
-import 'package:partner/ui/common/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'notice_sheet_model.dart';
-
 class NoticeSheet extends StackedView<NoticeSheetModel> {
-  final Function(SheetResponse)? completer;
-  final SheetRequest request;
-  const NoticeSheet({Key? key, required this.completer, required this.request})
-      : super(key: key);
+  const NoticeSheet({
+    required this.completer,
+    required this.request,
+    super.key,
+  });
+
+  final void Function(SheetResponse<dynamic>)? completer;
+  final SheetRequest<dynamic> request;
 
   @override
   Widget builder(
@@ -19,7 +22,10 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
     Widget? child,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 15,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -33,12 +39,18 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
         children: [
           Text(
             request.title!,
-            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w900,
+            ),
           ),
           verticalSpaceTiny,
           Text(
             request.description!,
-            style: const TextStyle(fontSize: 14, color: kcMediumGrey),
+            style: const TextStyle(
+              fontSize: 14,
+              color: kcMediumGrey,
+            ),
             maxLines: 3,
             softWrap: true,
           ),
@@ -49,5 +61,8 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
   }
 
   @override
-  NoticeSheetModel viewModelBuilder(BuildContext context) => NoticeSheetModel();
+  NoticeSheetModel viewModelBuilder(
+    BuildContext context,
+  ) =>
+      NoticeSheetModel();
 }

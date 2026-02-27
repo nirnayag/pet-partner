@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/ui/common/app_colors.dart';
+import 'package:partner/ui/views/doctor_profile/doctor_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import 'doctor_profile_viewmodel.dart';
-
-class DoctorProfileView extends StackedView<DoctorProfileViewModel> {
-  const DoctorProfileView({Key? key}) : super(key: key);
+/// Profile screen for the logged-in clinic user.
+///
+/// Displays real user data from the auth service
+/// and supports notification toggles and logout.
+class DoctorProfileView
+    extends StackedView<DoctorProfileViewModel> {
+  /// Creates a [DoctorProfileView].
+  const DoctorProfileView({super.key});
 
   @override
   Widget builder(
@@ -22,23 +27,29 @@ class DoctorProfileView extends StackedView<DoctorProfileViewModel> {
             const _Header(),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(20),
+                padding:
+                    const EdgeInsets.all(20),
                 children: [
-                  const _ProfileSection(),
-                  const SizedBox(height: 24),
-                  const _DigitalSignature(),
+                  _ProfileSection(
+                    viewModel: viewModel,
+                  ),
                   const SizedBox(height: 24),
                   const _WorkingHours(),
                   const SizedBox(height: 24),
-                  _NotificationSection(viewModel: viewModel),
+                  _NotificationSection(
+                    viewModel: viewModel,
+                  ),
                   const SizedBox(height: 20),
                   const _HelpButton(),
                   const SizedBox(height: 16),
-                  _LogoutButton(onTap: viewModel.logout),
+                  _LogoutButton(
+                    onTap: viewModel.logout,
+                    isBusy: viewModel.isBusy,
+                  ),
                   const SizedBox(height: 120),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -46,9 +57,15 @@ class DoctorProfileView extends StackedView<DoctorProfileViewModel> {
   }
 
   @override
-  DoctorProfileViewModel viewModelBuilder(BuildContext context) =>
+  DoctorProfileViewModel viewModelBuilder(
+    BuildContext context,
+  ) =>
       DoctorProfileViewModel();
 }
+
+// ====================================================
+// Header
+// ====================================================
 
 class _Header extends StatelessWidget {
   const _Header();
@@ -56,33 +73,51 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 16,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
-          bottom: BorderSide(color: kcVeryLightGrey, width: 0.5),
+          bottom: BorderSide(
+            color: kcVeryLightGrey,
+            width: 0.5,
+          ),
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Profile",
+            'Profile',
             style: GoogleFonts.manrope(
               fontSize: 20,
               fontWeight: FontWeight.w800,
               color: kcDarkGreyColor,
             ),
           ),
-          const Icon(Icons.settings_outlined, color: kcDarkGreyColor),
+          const Icon(
+            Icons.settings_outlined,
+            color: kcDarkGreyColor,
+          ),
         ],
       ),
     );
   }
 }
 
+// ====================================================
+// Profile section (real user data)
+// ====================================================
+
 class _ProfileSection extends StatelessWidget {
-  const _ProfileSection();
+  const _ProfileSection({
+    required this.viewModel,
+  });
+
+  final DoctorProfileViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -93,27 +128,46 @@ class _ProfileSection extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
+                border: Border.all(
+                  color: Colors.white,
+                  width: 4,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color:
+                        Colors.black.withValues(
+                      alpha: 0.1,
+                    ),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ],
               ),
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 48,
-                backgroundImage: NetworkImage(
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuDZw0fxqVSMpmJRdqJMLQGYmOVcVjbL1nIx_zlefzpBXaYPsLmuGlbj7zDKAjlWzvu4SsFwP6mnPlIZ9rdl4g2Ne9guBp2D9sPHFUh2rRkdprMDms600_J5ghMrnMOcKtOHURlh1CykiK_NLAmJ_l57Xs-7jQ8sbNFRfMvYeRwyNtjxFMDIIPaTPJStcaQrultw0AN8oGpces9ZhbvV2pT4264vbcjiCl733TPfsDFkQFAD5tBBlrjM2M8o6xWfvhIzgMc8XWShLE4",
-                ),
+                backgroundColor: kcVeryLightGrey,
+                backgroundImage:
+                    viewModel.avatarUrl != null
+                        ? NetworkImage(
+                            viewModel.avatarUrl!,
+                          )
+                        : null,
+                child:
+                    viewModel.avatarUrl == null
+                        ? const Icon(
+                            Icons.person,
+                            size: 40,
+                            color: kcLightGrey,
+                          )
+                        : null,
               ),
             ),
             Positioned(
               bottom: 4,
               right: 4,
               child: Container(
-                padding: const EdgeInsets.all(6),
+                padding:
+                    const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
                   color: kcPrimaryColor,
                   shape: BoxShape.circle,
@@ -124,12 +178,12 @@ class _ProfileSection extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-            )
+            ),
           ],
         ),
         const SizedBox(height: 16),
         Text(
-          "Dr. Alex",
+          viewModel.userName,
           style: GoogleFonts.manrope(
             fontSize: 24,
             fontWeight: FontWeight.w900,
@@ -138,90 +192,55 @@ class _ProfileSection extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          "Senior Veterinarian",
+          viewModel.specialization,
           style: GoogleFonts.manrope(
             fontSize: 14,
             fontWeight: FontWeight.w700,
             color: kcPrimaryColor,
           ),
         ),
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: kcNeutral100,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.verified_rounded, size: 14, color: kcNeutral500),
-              const SizedBox(width: 6),
-              Text(
-                "LIC-88294-VET",
-                style: GoogleFonts.manrope(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: kcNeutral800,
+        if (viewModel.email.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Container(
+            padding:
+                const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 6,
+            ),
+            decoration: BoxDecoration(
+              color: kcNeutral100,
+              borderRadius:
+                  BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.email_outlined,
+                  size: 14,
+                  color: kcNeutral500,
                 ),
-              ),
-            ],
+                const SizedBox(width: 6),
+                Text(
+                  viewModel.email,
+                  style: GoogleFonts.manrope(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: kcNeutral800,
+                  ),
+                ),
+              ],
+            ),
           ),
-        )
+        ],
       ],
     );
   }
 }
 
-class _DigitalSignature extends StatelessWidget {
-  const _DigitalSignature();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Digital Signature",
-              style: GoogleFonts.manrope(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                color: kcDarkGreyColor,
-              ),
-            ),
-            Text(
-              "Edit",
-              style: GoogleFonts.manrope(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: kcPrimaryColor,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Container(
-          height: 96,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: kcVeryLightGrey.withValues(alpha: 0.5)),
-            image: const DecorationImage(
-              image: NetworkImage(
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuBbjiMjzS-3nA79HHO50durmkFMxrI0vf0K5QAFXDq3sTFeNRoZJ_RxzxC6USan4kDAWzrfdxOpErk158EOckOZa9JsV7b8ze5yebpvWN8NheoN5DqCnus5XuvzzCHhf4Kki-h_1sFr2gfzsv_l0knhQ0ILKj-2VeudtNtfqsmt9FE0QUWtHOvZzJa0Nsn544RnhIud4DMNIyx3kpulYwDLrNjFtLUCSsQ9EUdiVz6ysf8bQhxGpTXSTDQ1q9oHPlXPBCymbxvwtFE"),
-              fit: BoxFit.contain,
-              opacity: 0.7,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
+// ====================================================
+// Working hours (static for now)
+// ====================================================
 
 class _WorkingHours extends StatelessWidget {
   const _WorkingHours();
@@ -229,13 +248,15 @@ class _WorkingHours extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Working Hours",
+              'Working Hours',
               style: GoogleFonts.manrope(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
@@ -243,7 +264,7 @@ class _WorkingHours extends StatelessWidget {
               ),
             ),
             Text(
-              "Manage",
+              'Manage',
               style: GoogleFonts.manrope(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
@@ -256,23 +277,30 @@ class _WorkingHours extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: kcVeryLightGrey.withValues(alpha: 0.5)),
+            borderRadius:
+                BorderRadius.circular(24),
+            border: Border.all(
+              color:
+                  kcVeryLightGrey.withValues(
+                alpha: 0.5,
+              ),
+            ),
           ),
           child: const Column(
             children: [
               _WorkingHourTile(
-                days: "Mon - Fri",
-                time: "09:00 AM - 05:00 PM",
-                label: "Standard Shift",
-                icon: Icons.calendar_today_rounded,
+                days: 'Mon - Fri',
+                time: '09:00 AM - 05:00 PM',
+                label: 'Standard Shift',
+                icon: Icons
+                    .calendar_today_rounded,
                 iconColor: Colors.blue,
               ),
               Divider(height: 1, indent: 64),
               _WorkingHourTile(
-                days: "Saturday",
-                time: "10:00 AM - 02:00 PM",
-                label: "Half Day",
+                days: 'Saturday',
+                time: '10:00 AM - 02:00 PM',
+                label: 'Half Day',
                 icon: Icons.weekend_rounded,
                 iconColor: Colors.purple,
                 isLast: true,
@@ -286,11 +314,6 @@ class _WorkingHours extends StatelessWidget {
 }
 
 class _WorkingHourTile extends StatelessWidget {
-  final String days, time, label;
-  final IconData icon;
-  final Color iconColor;
-  final bool isLast;
-
   const _WorkingHourTile({
     required this.days,
     required this.time,
@@ -299,6 +322,13 @@ class _WorkingHourTile extends StatelessWidget {
     required this.iconColor,
     this.isLast = false,
   });
+
+  final String days;
+  final String time;
+  final String label;
+  final IconData icon;
+  final Color iconColor;
+  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
@@ -309,15 +339,22 @@ class _WorkingHourTile extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.1),
+              color: iconColor.withValues(
+                alpha: 0.1,
+              ),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: iconColor, size: 18),
+            child: Icon(
+              icon,
+              color: iconColor,
+              size: 18,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Text(
                   days,
@@ -352,17 +389,26 @@ class _WorkingHourTile extends StatelessWidget {
   }
 }
 
-class _NotificationSection extends StatelessWidget {
+// ====================================================
+// Notification section
+// ====================================================
+
+class _NotificationSection
+    extends StatelessWidget {
+  const _NotificationSection({
+    required this.viewModel,
+  });
+
   final DoctorProfileViewModel viewModel;
-  const _NotificationSection({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.start,
       children: [
         Text(
-          "Notification Preferences",
+          'Notification Preferences',
           style: GoogleFonts.manrope(
             fontSize: 16,
             fontWeight: FontWeight.w800,
@@ -373,30 +419,55 @@ class _NotificationSection extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: kcVeryLightGrey.withValues(alpha: 0.5)),
+            borderRadius:
+                BorderRadius.circular(24),
+            border: Border.all(
+              color:
+                  kcVeryLightGrey.withValues(
+                alpha: 0.5,
+              ),
+            ),
           ),
           child: Column(
             children: [
               _ToggleTile(
-                title: "Email Alerts",
+                title: 'Email Alerts',
                 icon: Icons.email_outlined,
-                value: viewModel.isEmailAlertsEnabled,
-                onChanged: viewModel.toggleEmailAlerts,
+                value: viewModel
+                    .isEmailAlertsEnabled,
+                onChanged: (v) => viewModel
+                    .toggleEmailAlerts(
+                  value: v,
+                ),
               ),
-              const Divider(height: 1, indent: 56),
-              _ToggleTile(
-                title: "In-App Alerts",
-                icon: Icons.notifications_active_outlined,
-                value: viewModel.isInAppAlertsEnabled,
-                onChanged: viewModel.toggleInAppAlerts,
+              const Divider(
+                height: 1,
+                indent: 56,
               ),
-              const Divider(height: 1, indent: 56),
               _ToggleTile(
-                title: "SMS Updates",
+                title: 'In-App Alerts',
+                icon: Icons
+                    .notifications_active_outlined,
+                value: viewModel
+                    .isInAppAlertsEnabled,
+                onChanged: (v) => viewModel
+                    .toggleInAppAlerts(
+                  value: v,
+                ),
+              ),
+              const Divider(
+                height: 1,
+                indent: 56,
+              ),
+              _ToggleTile(
+                title: 'SMS Updates',
                 icon: Icons.sms_outlined,
-                value: viewModel.isSmsUpdatesEnabled,
-                onChanged: viewModel.toggleSmsUpdates,
+                value: viewModel
+                    .isSmsUpdatesEnabled,
+                onChanged: (v) => viewModel
+                    .toggleSmsUpdates(
+                  value: v,
+                ),
                 isLast: true,
               ),
             ],
@@ -408,12 +479,6 @@ class _NotificationSection extends StatelessWidget {
 }
 
 class _ToggleTile extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final bool value;
-  final Function(bool) onChanged;
-  final bool isLast;
-
   const _ToggleTile({
     required this.title,
     required this.icon,
@@ -422,13 +487,26 @@ class _ToggleTile extends StatelessWidget {
     this.isLast = false,
   });
 
+  final String title;
+  final IconData icon;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  final bool isLast;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: Row(
         children: [
-          Icon(icon, color: kcLightGrey, size: 22),
+          Icon(
+            icon,
+            color: kcLightGrey,
+            size: 22,
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
@@ -451,24 +529,38 @@ class _ToggleTile extends StatelessWidget {
   }
 }
 
+// ====================================================
+// Help button
+// ====================================================
+
 class _HelpButton extends StatelessWidget {
   const _HelpButton();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 16,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: kcVeryLightGrey.withValues(alpha: 0.5)),
+        border: Border.all(
+          color: kcVeryLightGrey.withValues(
+            alpha: 0.5,
+          ),
+        ),
       ),
       child: Row(
         children: [
-          const Icon(Icons.help_outline_rounded, color: kcLightGrey),
+          const Icon(
+            Icons.help_outline_rounded,
+            color: kcLightGrey,
+          ),
           const SizedBox(width: 12),
           Text(
-            "Help & Support",
+            'Help & Support',
             style: GoogleFonts.manrope(
               fontSize: 15,
               fontWeight: FontWeight.w800,
@@ -476,34 +568,65 @@ class _HelpButton extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          const Icon(Icons.chevron_right_rounded, color: kcLightGrey),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: kcLightGrey,
+          ),
         ],
       ),
     );
   }
 }
 
+// ====================================================
+// Logout button
+// ====================================================
+
 class _LogoutButton extends StatelessWidget {
+  const _LogoutButton({
+    required this.onTap,
+    required this.isBusy,
+  });
+
   final VoidCallback onTap;
-  const _LogoutButton({required this.onTap});
+  final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isBusy ? null : onTap,
       child: Container(
         height: 56,
         decoration: BoxDecoration(
           color: const Color(0xFFFFEBEE),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius:
+              BorderRadius.circular(20),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment:
+              MainAxisAlignment.center,
           children: [
-            const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
+            if (isBusy)
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child:
+                    CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.red,
+                ),
+              )
+            else
+              const Icon(
+                Icons.logout_rounded,
+                color: Colors.red,
+                size: 20,
+              ),
             const SizedBox(width: 8),
             Text(
-              "Log Out",
+              isBusy
+                  ? 'Logging out...'
+                  : 'Log Out',
               style: GoogleFonts.manrope(
                 fontSize: 15,
                 fontWeight: FontWeight.w800,
