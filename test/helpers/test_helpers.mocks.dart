@@ -3,13 +3,45 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
-import 'dart:ui' as _i6;
+import 'dart:async' as _i19;
+import 'dart:io' as _i34;
+import 'dart:typed_data' as _i31;
+import 'dart:ui' as _i20;
 
-import 'package:flutter/material.dart' as _i4;
+import 'package:flutter/material.dart' as _i18;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i3;
-import 'package:stacked_services/stacked_services.dart' as _i2;
+import 'package:mockito/src/dummies.dart' as _i17;
+import 'package:partner/core/enums/user_role.dart' as _i23;
+import 'package:partner/core/models/appointment/appointment.dart' as _i6;
+import 'package:partner/core/models/appointment/appointment_history_entry.dart'
+    as _i28;
+import 'package:partner/core/models/appointment/time_slot.dart' as _i27;
+import 'package:partner/core/models/auth/user.dart' as _i2;
+import 'package:partner/core/models/clinic/bulk_create_result.dart' as _i11;
+import 'package:partner/core/models/clinic/clinic.dart' as _i12;
+import 'package:partner/core/models/clinic/clinic_branding.dart' as _i13;
+import 'package:partner/core/models/clinic/send_result.dart' as _i15;
+import 'package:partner/core/models/document/document.dart' as _i10;
+import 'package:partner/core/models/medical/medical_record.dart' as _i7;
+import 'package:partner/core/models/medical/prescription.dart' as _i8;
+import 'package:partner/core/models/medical/vaccination.dart' as _i9;
+import 'package:partner/core/models/pagination.dart' as _i3;
+import 'package:partner/core/models/pet/pet.dart' as _i4;
+import 'package:partner/core/models/pet_owner.dart' as _i5;
+import 'package:partner/core/models/reminder/reminder.dart' as _i14;
+import 'package:partner/services/api_client.dart' as _i21;
+import 'package:partner/services/appointment_service.dart' as _i26;
+import 'package:partner/services/auth_service.dart' as _i22;
+import 'package:partner/services/clinic_service.dart' as _i36;
+import 'package:partner/services/document_service.dart' as _i33;
+import 'package:partner/services/medical_record_service.dart' as _i29;
+import 'package:partner/services/pet_owner_service.dart' as _i25;
+import 'package:partner/services/pet_service.dart' as _i24;
+import 'package:partner/services/prescription_service.dart' as _i30;
+import 'package:partner/services/reminder_service.dart' as _i37;
+import 'package:partner/services/user_service.dart' as _i35;
+import 'package:partner/services/vaccination_service.dart' as _i32;
+import 'package:stacked_services/stacked_services.dart' as _i16;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -25,18 +57,161 @@ import 'package:stacked_services/stacked_services.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+class _FakeUser_0 extends _i1.SmartFake implements _i2.User {
+  _FakeUser_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePaginatedResponse_1<T> extends _i1.SmartFake
+    implements _i3.PaginatedResponse<T> {
+  _FakePaginatedResponse_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePet_2 extends _i1.SmartFake implements _i4.Pet {
+  _FakePet_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePetOwner_3 extends _i1.SmartFake implements _i5.PetOwner {
+  _FakePetOwner_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAppointment_4 extends _i1.SmartFake implements _i6.Appointment {
+  _FakeAppointment_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeMedicalRecord_5 extends _i1.SmartFake implements _i7.MedicalRecord {
+  _FakeMedicalRecord_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePrescription_6 extends _i1.SmartFake implements _i8.Prescription {
+  _FakePrescription_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeVaccination_7 extends _i1.SmartFake implements _i9.Vaccination {
+  _FakeVaccination_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDocument_8 extends _i1.SmartFake implements _i10.Document {
+  _FakeDocument_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeBulkCreateResult_9 extends _i1.SmartFake
+    implements _i11.BulkCreateResult {
+  _FakeBulkCreateResult_9(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeClinic_10 extends _i1.SmartFake implements _i12.Clinic {
+  _FakeClinic_10(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeClinicBranding_11 extends _i1.SmartFake
+    implements _i13.ClinicBranding {
+  _FakeClinicBranding_11(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeReminder_12 extends _i1.SmartFake implements _i14.Reminder {
+  _FakeReminder_12(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeSendResult_13 extends _i1.SmartFake implements _i15.SendResult {
+  _FakeSendResult_13(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [NavigationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
+class MockNavigationService extends _i1.Mock implements _i16.NavigationService {
   @override
   String get previousRoute => (super.noSuchMethod(
         Invocation.getter(#previousRoute),
-        returnValue: _i3.dummyValue<String>(
+        returnValue: _i17.dummyValue<String>(
           this,
           Invocation.getter(#previousRoute),
         ),
-        returnValueForMissingStub: _i3.dummyValue<String>(
+        returnValueForMissingStub: _i17.dummyValue<String>(
           this,
           Invocation.getter(#previousRoute),
         ),
@@ -45,25 +220,25 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
   @override
   String get currentRoute => (super.noSuchMethod(
         Invocation.getter(#currentRoute),
-        returnValue: _i3.dummyValue<String>(
+        returnValue: _i17.dummyValue<String>(
           this,
           Invocation.getter(#currentRoute),
         ),
-        returnValueForMissingStub: _i3.dummyValue<String>(
+        returnValueForMissingStub: _i17.dummyValue<String>(
           this,
           Invocation.getter(#currentRoute),
         ),
       ) as String);
 
   @override
-  _i4.GlobalKey<_i4.NavigatorState>? nestedNavigationKey(int? index) =>
+  _i18.GlobalKey<_i18.NavigatorState>? nestedNavigationKey(int? index) =>
       (super.noSuchMethod(
         Invocation.method(
           #nestedNavigationKey,
           [index],
         ),
         returnValueForMissingStub: null,
-      ) as _i4.GlobalKey<_i4.NavigatorState>?);
+      ) as _i18.GlobalKey<_i18.NavigatorState>?);
 
   @override
   void config({
@@ -72,7 +247,7 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
     bool? defaultOpaqueRoute,
     Duration? defaultDurationTransition,
     bool? defaultGlobalState,
-    _i2.Transition? defaultTransitionStyle,
+    _i16.Transition? defaultTransitionStyle,
     String? defaultTransition,
   }) =>
       super.noSuchMethod(
@@ -93,18 +268,18 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
       );
 
   @override
-  _i5.Future<T?>? navigateWithTransition<T>(
-    _i4.Widget? page, {
+  _i19.Future<T?>? navigateWithTransition<T>(
+    _i18.Widget? page, {
     bool? opaque,
     String? transition = '',
     Duration? duration,
     bool? popGesture,
     int? id,
-    _i4.Curve? curve,
+    _i18.Curve? curve,
     bool? fullscreenDialog = false,
     bool? preventDuplicates = true,
-    _i2.Transition? transitionClass,
-    _i2.Transition? transitionStyle,
+    _i16.Transition? transitionClass,
+    _i16.Transition? transitionStyle,
     String? routeName,
   }) =>
       (super.noSuchMethod(
@@ -126,21 +301,21 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? replaceWithTransition<T>(
-    _i4.Widget? page, {
+  _i19.Future<T?>? replaceWithTransition<T>(
+    _i18.Widget? page, {
     bool? opaque,
     String? transition = '',
     Duration? duration,
     bool? popGesture,
     int? id,
-    _i4.Curve? curve,
+    _i18.Curve? curve,
     bool? fullscreenDialog = false,
     bool? preventDuplicates = true,
-    _i2.Transition? transitionClass,
-    _i2.Transition? transitionStyle,
+    _i16.Transition? transitionClass,
+    _i16.Transition? transitionStyle,
     String? routeName,
   }) =>
       (super.noSuchMethod(
@@ -162,7 +337,7 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
   bool back<T>({
@@ -184,7 +359,7 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
 
   @override
   void popUntil(
-    _i4.RoutePredicate? predicate, {
+    _i18.RoutePredicate? predicate, {
     int? id,
   }) =>
       super.noSuchMethod(
@@ -206,13 +381,13 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
       );
 
   @override
-  _i5.Future<T?>? navigateTo<T>(
+  _i19.Future<T?>? navigateTo<T>(
     String? routeName, {
     dynamic arguments,
     int? id,
     bool? preventDuplicates = true,
     Map<String, String>? parameters,
-    _i4.RouteTransitionsBuilder? transition,
+    _i18.RouteTransitionsBuilder? transition,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -227,21 +402,21 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? navigateToView<T>(
-    _i4.Widget? view, {
+  _i19.Future<T?>? navigateToView<T>(
+    _i18.Widget? view, {
     dynamic arguments,
     int? id,
     bool? opaque,
-    _i4.Curve? curve,
+    _i18.Curve? curve,
     Duration? duration,
     bool? fullscreenDialog = false,
     bool? popGesture,
     bool? preventDuplicates = true,
-    _i2.Transition? transition,
-    _i2.Transition? transitionStyle,
+    _i16.Transition? transition,
+    _i16.Transition? transitionStyle,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -261,16 +436,16 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? replaceWith<T>(
+  _i19.Future<T?>? replaceWith<T>(
     String? routeName, {
     dynamic arguments,
     int? id,
     bool? preventDuplicates = true,
     Map<String, String>? parameters,
-    _i4.RouteTransitionsBuilder? transition,
+    _i18.RouteTransitionsBuilder? transition,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -285,10 +460,10 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? clearStackAndShow<T>(
+  _i19.Future<T?>? clearStackAndShow<T>(
     String? routeName, {
     dynamic arguments,
     int? id,
@@ -305,11 +480,11 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? clearStackAndShowView<T>(
-    _i4.Widget? view, {
+  _i19.Future<T?>? clearStackAndShowView<T>(
+    _i18.Widget? view, {
     dynamic arguments,
     int? id,
   }) =>
@@ -323,10 +498,10 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? clearTillFirstAndShow<T>(
+  _i19.Future<T?>? clearTillFirstAndShow<T>(
     String? routeName, {
     dynamic arguments,
     int? id,
@@ -345,11 +520,11 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? clearTillFirstAndShowView<T>(
-    _i4.Widget? view, {
+  _i19.Future<T?>? clearTillFirstAndShowView<T>(
+    _i18.Widget? view, {
     dynamic arguments,
     int? id,
   }) =>
@@ -363,12 +538,12 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 
   @override
-  _i5.Future<T?>? pushNamedAndRemoveUntil<T>(
+  _i19.Future<T?>? pushNamedAndRemoveUntil<T>(
     String? routeName, {
-    _i4.RoutePredicate? predicate,
+    _i18.RoutePredicate? predicate,
     dynamic arguments,
     int? id,
   }) =>
@@ -383,16 +558,16 @@ class MockNavigationService extends _i1.Mock implements _i2.NavigationService {
           },
         ),
         returnValueForMissingStub: null,
-      ) as _i5.Future<T?>?);
+      ) as _i19.Future<T?>?);
 }
 
 /// A class which mocks [BottomSheetService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockBottomSheetService extends _i1.Mock
-    implements _i2.BottomSheetService {
+    implements _i16.BottomSheetService {
   @override
-  void setCustomSheetBuilders(Map<dynamic, _i2.SheetBuilder>? builders) =>
+  void setCustomSheetBuilders(Map<dynamic, _i16.SheetBuilder>? builders) =>
       super.noSuchMethod(
         Invocation.method(
           #setCustomSheetBuilders,
@@ -402,7 +577,7 @@ class MockBottomSheetService extends _i1.Mock
       );
 
   @override
-  _i5.Future<_i2.SheetResponse<dynamic>?> showBottomSheet({
+  _i19.Future<_i16.SheetResponse<dynamic>?> showBottomSheet({
     required String? title,
     String? description,
     String? confirmButtonTitle = 'Ok',
@@ -435,13 +610,13 @@ class MockBottomSheetService extends _i1.Mock
             #elevation: elevation,
           },
         ),
-        returnValue: _i5.Future<_i2.SheetResponse<dynamic>?>.value(),
+        returnValue: _i19.Future<_i16.SheetResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i5.Future<_i2.SheetResponse<dynamic>?>.value(),
-      ) as _i5.Future<_i2.SheetResponse<dynamic>?>);
+            _i19.Future<_i16.SheetResponse<dynamic>?>.value(),
+      ) as _i19.Future<_i16.SheetResponse<dynamic>?>);
 
   @override
-  _i5.Future<_i2.SheetResponse<T>?> showCustomSheet<T, R>({
+  _i19.Future<_i16.SheetResponse<T>?> showCustomSheet<T, R>({
     dynamic variant,
     String? title,
     String? description,
@@ -454,7 +629,7 @@ class MockBottomSheetService extends _i1.Mock
     bool? showIconInAdditionalButton = false,
     String? additionalButtonTitle,
     bool? takesInput = false,
-    _i6.Color? barrierColor = const _i6.Color(2315255808),
+    _i20.Color? barrierColor = const _i20.Color(2315255808),
     double? elevation = 1.0,
     bool? barrierDismissible = true,
     bool? isScrollControlled = false,
@@ -498,12 +673,12 @@ class MockBottomSheetService extends _i1.Mock
             #useRootNavigator: useRootNavigator,
           },
         ),
-        returnValue: _i5.Future<_i2.SheetResponse<T>?>.value(),
-        returnValueForMissingStub: _i5.Future<_i2.SheetResponse<T>?>.value(),
-      ) as _i5.Future<_i2.SheetResponse<T>?>);
+        returnValue: _i19.Future<_i16.SheetResponse<T>?>.value(),
+        returnValueForMissingStub: _i19.Future<_i16.SheetResponse<T>?>.value(),
+      ) as _i19.Future<_i16.SheetResponse<T>?>);
 
   @override
-  void completeSheet(_i2.SheetResponse<dynamic>? response) =>
+  void completeSheet(_i16.SheetResponse<dynamic>? response) =>
       super.noSuchMethod(
         Invocation.method(
           #completeSheet,
@@ -516,10 +691,10 @@ class MockBottomSheetService extends _i1.Mock
 /// A class which mocks [DialogService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDialogService extends _i1.Mock implements _i2.DialogService {
+class MockDialogService extends _i1.Mock implements _i16.DialogService {
   @override
   void registerCustomDialogBuilders(
-          Map<dynamic, _i2.DialogBuilder>? builders) =>
+          Map<dynamic, _i16.DialogBuilder>? builders) =>
       super.noSuchMethod(
         Invocation.method(
           #registerCustomDialogBuilders,
@@ -531,10 +706,10 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
   @override
   void registerCustomDialogBuilder({
     required dynamic variant,
-    required _i4.Widget Function(
-      _i4.BuildContext,
-      _i2.DialogRequest<dynamic>,
-      dynamic Function(_i2.DialogResponse<dynamic>),
+    required _i18.Widget Function(
+      _i18.BuildContext,
+      _i16.DialogRequest<dynamic>,
+      dynamic Function(_i16.DialogResponse<dynamic>),
     )? builder,
   }) =>
       super.noSuchMethod(
@@ -550,17 +725,17 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
       );
 
   @override
-  _i5.Future<_i2.DialogResponse<dynamic>?> showDialog({
+  _i19.Future<_i16.DialogResponse<dynamic>?> showDialog({
     String? title,
     String? description,
     String? cancelTitle,
-    _i6.Color? cancelTitleColor,
+    _i20.Color? cancelTitleColor,
     String? buttonTitle = 'Ok',
-    _i6.Color? buttonTitleColor,
+    _i20.Color? buttonTitleColor,
     bool? barrierDismissible = false,
-    _i4.RouteSettings? routeSettings,
-    _i4.GlobalKey<_i4.NavigatorState>? navigatorKey,
-    _i2.DialogPlatform? dialogPlatform,
+    _i18.RouteSettings? routeSettings,
+    _i18.GlobalKey<_i18.NavigatorState>? navigatorKey,
+    _i16.DialogPlatform? dialogPlatform,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -579,13 +754,13 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
             #dialogPlatform: dialogPlatform,
           },
         ),
-        returnValue: _i5.Future<_i2.DialogResponse<dynamic>?>.value(),
+        returnValue: _i19.Future<_i16.DialogResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i5.Future<_i2.DialogResponse<dynamic>?>.value(),
-      ) as _i5.Future<_i2.DialogResponse<dynamic>?>);
+            _i19.Future<_i16.DialogResponse<dynamic>?>.value(),
+      ) as _i19.Future<_i16.DialogResponse<dynamic>?>);
 
   @override
-  _i5.Future<_i2.DialogResponse<T>?> showCustomDialog<T, R>({
+  _i19.Future<_i16.DialogResponse<T>?> showCustomDialog<T, R>({
     dynamic variant,
     String? title,
     String? description,
@@ -598,13 +773,13 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
     bool? showIconInAdditionalButton = false,
     String? additionalButtonTitle,
     bool? takesInput = false,
-    _i6.Color? barrierColor = const _i6.Color(2315255808),
+    _i20.Color? barrierColor = const _i20.Color(2315255808),
     bool? barrierDismissible = false,
     String? barrierLabel = '',
     bool? useSafeArea = true,
-    _i4.RouteSettings? routeSettings,
-    _i4.GlobalKey<_i4.NavigatorState>? navigatorKey,
-    _i4.RouteTransitionsBuilder? transitionBuilder,
+    _i18.RouteSettings? routeSettings,
+    _i18.GlobalKey<_i18.NavigatorState>? navigatorKey,
+    _i18.RouteTransitionsBuilder? transitionBuilder,
     dynamic customData,
     R? data,
   }) =>
@@ -636,21 +811,21 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
             #data: data,
           },
         ),
-        returnValue: _i5.Future<_i2.DialogResponse<T>?>.value(),
-        returnValueForMissingStub: _i5.Future<_i2.DialogResponse<T>?>.value(),
-      ) as _i5.Future<_i2.DialogResponse<T>?>);
+        returnValue: _i19.Future<_i16.DialogResponse<T>?>.value(),
+        returnValueForMissingStub: _i19.Future<_i16.DialogResponse<T>?>.value(),
+      ) as _i19.Future<_i16.DialogResponse<T>?>);
 
   @override
-  _i5.Future<_i2.DialogResponse<dynamic>?> showConfirmationDialog({
+  _i19.Future<_i16.DialogResponse<dynamic>?> showConfirmationDialog({
     String? title,
     String? description,
     String? cancelTitle = 'Cancel',
-    _i6.Color? cancelTitleColor,
+    _i20.Color? cancelTitleColor,
     String? confirmationTitle = 'Ok',
-    _i6.Color? confirmationTitleColor,
+    _i20.Color? confirmationTitleColor,
     bool? barrierDismissible = false,
-    _i4.RouteSettings? routeSettings,
-    _i2.DialogPlatform? dialogPlatform,
+    _i18.RouteSettings? routeSettings,
+    _i16.DialogPlatform? dialogPlatform,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -668,13 +843,13 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
             #dialogPlatform: dialogPlatform,
           },
         ),
-        returnValue: _i5.Future<_i2.DialogResponse<dynamic>?>.value(),
+        returnValue: _i19.Future<_i16.DialogResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i5.Future<_i2.DialogResponse<dynamic>?>.value(),
-      ) as _i5.Future<_i2.DialogResponse<dynamic>?>);
+            _i19.Future<_i16.DialogResponse<dynamic>?>.value(),
+      ) as _i19.Future<_i16.DialogResponse<dynamic>?>);
 
   @override
-  void completeDialog(_i2.DialogResponse<dynamic>? response) =>
+  void completeDialog(_i16.DialogResponse<dynamic>? response) =>
       super.noSuchMethod(
         Invocation.method(
           #completeDialog,
@@ -682,4 +857,2052 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [ApiClient].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockApiClient extends _i1.Mock implements _i21.ApiClient {
+  @override
+  _i19.Future<dynamic> get(
+    String? path, {
+    Map<String, dynamic>? queryParameters,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #get,
+          [path],
+          {#queryParameters: queryParameters},
+        ),
+        returnValue: _i19.Future<dynamic>.value(),
+        returnValueForMissingStub: _i19.Future<dynamic>.value(),
+      ) as _i19.Future<dynamic>);
+
+  @override
+  _i19.Future<dynamic> post(
+    String? path, {
+    dynamic data,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #post,
+          [path],
+          {#data: data},
+        ),
+        returnValue: _i19.Future<dynamic>.value(),
+        returnValueForMissingStub: _i19.Future<dynamic>.value(),
+      ) as _i19.Future<dynamic>);
+
+  @override
+  _i19.Future<dynamic> put(
+    String? path, {
+    dynamic data,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #put,
+          [path],
+          {#data: data},
+        ),
+        returnValue: _i19.Future<dynamic>.value(),
+        returnValueForMissingStub: _i19.Future<dynamic>.value(),
+      ) as _i19.Future<dynamic>);
+
+  @override
+  _i19.Future<dynamic> patch(
+    String? path, {
+    dynamic data,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #patch,
+          [path],
+          {#data: data},
+        ),
+        returnValue: _i19.Future<dynamic>.value(),
+        returnValueForMissingStub: _i19.Future<dynamic>.value(),
+      ) as _i19.Future<dynamic>);
+
+  @override
+  _i19.Future<dynamic> delete(String? path) => (super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [path],
+        ),
+        returnValue: _i19.Future<dynamic>.value(),
+        returnValueForMissingStub: _i19.Future<dynamic>.value(),
+      ) as _i19.Future<dynamic>);
+}
+
+/// A class which mocks [AuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthService extends _i1.Mock implements _i22.AuthService {
+  @override
+  List<_i23.UserRole> get availableRoles => (super.noSuchMethod(
+        Invocation.getter(#availableRoles),
+        returnValue: <_i23.UserRole>[],
+        returnValueForMissingStub: <_i23.UserRole>[],
+      ) as List<_i23.UserRole>);
+
+  @override
+  bool get hasMultipleRoles => (super.noSuchMethod(
+        Invocation.getter(#hasMultipleRoles),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i19.Future<void> loadUserFromStorage() => (super.noSuchMethod(
+        Invocation.method(
+          #loadUserFromStorage,
+          [],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<_i2.User> login(
+    String? email,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #login,
+          [
+            email,
+            password,
+          ],
+        ),
+        returnValue: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #login,
+            [
+              email,
+              password,
+            ],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #login,
+            [
+              email,
+              password,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i2.User>);
+
+  @override
+  _i19.Future<void> refreshToken() => (super.noSuchMethod(
+        Invocation.method(
+          #refreshToken,
+          [],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<_i2.User> switchRole(_i23.UserRole? newRole) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #switchRole,
+          [newRole],
+        ),
+        returnValue: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #switchRole,
+            [newRole],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #switchRole,
+            [newRole],
+          ),
+        )),
+      ) as _i19.Future<_i2.User>);
+
+  @override
+  _i19.Future<void> logout() => (super.noSuchMethod(
+        Invocation.method(
+          #logout,
+          [],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<_i2.User?> getCurrentUser() => (super.noSuchMethod(
+        Invocation.method(
+          #getCurrentUser,
+          [],
+        ),
+        returnValue: _i19.Future<_i2.User?>.value(),
+        returnValueForMissingStub: _i19.Future<_i2.User?>.value(),
+      ) as _i19.Future<_i2.User?>);
+
+  @override
+  _i19.Future<bool> isLoggedIn() => (super.noSuchMethod(
+        Invocation.method(
+          #isLoggedIn,
+          [],
+        ),
+        returnValue: _i19.Future<bool>.value(false),
+        returnValueForMissingStub: _i19.Future<bool>.value(false),
+      ) as _i19.Future<bool>);
+
+  @override
+  _i19.Future<_i23.UserRole?> getUserRole() => (super.noSuchMethod(
+        Invocation.method(
+          #getUserRole,
+          [],
+        ),
+        returnValue: _i19.Future<_i23.UserRole?>.value(),
+        returnValueForMissingStub: _i19.Future<_i23.UserRole?>.value(),
+      ) as _i19.Future<_i23.UserRole?>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [PetService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPetService extends _i1.Mock implements _i24.PetService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i4.Pet>> getPets({
+    int? page = 1,
+    int? limit = 20,
+    String? species,
+    bool? isActive,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPets,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #species: species,
+            #isActive: isActive,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i4.Pet>>.value(
+            _FakePaginatedResponse_1<_i4.Pet>(
+          this,
+          Invocation.method(
+            #getPets,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #species: species,
+              #isActive: isActive,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i4.Pet>>.value(
+                _FakePaginatedResponse_1<_i4.Pet>(
+          this,
+          Invocation.method(
+            #getPets,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #species: species,
+              #isActive: isActive,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i4.Pet>>);
+
+  @override
+  _i19.Future<_i4.Pet> getPetById(String? petId) => (super.noSuchMethod(
+        Invocation.method(
+          #getPetById,
+          [petId],
+        ),
+        returnValue: _i19.Future<_i4.Pet>.value(_FakePet_2(
+          this,
+          Invocation.method(
+            #getPetById,
+            [petId],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i4.Pet>.value(_FakePet_2(
+          this,
+          Invocation.method(
+            #getPetById,
+            [petId],
+          ),
+        )),
+      ) as _i19.Future<_i4.Pet>);
+
+  @override
+  _i19.Future<_i4.Pet> createPet(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createPet,
+          [data],
+        ),
+        returnValue: _i19.Future<_i4.Pet>.value(_FakePet_2(
+          this,
+          Invocation.method(
+            #createPet,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i4.Pet>.value(_FakePet_2(
+          this,
+          Invocation.method(
+            #createPet,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i4.Pet>);
+
+  @override
+  _i19.Future<_i4.Pet> updatePet(
+    String? petId,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updatePet,
+          [
+            petId,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i4.Pet>.value(_FakePet_2(
+          this,
+          Invocation.method(
+            #updatePet,
+            [
+              petId,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i4.Pet>.value(_FakePet_2(
+          this,
+          Invocation.method(
+            #updatePet,
+            [
+              petId,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i4.Pet>);
+
+  @override
+  _i19.Future<void> deletePet(String? petId) => (super.noSuchMethod(
+        Invocation.method(
+          #deletePet,
+          [petId],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<Map<String, dynamic>> getPetMedicalSummary(String? petId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPetMedicalSummary,
+          [petId],
+        ),
+        returnValue:
+            _i19.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i19.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i19.Future<Map<String, dynamic>>);
+}
+
+/// A class which mocks [PetOwnerService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPetOwnerService extends _i1.Mock implements _i25.PetOwnerService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i5.PetOwner>> getPetOwners({
+    int? page = 1,
+    int? limit = 20,
+    String? search,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPetOwners,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #search: search,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i5.PetOwner>>.value(
+            _FakePaginatedResponse_1<_i5.PetOwner>(
+          this,
+          Invocation.method(
+            #getPetOwners,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #search: search,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i5.PetOwner>>.value(
+                _FakePaginatedResponse_1<_i5.PetOwner>(
+          this,
+          Invocation.method(
+            #getPetOwners,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #search: search,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i5.PetOwner>>);
+
+  @override
+  _i19.Future<_i5.PetOwner> getPetOwnerById(String? ownerId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPetOwnerById,
+          [ownerId],
+        ),
+        returnValue: _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #getPetOwnerById,
+            [ownerId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #getPetOwnerById,
+            [ownerId],
+          ),
+        )),
+      ) as _i19.Future<_i5.PetOwner>);
+
+  @override
+  _i19.Future<_i5.PetOwner> createPetOwner(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createPetOwner,
+          [data],
+        ),
+        returnValue: _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #createPetOwner,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #createPetOwner,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i5.PetOwner>);
+
+  @override
+  _i19.Future<_i5.PetOwner> updatePetOwner(
+    String? ownerId,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updatePetOwner,
+          [
+            ownerId,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #updatePetOwner,
+            [
+              ownerId,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #updatePetOwner,
+            [
+              ownerId,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i5.PetOwner>);
+
+  @override
+  _i19.Future<_i5.PetOwner?> lookupByPhone(String? phone) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #lookupByPhone,
+          [phone],
+        ),
+        returnValue: _i19.Future<_i5.PetOwner?>.value(),
+        returnValueForMissingStub: _i19.Future<_i5.PetOwner?>.value(),
+      ) as _i19.Future<_i5.PetOwner?>);
+
+  @override
+  _i19.Future<_i5.PetOwner> quickCreate(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #quickCreate,
+          [data],
+        ),
+        returnValue: _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #quickCreate,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i5.PetOwner>.value(_FakePetOwner_3(
+          this,
+          Invocation.method(
+            #quickCreate,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i5.PetOwner>);
+}
+
+/// A class which mocks [AppointmentService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAppointmentService extends _i1.Mock
+    implements _i26.AppointmentService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i6.Appointment>> getAppointments({
+    int? page = 1,
+    int? limit = 20,
+    String? status,
+    String? petId,
+    String? veterinarianId,
+    String? date,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAppointments,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #status: status,
+            #petId: petId,
+            #veterinarianId: veterinarianId,
+            #date: date,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i6.Appointment>>.value(
+            _FakePaginatedResponse_1<_i6.Appointment>(
+          this,
+          Invocation.method(
+            #getAppointments,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #status: status,
+              #petId: petId,
+              #veterinarianId: veterinarianId,
+              #date: date,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i6.Appointment>>.value(
+                _FakePaginatedResponse_1<_i6.Appointment>(
+          this,
+          Invocation.method(
+            #getAppointments,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #status: status,
+              #petId: petId,
+              #veterinarianId: veterinarianId,
+              #date: date,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i6.Appointment>>);
+
+  @override
+  _i19.Future<_i6.Appointment> getAppointmentById(String? appointmentId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAppointmentById,
+          [appointmentId],
+        ),
+        returnValue: _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #getAppointmentById,
+            [appointmentId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #getAppointmentById,
+            [appointmentId],
+          ),
+        )),
+      ) as _i19.Future<_i6.Appointment>);
+
+  @override
+  _i19.Future<_i6.Appointment> createAppointment(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createAppointment,
+          [data],
+        ),
+        returnValue: _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #createAppointment,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #createAppointment,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i6.Appointment>);
+
+  @override
+  _i19.Future<_i6.Appointment> updateAppointment(
+    String? appointmentId,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateAppointment,
+          [
+            appointmentId,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #updateAppointment,
+            [
+              appointmentId,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #updateAppointment,
+            [
+              appointmentId,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i6.Appointment>);
+
+  @override
+  _i19.Future<_i6.Appointment> updateAppointmentStatus(
+    String? appointmentId,
+    String? status,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateAppointmentStatus,
+          [
+            appointmentId,
+            status,
+          ],
+        ),
+        returnValue: _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #updateAppointmentStatus,
+            [
+              appointmentId,
+              status,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #updateAppointmentStatus,
+            [
+              appointmentId,
+              status,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i6.Appointment>);
+
+  @override
+  _i19.Future<_i6.Appointment> approveAppointment(String? appointmentId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #approveAppointment,
+          [appointmentId],
+        ),
+        returnValue: _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #approveAppointment,
+            [appointmentId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i6.Appointment>.value(_FakeAppointment_4(
+          this,
+          Invocation.method(
+            #approveAppointment,
+            [appointmentId],
+          ),
+        )),
+      ) as _i19.Future<_i6.Appointment>);
+
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i6.Appointment>> getPendingAppointments({
+    int? page = 1,
+    int? limit = 20,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPendingAppointments,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i6.Appointment>>.value(
+            _FakePaginatedResponse_1<_i6.Appointment>(
+          this,
+          Invocation.method(
+            #getPendingAppointments,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i6.Appointment>>.value(
+                _FakePaginatedResponse_1<_i6.Appointment>(
+          this,
+          Invocation.method(
+            #getPendingAppointments,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i6.Appointment>>);
+
+  @override
+  _i19.Future<List<_i27.TimeSlot>> getAvailability({
+    required String? clinicId,
+    required String? date,
+    String? vetId,
+    int? slotDuration,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAvailability,
+          [],
+          {
+            #clinicId: clinicId,
+            #date: date,
+            #vetId: vetId,
+            #slotDuration: slotDuration,
+          },
+        ),
+        returnValue: _i19.Future<List<_i27.TimeSlot>>.value(<_i27.TimeSlot>[]),
+        returnValueForMissingStub:
+            _i19.Future<List<_i27.TimeSlot>>.value(<_i27.TimeSlot>[]),
+      ) as _i19.Future<List<_i27.TimeSlot>>);
+
+  @override
+  _i19.Future<List<_i28.AppointmentHistoryEntry>> getAppointmentHistory(
+          String? appointmentId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAppointmentHistory,
+          [appointmentId],
+        ),
+        returnValue: _i19.Future<List<_i28.AppointmentHistoryEntry>>.value(
+            <_i28.AppointmentHistoryEntry>[]),
+        returnValueForMissingStub:
+            _i19.Future<List<_i28.AppointmentHistoryEntry>>.value(
+                <_i28.AppointmentHistoryEntry>[]),
+      ) as _i19.Future<List<_i28.AppointmentHistoryEntry>>);
+}
+
+/// A class which mocks [MedicalRecordService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockMedicalRecordService extends _i1.Mock
+    implements _i29.MedicalRecordService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i7.MedicalRecord>> getMedicalRecords({
+    int? page = 1,
+    int? limit = 20,
+    String? petId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMedicalRecords,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #petId: petId,
+          },
+        ),
+        returnValue:
+            _i19.Future<_i3.PaginatedResponse<_i7.MedicalRecord>>.value(
+                _FakePaginatedResponse_1<_i7.MedicalRecord>(
+          this,
+          Invocation.method(
+            #getMedicalRecords,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i7.MedicalRecord>>.value(
+                _FakePaginatedResponse_1<_i7.MedicalRecord>(
+          this,
+          Invocation.method(
+            #getMedicalRecords,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i7.MedicalRecord>>);
+
+  @override
+  _i19.Future<_i7.MedicalRecord> getMedicalRecordById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getMedicalRecordById,
+          [id],
+        ),
+        returnValue: _i19.Future<_i7.MedicalRecord>.value(_FakeMedicalRecord_5(
+          this,
+          Invocation.method(
+            #getMedicalRecordById,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i7.MedicalRecord>.value(_FakeMedicalRecord_5(
+          this,
+          Invocation.method(
+            #getMedicalRecordById,
+            [id],
+          ),
+        )),
+      ) as _i19.Future<_i7.MedicalRecord>);
+
+  @override
+  _i19.Future<_i7.MedicalRecord> createMedicalRecord(
+          Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createMedicalRecord,
+          [data],
+        ),
+        returnValue: _i19.Future<_i7.MedicalRecord>.value(_FakeMedicalRecord_5(
+          this,
+          Invocation.method(
+            #createMedicalRecord,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i7.MedicalRecord>.value(_FakeMedicalRecord_5(
+          this,
+          Invocation.method(
+            #createMedicalRecord,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i7.MedicalRecord>);
+
+  @override
+  _i19.Future<_i7.MedicalRecord> updateMedicalRecord(
+    String? id,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateMedicalRecord,
+          [
+            id,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i7.MedicalRecord>.value(_FakeMedicalRecord_5(
+          this,
+          Invocation.method(
+            #updateMedicalRecord,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i7.MedicalRecord>.value(_FakeMedicalRecord_5(
+          this,
+          Invocation.method(
+            #updateMedicalRecord,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i7.MedicalRecord>);
+
+  @override
+  _i19.Future<void> deleteMedicalRecord(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteMedicalRecord,
+          [id],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<List<_i7.MedicalRecord>> getPetMedicalRecords(String? petId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPetMedicalRecords,
+          [petId],
+        ),
+        returnValue:
+            _i19.Future<List<_i7.MedicalRecord>>.value(<_i7.MedicalRecord>[]),
+        returnValueForMissingStub:
+            _i19.Future<List<_i7.MedicalRecord>>.value(<_i7.MedicalRecord>[]),
+      ) as _i19.Future<List<_i7.MedicalRecord>>);
+}
+
+/// A class which mocks [PrescriptionService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPrescriptionService extends _i1.Mock
+    implements _i30.PrescriptionService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i8.Prescription>> getPrescriptions({
+    int? page = 1,
+    int? limit = 20,
+    String? petId,
+    bool? isActive,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPrescriptions,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #petId: petId,
+            #isActive: isActive,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i8.Prescription>>.value(
+            _FakePaginatedResponse_1<_i8.Prescription>(
+          this,
+          Invocation.method(
+            #getPrescriptions,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+              #isActive: isActive,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i8.Prescription>>.value(
+                _FakePaginatedResponse_1<_i8.Prescription>(
+          this,
+          Invocation.method(
+            #getPrescriptions,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+              #isActive: isActive,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i8.Prescription>>);
+
+  @override
+  _i19.Future<_i8.Prescription> getPrescriptionById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPrescriptionById,
+          [id],
+        ),
+        returnValue: _i19.Future<_i8.Prescription>.value(_FakePrescription_6(
+          this,
+          Invocation.method(
+            #getPrescriptionById,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i8.Prescription>.value(_FakePrescription_6(
+          this,
+          Invocation.method(
+            #getPrescriptionById,
+            [id],
+          ),
+        )),
+      ) as _i19.Future<_i8.Prescription>);
+
+  @override
+  _i19.Future<_i8.Prescription> createPrescription(
+          Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createPrescription,
+          [data],
+        ),
+        returnValue: _i19.Future<_i8.Prescription>.value(_FakePrescription_6(
+          this,
+          Invocation.method(
+            #createPrescription,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i8.Prescription>.value(_FakePrescription_6(
+          this,
+          Invocation.method(
+            #createPrescription,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i8.Prescription>);
+
+  @override
+  _i19.Future<_i8.Prescription> updatePrescription(
+    String? id,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updatePrescription,
+          [
+            id,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i8.Prescription>.value(_FakePrescription_6(
+          this,
+          Invocation.method(
+            #updatePrescription,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i8.Prescription>.value(_FakePrescription_6(
+          this,
+          Invocation.method(
+            #updatePrescription,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i8.Prescription>);
+
+  @override
+  _i19.Future<void> deletePrescription(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deletePrescription,
+          [id],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<_i31.Uint8List> downloadPrescriptionPdf(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #downloadPrescriptionPdf,
+          [id],
+        ),
+        returnValue: _i19.Future<_i31.Uint8List>.value(_i31.Uint8List(0)),
+        returnValueForMissingStub:
+            _i19.Future<_i31.Uint8List>.value(_i31.Uint8List(0)),
+      ) as _i19.Future<_i31.Uint8List>);
+
+  @override
+  _i19.Future<List<_i8.Prescription>> getPetPrescriptions(String? petId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPetPrescriptions,
+          [petId],
+        ),
+        returnValue:
+            _i19.Future<List<_i8.Prescription>>.value(<_i8.Prescription>[]),
+        returnValueForMissingStub:
+            _i19.Future<List<_i8.Prescription>>.value(<_i8.Prescription>[]),
+      ) as _i19.Future<List<_i8.Prescription>>);
+}
+
+/// A class which mocks [VaccinationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockVaccinationService extends _i1.Mock
+    implements _i32.VaccinationService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i9.Vaccination>> getVaccinations({
+    int? page = 1,
+    int? limit = 20,
+    String? petId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVaccinations,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #petId: petId,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i9.Vaccination>>.value(
+            _FakePaginatedResponse_1<_i9.Vaccination>(
+          this,
+          Invocation.method(
+            #getVaccinations,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i9.Vaccination>>.value(
+                _FakePaginatedResponse_1<_i9.Vaccination>(
+          this,
+          Invocation.method(
+            #getVaccinations,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i9.Vaccination>>);
+
+  @override
+  _i19.Future<_i9.Vaccination> getVaccinationById(String? id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getVaccinationById,
+          [id],
+        ),
+        returnValue: _i19.Future<_i9.Vaccination>.value(_FakeVaccination_7(
+          this,
+          Invocation.method(
+            #getVaccinationById,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i9.Vaccination>.value(_FakeVaccination_7(
+          this,
+          Invocation.method(
+            #getVaccinationById,
+            [id],
+          ),
+        )),
+      ) as _i19.Future<_i9.Vaccination>);
+
+  @override
+  _i19.Future<_i9.Vaccination> createVaccination(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createVaccination,
+          [data],
+        ),
+        returnValue: _i19.Future<_i9.Vaccination>.value(_FakeVaccination_7(
+          this,
+          Invocation.method(
+            #createVaccination,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i9.Vaccination>.value(_FakeVaccination_7(
+          this,
+          Invocation.method(
+            #createVaccination,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i9.Vaccination>);
+
+  @override
+  _i19.Future<_i9.Vaccination> updateVaccination(
+    String? id,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateVaccination,
+          [
+            id,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i9.Vaccination>.value(_FakeVaccination_7(
+          this,
+          Invocation.method(
+            #updateVaccination,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i9.Vaccination>.value(_FakeVaccination_7(
+          this,
+          Invocation.method(
+            #updateVaccination,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i9.Vaccination>);
+
+  @override
+  _i19.Future<void> deleteVaccination(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteVaccination,
+          [id],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<List<_i9.Vaccination>> getPetVaccinations(String? petId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getPetVaccinations,
+          [petId],
+        ),
+        returnValue:
+            _i19.Future<List<_i9.Vaccination>>.value(<_i9.Vaccination>[]),
+        returnValueForMissingStub:
+            _i19.Future<List<_i9.Vaccination>>.value(<_i9.Vaccination>[]),
+      ) as _i19.Future<List<_i9.Vaccination>>);
+}
+
+/// A class which mocks [DocumentService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDocumentService extends _i1.Mock implements _i33.DocumentService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i10.Document>> getDocuments({
+    int? page = 1,
+    int? limit = 20,
+    String? petId,
+    String? medicalRecordId,
+    String? documentType,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDocuments,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #petId: petId,
+            #medicalRecordId: medicalRecordId,
+            #documentType: documentType,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i10.Document>>.value(
+            _FakePaginatedResponse_1<_i10.Document>(
+          this,
+          Invocation.method(
+            #getDocuments,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+              #medicalRecordId: medicalRecordId,
+              #documentType: documentType,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i10.Document>>.value(
+                _FakePaginatedResponse_1<_i10.Document>(
+          this,
+          Invocation.method(
+            #getDocuments,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #petId: petId,
+              #medicalRecordId: medicalRecordId,
+              #documentType: documentType,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i10.Document>>);
+
+  @override
+  _i19.Future<_i10.Document> getDocumentById(String? documentId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDocumentById,
+          [documentId],
+        ),
+        returnValue: _i19.Future<_i10.Document>.value(_FakeDocument_8(
+          this,
+          Invocation.method(
+            #getDocumentById,
+            [documentId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i10.Document>.value(_FakeDocument_8(
+          this,
+          Invocation.method(
+            #getDocumentById,
+            [documentId],
+          ),
+        )),
+      ) as _i19.Future<_i10.Document>);
+
+  @override
+  _i19.Future<_i10.Document> uploadDocument({
+    required _i34.File? file,
+    required String? petId,
+    required String? documentType,
+    required String? title,
+    String? description,
+    String? medicalRecordId,
+    List<String>? tags,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #uploadDocument,
+          [],
+          {
+            #file: file,
+            #petId: petId,
+            #documentType: documentType,
+            #title: title,
+            #description: description,
+            #medicalRecordId: medicalRecordId,
+            #tags: tags,
+          },
+        ),
+        returnValue: _i19.Future<_i10.Document>.value(_FakeDocument_8(
+          this,
+          Invocation.method(
+            #uploadDocument,
+            [],
+            {
+              #file: file,
+              #petId: petId,
+              #documentType: documentType,
+              #title: title,
+              #description: description,
+              #medicalRecordId: medicalRecordId,
+              #tags: tags,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i10.Document>.value(_FakeDocument_8(
+          this,
+          Invocation.method(
+            #uploadDocument,
+            [],
+            {
+              #file: file,
+              #petId: petId,
+              #documentType: documentType,
+              #title: title,
+              #description: description,
+              #medicalRecordId: medicalRecordId,
+              #tags: tags,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i10.Document>);
+
+  @override
+  _i19.Future<_i10.Document> updateDocument(
+    String? documentId,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateDocument,
+          [
+            documentId,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i10.Document>.value(_FakeDocument_8(
+          this,
+          Invocation.method(
+            #updateDocument,
+            [
+              documentId,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i10.Document>.value(_FakeDocument_8(
+          this,
+          Invocation.method(
+            #updateDocument,
+            [
+              documentId,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i10.Document>);
+
+  @override
+  _i19.Future<void> deleteDocument(String? documentId) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteDocument,
+          [documentId],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<String> downloadDocument(String? documentId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #downloadDocument,
+          [documentId],
+        ),
+        returnValue: _i19.Future<String>.value(_i17.dummyValue<String>(
+          this,
+          Invocation.method(
+            #downloadDocument,
+            [documentId],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<String>.value(_i17.dummyValue<String>(
+          this,
+          Invocation.method(
+            #downloadDocument,
+            [documentId],
+          ),
+        )),
+      ) as _i19.Future<String>);
+}
+
+/// A class which mocks [UserService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockUserService extends _i1.Mock implements _i35.UserService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i2.User>> getUsers({
+    int? page = 1,
+    int? limit = 20,
+    String? role,
+    bool? isActive,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getUsers,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #role: role,
+            #isActive: isActive,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i2.User>>.value(
+            _FakePaginatedResponse_1<_i2.User>(
+          this,
+          Invocation.method(
+            #getUsers,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #role: role,
+              #isActive: isActive,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i2.User>>.value(
+                _FakePaginatedResponse_1<_i2.User>(
+          this,
+          Invocation.method(
+            #getUsers,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #role: role,
+              #isActive: isActive,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i2.User>>);
+
+  @override
+  _i19.Future<_i2.User> getUserById(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getUserById,
+          [id],
+        ),
+        returnValue: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #getUserById,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #getUserById,
+            [id],
+          ),
+        )),
+      ) as _i19.Future<_i2.User>);
+
+  @override
+  _i19.Future<_i2.User> createUser(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createUser,
+          [data],
+        ),
+        returnValue: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #createUser,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #createUser,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i2.User>);
+
+  @override
+  _i19.Future<_i2.User> updateUser(
+    String? id,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateUser,
+          [
+            id,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #updateUser,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub: _i19.Future<_i2.User>.value(_FakeUser_0(
+          this,
+          Invocation.method(
+            #updateUser,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i2.User>);
+
+  @override
+  _i19.Future<void> deactivateUser(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deactivateUser,
+          [id],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<_i11.BulkCreateResult> bulkCreateUsers(
+          List<Map<String, dynamic>>? users) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #bulkCreateUsers,
+          [users],
+        ),
+        returnValue:
+            _i19.Future<_i11.BulkCreateResult>.value(_FakeBulkCreateResult_9(
+          this,
+          Invocation.method(
+            #bulkCreateUsers,
+            [users],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i11.BulkCreateResult>.value(_FakeBulkCreateResult_9(
+          this,
+          Invocation.method(
+            #bulkCreateUsers,
+            [users],
+          ),
+        )),
+      ) as _i19.Future<_i11.BulkCreateResult>);
+}
+
+/// A class which mocks [ClinicService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockClinicService extends _i1.Mock implements _i36.ClinicService {
+  @override
+  _i19.Future<_i12.Clinic> getClinicInfo() => (super.noSuchMethod(
+        Invocation.method(
+          #getClinicInfo,
+          [],
+        ),
+        returnValue: _i19.Future<_i12.Clinic>.value(_FakeClinic_10(
+          this,
+          Invocation.method(
+            #getClinicInfo,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i12.Clinic>.value(_FakeClinic_10(
+          this,
+          Invocation.method(
+            #getClinicInfo,
+            [],
+          ),
+        )),
+      ) as _i19.Future<_i12.Clinic>);
+
+  @override
+  _i19.Future<_i12.Clinic> updateClinicInfo(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateClinicInfo,
+          [data],
+        ),
+        returnValue: _i19.Future<_i12.Clinic>.value(_FakeClinic_10(
+          this,
+          Invocation.method(
+            #updateClinicInfo,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i12.Clinic>.value(_FakeClinic_10(
+          this,
+          Invocation.method(
+            #updateClinicInfo,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i12.Clinic>);
+
+  @override
+  _i19.Future<Map<String, dynamic>> getClinicSettings() => (super.noSuchMethod(
+        Invocation.method(
+          #getClinicSettings,
+          [],
+        ),
+        returnValue:
+            _i19.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i19.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i19.Future<Map<String, dynamic>>);
+
+  @override
+  _i19.Future<Map<String, dynamic>> updateClinicSettings(
+          Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateClinicSettings,
+          [data],
+        ),
+        returnValue:
+            _i19.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i19.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i19.Future<Map<String, dynamic>>);
+
+  @override
+  _i19.Future<_i13.ClinicBranding> getClinicBranding() => (super.noSuchMethod(
+        Invocation.method(
+          #getClinicBranding,
+          [],
+        ),
+        returnValue:
+            _i19.Future<_i13.ClinicBranding>.value(_FakeClinicBranding_11(
+          this,
+          Invocation.method(
+            #getClinicBranding,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i13.ClinicBranding>.value(_FakeClinicBranding_11(
+          this,
+          Invocation.method(
+            #getClinicBranding,
+            [],
+          ),
+        )),
+      ) as _i19.Future<_i13.ClinicBranding>);
+
+  @override
+  _i19.Future<_i13.ClinicBranding> updateClinicBranding(
+          Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateClinicBranding,
+          [data],
+        ),
+        returnValue:
+            _i19.Future<_i13.ClinicBranding>.value(_FakeClinicBranding_11(
+          this,
+          Invocation.method(
+            #updateClinicBranding,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i13.ClinicBranding>.value(_FakeClinicBranding_11(
+          this,
+          Invocation.method(
+            #updateClinicBranding,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i13.ClinicBranding>);
+}
+
+/// A class which mocks [ReminderService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockReminderService extends _i1.Mock implements _i37.ReminderService {
+  @override
+  _i19.Future<_i3.PaginatedResponse<_i14.Reminder>> getReminders({
+    int? page = 1,
+    int? limit = 20,
+    String? status,
+    String? reminderType,
+    String? petId,
+    String? ownerId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getReminders,
+          [],
+          {
+            #page: page,
+            #limit: limit,
+            #status: status,
+            #reminderType: reminderType,
+            #petId: petId,
+            #ownerId: ownerId,
+          },
+        ),
+        returnValue: _i19.Future<_i3.PaginatedResponse<_i14.Reminder>>.value(
+            _FakePaginatedResponse_1<_i14.Reminder>(
+          this,
+          Invocation.method(
+            #getReminders,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #status: status,
+              #reminderType: reminderType,
+              #petId: petId,
+              #ownerId: ownerId,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i3.PaginatedResponse<_i14.Reminder>>.value(
+                _FakePaginatedResponse_1<_i14.Reminder>(
+          this,
+          Invocation.method(
+            #getReminders,
+            [],
+            {
+              #page: page,
+              #limit: limit,
+              #status: status,
+              #reminderType: reminderType,
+              #petId: petId,
+              #ownerId: ownerId,
+            },
+          ),
+        )),
+      ) as _i19.Future<_i3.PaginatedResponse<_i14.Reminder>>);
+
+  @override
+  _i19.Future<_i14.Reminder> getReminderById(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getReminderById,
+          [id],
+        ),
+        returnValue: _i19.Future<_i14.Reminder>.value(_FakeReminder_12(
+          this,
+          Invocation.method(
+            #getReminderById,
+            [id],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i14.Reminder>.value(_FakeReminder_12(
+          this,
+          Invocation.method(
+            #getReminderById,
+            [id],
+          ),
+        )),
+      ) as _i19.Future<_i14.Reminder>);
+
+  @override
+  _i19.Future<_i14.Reminder> createReminder(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createReminder,
+          [data],
+        ),
+        returnValue: _i19.Future<_i14.Reminder>.value(_FakeReminder_12(
+          this,
+          Invocation.method(
+            #createReminder,
+            [data],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i14.Reminder>.value(_FakeReminder_12(
+          this,
+          Invocation.method(
+            #createReminder,
+            [data],
+          ),
+        )),
+      ) as _i19.Future<_i14.Reminder>);
+
+  @override
+  _i19.Future<_i14.Reminder> updateReminder(
+    String? id,
+    Map<String, dynamic>? data,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateReminder,
+          [
+            id,
+            data,
+          ],
+        ),
+        returnValue: _i19.Future<_i14.Reminder>.value(_FakeReminder_12(
+          this,
+          Invocation.method(
+            #updateReminder,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i14.Reminder>.value(_FakeReminder_12(
+          this,
+          Invocation.method(
+            #updateReminder,
+            [
+              id,
+              data,
+            ],
+          ),
+        )),
+      ) as _i19.Future<_i14.Reminder>);
+
+  @override
+  _i19.Future<void> deleteReminder(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteReminder,
+          [id],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<_i15.SendResult> sendPendingReminders() => (super.noSuchMethod(
+        Invocation.method(
+          #sendPendingReminders,
+          [],
+        ),
+        returnValue: _i19.Future<_i15.SendResult>.value(_FakeSendResult_13(
+          this,
+          Invocation.method(
+            #sendPendingReminders,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<_i15.SendResult>.value(_FakeSendResult_13(
+          this,
+          Invocation.method(
+            #sendPendingReminders,
+            [],
+          ),
+        )),
+      ) as _i19.Future<_i15.SendResult>);
 }
