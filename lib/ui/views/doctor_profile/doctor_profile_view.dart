@@ -4,8 +4,13 @@ import 'package:partner/ui/common/app_colors.dart';
 import 'package:partner/ui/views/doctor_profile/doctor_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+/// Profile screen for the logged-in clinic user.
+///
+/// Displays real user data from the auth service
+/// and supports notification toggles and logout.
 class DoctorProfileView
     extends StackedView<DoctorProfileViewModel> {
+  /// Creates a [DoctorProfileView].
   const DoctorProfileView({super.key});
 
   @override
@@ -22,11 +27,12 @@ class DoctorProfileView
             const _Header(),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(20),
+                padding:
+                    const EdgeInsets.all(20),
                 children: [
-                  const _ProfileSection(),
-                  const SizedBox(height: 24),
-                  const _DigitalSignature(),
+                  _ProfileSection(
+                    viewModel: viewModel,
+                  ),
                   const SizedBox(height: 24),
                   const _WorkingHours(),
                   const SizedBox(height: 24),
@@ -38,6 +44,7 @@ class DoctorProfileView
                   const SizedBox(height: 16),
                   _LogoutButton(
                     onTap: viewModel.logout,
+                    isBusy: viewModel.isBusy,
                   ),
                   const SizedBox(height: 120),
                 ],
@@ -55,6 +62,10 @@ class DoctorProfileView
   ) =>
       DoctorProfileViewModel();
 }
+
+// ====================================================
+// Header
+// ====================================================
 
 class _Header extends StatelessWidget {
   const _Header();
@@ -97,8 +108,16 @@ class _Header extends StatelessWidget {
   }
 }
 
+// ====================================================
+// Profile section (real user data)
+// ====================================================
+
 class _ProfileSection extends StatelessWidget {
-  const _ProfileSection();
+  const _ProfileSection({
+    required this.viewModel,
+  });
+
+  final DoctorProfileViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +134,8 @@ class _ProfileSection extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(
+                    color:
+                        Colors.black.withValues(
                       alpha: 0.1,
                     ),
                     blurRadius: 10,
@@ -123,28 +143,31 @@ class _ProfileSection extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 48,
-                backgroundImage: NetworkImage(
-                  'https://lh3.googleusercontent'
-                  '.com/aida-public/AB6AXuDZw0fxq'
-                  'VSMpmJRdqJMLQGYmOVcVjbL1nIx_zle'
-                  'fzpBXaYPsLmuGlbj7zDKAjlWzvu4SsF'
-                  'wP6mnPlIZ9rdl4g2Ne9guBp2D9sPHFUh'
-                  '2rRkdprMDms600_J5ghMrnMOcKtOHURl'
-                  'h1CykiK_NLAmJ_l57Xs-7jQ8sbNFRfMv'
-                  'YeRwyNtjxFMDIIPaTPJStcaQrultw0AN8'
-                  'oGpces9ZhbvV2pT4264vbcjiCl733TPfs'
-                  'DFkQFAD5tBBlrjM2M8o6xWfvhIzgMc8X'
-                  'WShLE4',
-                ),
+                backgroundColor: kcVeryLightGrey,
+                backgroundImage:
+                    viewModel.avatarUrl != null
+                        ? NetworkImage(
+                            viewModel.avatarUrl!,
+                          )
+                        : null,
+                child:
+                    viewModel.avatarUrl == null
+                        ? const Icon(
+                            Icons.person,
+                            size: 40,
+                            color: kcLightGrey,
+                          )
+                        : null,
               ),
             ),
             Positioned(
               bottom: 4,
               right: 4,
               child: Container(
-                padding: const EdgeInsets.all(6),
+                padding:
+                    const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
                   color: kcPrimaryColor,
                   shape: BoxShape.circle,
@@ -160,7 +183,7 @@ class _ProfileSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          'Dr. Alex',
+          viewModel.userName,
           style: GoogleFonts.manrope(
             fontSize: 24,
             fontWeight: FontWeight.w900,
@@ -169,115 +192,55 @@ class _ProfileSection extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          'Senior Veterinarian',
+          viewModel.specialization,
           style: GoogleFonts.manrope(
             fontSize: 14,
             fontWeight: FontWeight.w700,
             color: kcPrimaryColor,
           ),
         ),
-        const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 6,
-          ),
-          decoration: BoxDecoration(
-            color: kcNeutral100,
-            borderRadius:
-                BorderRadius.circular(20),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.verified_rounded,
-                size: 14,
-                color: kcNeutral500,
-              ),
-              const SizedBox(width: 6),
-              Text(
-                'LIC-88294-VET',
-                style: GoogleFonts.manrope(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: kcNeutral800,
+        if (viewModel.email.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Container(
+            padding:
+                const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 6,
+            ),
+            decoration: BoxDecoration(
+              color: kcNeutral100,
+              borderRadius:
+                  BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.email_outlined,
+                  size: 14,
+                  color: kcNeutral500,
                 ),
-              ),
-            ],
+                const SizedBox(width: 6),
+                Text(
+                  viewModel.email,
+                  style: GoogleFonts.manrope(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: kcNeutral800,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+        ],
       ],
     );
   }
 }
 
-class _DigitalSignature extends StatelessWidget {
-  const _DigitalSignature();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Digital Signature',
-              style: GoogleFonts.manrope(
-                fontSize: 16,
-                fontWeight: FontWeight.w800,
-                color: kcDarkGreyColor,
-              ),
-            ),
-            Text(
-              'Edit',
-              style: GoogleFonts.manrope(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: kcPrimaryColor,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Container(
-          height: 96,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius:
-                BorderRadius.circular(24),
-            border: Border.all(
-              color: kcVeryLightGrey.withValues(
-                alpha: 0.5,
-              ),
-            ),
-            image: const DecorationImage(
-              image: NetworkImage(
-                'https://lh3.googleusercontent'
-                '.com/aida-public/AB6AXuBbjiMjzS'
-                '-3nA79HHO50durmkFMxrI0vf0K5QAFXDq'
-                '3sTFeNRoZJ_RxzxC6USan4kDAWzrfdxOp'
-                'Erk158EOckOZa9JsV7b8ze5yebpvWN8Nh'
-                'eoN5DqCnus5XuvzzCHhf4Kki-h_1sFr2g'
-                'fzsv_l0knhQ0ILKj-2VeudtNtfqsmt9FE'
-                '0QUWtHOvZzJa0Nsn544RnhIud4DMNIyx3'
-                'kpulYwDLrNjFtLUCSsQ9EUdiVz6ysf8bQ'
-                'hxGpTXSTDQ1q9oHPlXPBCymbxvwtFE',
-              ),
-              fit: BoxFit.contain,
-              opacity: 0.7,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
+// ====================================================
+// Working hours (static for now)
+// ====================================================
 
 class _WorkingHours extends StatelessWidget {
   const _WorkingHours();
@@ -317,7 +280,8 @@ class _WorkingHours extends StatelessWidget {
             borderRadius:
                 BorderRadius.circular(24),
             border: Border.all(
-              color: kcVeryLightGrey.withValues(
+              color:
+                  kcVeryLightGrey.withValues(
                 alpha: 0.5,
               ),
             ),
@@ -328,8 +292,8 @@ class _WorkingHours extends StatelessWidget {
                 days: 'Mon - Fri',
                 time: '09:00 AM - 05:00 PM',
                 label: 'Standard Shift',
-                icon:
-                    Icons.calendar_today_rounded,
+                icon: Icons
+                    .calendar_today_rounded,
                 iconColor: Colors.blue,
               ),
               Divider(height: 1, indent: 64),
@@ -425,6 +389,10 @@ class _WorkingHourTile extends StatelessWidget {
   }
 }
 
+// ====================================================
+// Notification section
+// ====================================================
+
 class _NotificationSection
     extends StatelessWidget {
   const _NotificationSection({
@@ -454,7 +422,8 @@ class _NotificationSection
             borderRadius:
                 BorderRadius.circular(24),
             border: Border.all(
-              color: kcVeryLightGrey.withValues(
+              color:
+                  kcVeryLightGrey.withValues(
                 alpha: 0.5,
               ),
             ),
@@ -464,8 +433,8 @@ class _NotificationSection
               _ToggleTile(
                 title: 'Email Alerts',
                 icon: Icons.email_outlined,
-                value:
-                    viewModel.isEmailAlertsEnabled,
+                value: viewModel
+                    .isEmailAlertsEnabled,
                 onChanged: (v) => viewModel
                     .toggleEmailAlerts(
                   value: v,
@@ -479,8 +448,8 @@ class _NotificationSection
                 title: 'In-App Alerts',
                 icon: Icons
                     .notifications_active_outlined,
-                value:
-                    viewModel.isInAppAlertsEnabled,
+                value: viewModel
+                    .isInAppAlertsEnabled,
                 onChanged: (v) => viewModel
                     .toggleInAppAlerts(
                   value: v,
@@ -493,10 +462,12 @@ class _NotificationSection
               _ToggleTile(
                 title: 'SMS Updates',
                 icon: Icons.sms_outlined,
-                value:
-                    viewModel.isSmsUpdatesEnabled,
+                value: viewModel
+                    .isSmsUpdatesEnabled,
                 onChanged: (v) => viewModel
-                    .toggleSmsUpdates(value: v),
+                    .toggleSmsUpdates(
+                  value: v,
+                ),
                 isLast: true,
               ),
             ],
@@ -531,7 +502,11 @@ class _ToggleTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: kcLightGrey, size: 22),
+          Icon(
+            icon,
+            color: kcLightGrey,
+            size: 22,
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
@@ -553,6 +528,10 @@ class _ToggleTile extends StatelessWidget {
     );
   }
 }
+
+// ====================================================
+// Help button
+// ====================================================
 
 class _HelpButton extends StatelessWidget {
   const _HelpButton();
@@ -599,33 +578,55 @@ class _HelpButton extends StatelessWidget {
   }
 }
 
+// ====================================================
+// Logout button
+// ====================================================
+
 class _LogoutButton extends StatelessWidget {
-  const _LogoutButton({required this.onTap});
+  const _LogoutButton({
+    required this.onTap,
+    required this.isBusy,
+  });
 
   final VoidCallback onTap;
+  final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isBusy ? null : onTap,
       child: Container(
         height: 56,
         decoration: BoxDecoration(
           color: const Color(0xFFFFEBEE),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius:
+              BorderRadius.circular(20),
         ),
         child: Row(
           mainAxisAlignment:
               MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.logout_rounded,
-              color: Colors.red,
-              size: 20,
-            ),
+            if (isBusy)
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child:
+                    CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.red,
+                ),
+              )
+            else
+              const Icon(
+                Icons.logout_rounded,
+                color: Colors.red,
+                size: 20,
+              ),
             const SizedBox(width: 8),
             Text(
-              'Log Out',
+              isBusy
+                  ? 'Logging out...'
+                  : 'Log Out',
               style: GoogleFonts.manrope(
                 fontSize: 15,
                 fontWeight: FontWeight.w800,

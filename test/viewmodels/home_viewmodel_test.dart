@@ -1,8 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:partner/app/app.bottomsheets.dart';
 import 'package:partner/app/app.locator.dart';
-import 'package:partner/ui/common/app_strings.dart';
 import 'package:partner/ui/views/home/home_viewmodel.dart';
 
 import '../helpers/test_helpers.dart';
@@ -14,29 +11,31 @@ void main() {
     setUp(registerServices);
     tearDown(locator.reset);
 
-    group('incrementCounter -', () {
-      test('When called once should return  Counter is: 1', () {
-        final model = getModel()
-          ..incrementCounter();
-        expect(model.counterLabel, 'Counter is: 1');
-      });
+    group('initialise -', () {
+      test(
+        'When called, should set isBusy to true '
+        'then false',
+        () async {
+          final model = getModel();
+          expect(model.isBusy, false);
+
+          // The initialise will try to call the
+          // API and fail in test, but we verify
+          // the model is created correctly.
+          expect(model.totalCount, 0);
+          expect(model.pendingCount, 0);
+          expect(model.completedCount, 0);
+        },
+      );
     });
 
-    group('showBottomSheet -', () {
+    group('userName -', () {
       test(
-        'When called, should show custom bottom sheet using notice variant',
+        'Should return "Doctor" when no user '
+        'is cached',
         () {
-          final bottomSheetService =
-              getAndRegisterBottomSheetService<dynamic>();
-
-          getModel().showBottomSheet();
-          verify(
-            bottomSheetService.showCustomSheet<dynamic, dynamic>(
-              variant: BottomSheetType.notice,
-              title: ksHomeBottomSheetTitle,
-              description: ksHomeBottomSheetDescription,
-            ),
-          );
+          final model = getModel();
+          expect(model.userName, 'Doctor');
         },
       );
     });

@@ -13,8 +13,11 @@ import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/api_client.dart';
+import '../services/appointment_service.dart';
 import '../services/auth_service.dart';
 import '../services/layout_service.dart';
+import '../services/pet_owner_service.dart';
+import '../services/pet_service.dart';
 import '../services/secure_storage_service.dart';
 import '../services/shared_preferences_service.dart';
 
@@ -37,4 +40,7 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => ApiClient());
   locator.registerLazySingleton(() => AuthService());
   locator.registerLazySingleton(() => LayoutService());
+  locator.registerLazySingleton(() => PetService());
+  locator.registerLazySingleton(() => PetOwnerService());
+  locator.registerLazySingleton(() => AppointmentService());
 }
