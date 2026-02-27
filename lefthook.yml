@@ -1,0 +1,5 @@
+pre-commit:
+  commands:
+    flutter-analyze:
+      run: bash ./flutter_analyze_wrapper.sh --no-pub
+      fail_text: "Flutter analyze found errors. Please fix them and try again."

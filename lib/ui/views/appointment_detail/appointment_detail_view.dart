@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/ui/common/app_colors.dart';
+import 'package:partner/ui/views/appointment_detail/appointment_detail_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import 'appointment_detail_viewmodel.dart';
-
-class AppointmentDetailView extends StackedView<AppointmentDetailViewModel> {
-  const AppointmentDetailView({Key? key}) : super(key: key);
+class AppointmentDetailView
+    extends StackedView<AppointmentDetailViewModel> {
+  const AppointmentDetailView({super.key});
 
   @override
   Widget builder(
@@ -20,17 +20,23 @@ class AppointmentDetailView extends StackedView<AppointmentDetailViewModel> {
         children: [
           Column(
             children: [
-              _AppointmentAppBar(onBack: viewModel.goBack),
+              _AppointmentAppBar(
+                onBack: viewModel.goBack,
+              ),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(bottom: 120),
+                  padding: const EdgeInsets.only(
+                    bottom: 120,
+                  ),
                   child: Column(
                     children: [
                       const _PetProfileHeader(),
                       const SizedBox(height: 12),
                       _VisitInfoCard(
-                          onViewMedicalRecord:
-                              viewModel.showMedicalRecordSheet),
+                        onViewMedicalRecord:
+                            viewModel
+                                .showMedicalRecordSheet,
+                      ),
                       const SizedBox(height: 12),
                       const _ConsultationNotesCard(),
                       const SizedBox(height: 12),
@@ -48,38 +54,60 @@ class AppointmentDetailView extends StackedView<AppointmentDetailViewModel> {
   }
 
   @override
-  AppointmentDetailViewModel viewModelBuilder(BuildContext context) =>
+  AppointmentDetailViewModel viewModelBuilder(
+    BuildContext context,
+  ) =>
       AppointmentDetailViewModel();
 }
 
 class _AppointmentAppBar extends StatelessWidget {
+  const _AppointmentAppBar({
+    required this.onBack,
+  });
+
   final VoidCallback onBack;
-  const _AppointmentAppBar({required this.onBack});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
+      padding: const EdgeInsets.fromLTRB(
+        16,
+        50,
+        16,
+        16,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(bottom: BorderSide(color: kcVeryLightGrey, width: 0.5)),
+        border: Border(
+          bottom: BorderSide(
+            color: kcVeryLightGrey,
+            width: 0.5,
+          ),
+        ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
             onTap: onBack,
-            child: const Icon(Icons.arrow_back_rounded, color: kcDarkGreyColor),
+            child: const Icon(
+              Icons.arrow_back_rounded,
+              color: kcDarkGreyColor,
+            ),
           ),
           Text(
-            "Appointment Details",
+            'Appointment Details',
             style: GoogleFonts.manrope(
               fontSize: 18,
               fontWeight: FontWeight.w800,
               color: kcDarkGreyColor,
             ),
           ),
-          const Icon(Icons.more_vert_rounded, color: kcDarkGreyColor),
+          const Icon(
+            Icons.more_vert_rounded,
+            color: kcDarkGreyColor,
+          ),
         ],
       ),
     );
@@ -104,17 +132,41 @@ class _PetProfileHeader extends StatelessWidget {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius:
+                          BorderRadius.circular(
+                        24,
+                      ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.black
+                              .withValues(
+                            alpha: 0.1,
+                          ),
                           blurRadius: 15,
-                          offset: const Offset(0, 5),
-                        )
+                          offset:
+                              const Offset(0, 5),
+                        ),
                       ],
                       image: const DecorationImage(
                         image: NetworkImage(
-                            "https://lh3.googleusercontent.com/aida-public/AB6AXuB4bWNHkebQSAW_0qaIP_zMcEdckUaoLzXCkh2KRD6T0GBYNz-piheUcz6jXJY6JhjgvTS9qPL70Y1Y8h2EURRa2KhmZM-mlK22zwSktKwZojYL8B4FA_R1Y2QBPQYJQmLYrNcB1-UPz-nADQmYCxgZy7XETtRl6c20570FsqPhi5d4Er7xSXmKiAPStJx9bMHvQUsbyb3FckFUXYFAJoFBA61Ao_IZwrAVKNj6T_LZsa3-BzrvZ5fo34rhJCKDuBnQJmdf9ZVh5yc"),
+                          'https://lh3.googleus'
+                          'ercontent.com/aida-pu'
+                          'blic/AB6AXuB4bWNHkeb'
+                          'QSAw_0qaIP_zMcEdckUa'
+                          'oLzXCkh2KRD6T0GBYNz'
+                          '-piheUcz6jXJY6JhjgvT'
+                          'S9qPL70Y1Y8h2EURRa2'
+                          'KhmZM-mlK22zwSktKwZo'
+                          'jYL8B4FA_R1Y2QBPQYJQm'
+                          'LYrNcB1-UPz-nADQmYCx'
+                          'gZy7XETtRl6c20570Fsq'
+                          'Phi5d4Er7xSXmKiAPStJ'
+                          'x9bMHvQUsbyb3FckFUXY'
+                          'FAJoFBA61Ao_IZwrAVKN'
+                          'j6T_LZsa3-BzrvZ5fo34'
+                          'rhJCKDuBnQJmdf9ZVh5y'
+                          'c',
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -123,25 +175,39 @@ class _PetProfileHeader extends StatelessWidget {
                     right: -4,
                     bottom: -4,
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding:
+                          const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.white, width: 2),
+                        color: Colors.blue
+                            .withValues(
+                          alpha: 0.1,
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(
+                          12,
+                        ),
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2,
+                        ),
                       ),
-                      child:
-                          const Icon(Icons.pets, size: 20, color: Colors.blue),
+                      child: const Icon(
+                        Icons.pets,
+                        size: 20,
+                        color: Colors.blue,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Bella",
+                      'Bella',
                       style: GoogleFonts.manrope(
                         fontSize: 28,
                         fontWeight: FontWeight.w900,
@@ -149,7 +215,8 @@ class _PetProfileHeader extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Golden Retriever • 4 Years • Female",
+                      'Golden Retriever'
+                      ' • 4 Years • Female',
                       style: GoogleFonts.manrope(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
@@ -158,26 +225,46 @@ class _PetProfileHeader extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets
+                          .symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border:
-                            Border.all(color: Colors.green.withOpacity(0.2)),
+                        color: Colors.green
+                            .withValues(
+                          alpha: 0.1,
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(
+                          8,
+                        ),
+                        border: Border.all(
+                          color: Colors.green
+                              .withValues(
+                            alpha: 0.2,
+                          ),
+                        ),
                       ),
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize:
+                            MainAxisSize.min,
                         children: [
                           const CircleAvatar(
-                              radius: 4, backgroundColor: Colors.green),
+                            radius: 4,
+                            backgroundColor:
+                                Colors.green,
+                          ),
                           const SizedBox(width: 8),
                           Text(
-                            "Checked In",
-                            style: GoogleFonts.manrope(
+                            'Checked In',
+                            style: GoogleFonts
+                                .manrope(
                               fontSize: 12,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.green[700],
+                              fontWeight:
+                                  FontWeight.w800,
+                              color:
+                                  Colors.green[700],
                             ),
                           ),
                         ],
@@ -204,9 +291,15 @@ class _OwnerActionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: kcVeryLightGrey.withOpacity(0.2),
+        color: kcVeryLightGrey.withValues(
+          alpha: 0.2,
+        ),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: kcVeryLightGrey.withOpacity(0.5)),
+        border: Border.all(
+          color: kcVeryLightGrey.withValues(
+            alpha: 0.5,
+          ),
+        ),
       ),
       child: Row(
         children: [
@@ -217,15 +310,19 @@ class _OwnerActionCard extends StatelessWidget {
               color: kcVeryLightGrey,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.person, color: kcMediumGrey),
+            child: const Icon(
+              Icons.person,
+              color: kcMediumGrey,
+            ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
               children: [
                 Text(
-                  "OWNER",
+                  'OWNER',
                   style: GoogleFonts.manrope(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
@@ -234,7 +331,7 @@ class _OwnerActionCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "John Doe",
+                  'John Doe',
                   style: GoogleFonts.manrope(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
@@ -247,9 +344,16 @@ class _OwnerActionCard extends StatelessWidget {
           Row(
             children: [
               _iconButton(
-                  Icons.chat_bubble_rounded, Colors.white, Colors.green),
+                Icons.chat_bubble_rounded,
+                Colors.white,
+                Colors.green,
+              ),
               const SizedBox(width: 10),
-              _iconButton(Icons.call_rounded, kcPrimaryColor, kcNeutral900),
+              _iconButton(
+                Icons.call_rounded,
+                kcPrimaryColor,
+                kcNeutral900,
+              ),
             ],
           ),
         ],
@@ -257,7 +361,11 @@ class _OwnerActionCard extends StatelessWidget {
     );
   }
 
-  Widget _iconButton(IconData icon, Color bg, Color iconColor) {
+  Widget _iconButton(
+    IconData icon,
+    Color bg,
+    Color iconColor,
+  ) {
     return Container(
       width: 40,
       height: 40,
@@ -266,9 +374,10 @@ class _OwnerActionCard extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black
+                .withValues(alpha: 0.05),
             blurRadius: 10,
-          )
+          ),
         ],
       ),
       child: Icon(icon, color: iconColor, size: 20),
@@ -277,29 +386,37 @@ class _OwnerActionCard extends StatelessWidget {
 }
 
 class _VisitInfoCard extends StatelessWidget {
+  const _VisitInfoCard({
+    required this.onViewMedicalRecord,
+  });
+
   final VoidCallback onViewMedicalRecord;
-  const _VisitInfoCard({required this.onViewMedicalRecord});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "REASON FOR VISIT",
+                    'REASON FOR VISIT',
                     style: GoogleFonts.manrope(
                       fontSize: 11,
                       fontWeight: FontWeight.w900,
@@ -309,7 +426,7 @@ class _VisitInfoCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    "Annual Checkup",
+                    'Annual Checkup',
                     style: GoogleFonts.manrope(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
@@ -320,13 +437,19 @@ class _VisitInfoCard extends StatelessWidget {
               ),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.blue.withValues(
+                    alpha: 0.1,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(10),
                 ),
                 child: Text(
-                  "30 min",
+                  '30 min',
                   style: GoogleFonts.manrope(
                     fontSize: 12,
                     fontWeight: FontWeight.w800,
@@ -340,8 +463,8 @@ class _VisitInfoCard extends StatelessWidget {
           Wrap(
             spacing: 8,
             children: [
-              _tag("Vaccination due"),
-              _tag("Weight check"),
+              _tag('Vaccination due'),
+              _tag('Weight check'),
             ],
           ),
           const SizedBox(height: 24),
@@ -349,19 +472,26 @@ class _VisitInfoCard extends StatelessWidget {
             onTap: onViewMedicalRecord,
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(
+                vertical: 16,
+              ),
               decoration: BoxDecoration(
                 color: const Color(0xFF0C141F),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius:
+                    BorderRadius.circular(16),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.history_edu_rounded,
-                      color: Colors.white, size: 20),
+                  const Icon(
+                    Icons.history_edu_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
-                    "View Full Medical Record",
+                    'View Full Medical Record',
                     style: GoogleFonts.manrope(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
@@ -379,9 +509,14 @@ class _VisitInfoCard extends StatelessWidget {
 
   Widget _tag(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 6,
+      ),
       decoration: BoxDecoration(
-        color: kcVeryLightGrey.withOpacity(0.4),
+        color: kcVeryLightGrey.withValues(
+          alpha: 0.4,
+        ),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -396,13 +531,16 @@ class _VisitInfoCard extends StatelessWidget {
   }
 }
 
-class _ConsultationNotesCard extends StatelessWidget {
+class _ConsultationNotesCard
+    extends StatelessWidget {
   const _ConsultationNotesCard();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -411,15 +549,19 @@ class _ConsultationNotesCard extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
-                  const Icon(Icons.edit_note_rounded,
-                      color: kcPrimaryColor, size: 24),
+                  const Icon(
+                    Icons.edit_note_rounded,
+                    color: kcPrimaryColor,
+                    size: 24,
+                  ),
                   const SizedBox(width: 8),
                   Text(
-                    "Consultation Notes",
+                    'Consultation Notes',
                     style: GoogleFonts.manrope(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
@@ -429,7 +571,7 @@ class _ConsultationNotesCard extends StatelessWidget {
                 ],
               ),
               Text(
-                "Saving...",
+                'Saving...',
                 style: GoogleFonts.manrope(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -444,15 +586,25 @@ class _ConsultationNotesCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: kcVeryLightGrey.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(16),
+              color: kcVeryLightGrey.withValues(
+                alpha: 0.2,
+              ),
+              borderRadius:
+                  BorderRadius.circular(16),
             ),
             child: TextField(
               maxLines: null,
-              style: GoogleFonts.manrope(fontSize: 14, color: kcDarkGreyColor),
-              decoration: InputDecoration.collapsed(
+              style: GoogleFonts.manrope(
+                fontSize: 14,
+                color: kcDarkGreyColor,
+              ),
+              decoration:
+                  InputDecoration.collapsed(
                 hintText:
-                    "Enter clinical observations, diagnosis, and treatment plan...",
+                    'Enter clinical '
+                    'observations, '
+                    'diagnosis, and '
+                    'treatment plan...',
                 hintStyle: GoogleFonts.manrope(
                   fontSize: 14,
                   color: kcLightGrey,
@@ -466,9 +618,9 @@ class _ConsultationNotesCard extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _addSnippet("+ Prescribe Meds"),
-                _addSnippet("+ Add Vitals"),
-                _addSnippet("+ Upload File"),
+                _addSnippet('+ Prescribe Meds'),
+                _addSnippet('+ Add Vitals'),
+                _addSnippet('+ Upload File'),
               ],
             ),
           ),
@@ -480,7 +632,10 @@ class _ConsultationNotesCard extends StatelessWidget {
   Widget _addSnippet(String label) {
     return Container(
       margin: const EdgeInsets.only(right: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 8,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -504,17 +659,20 @@ class _CurrentVitalsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
         children: [
           Text(
-            "CURRENT VITALS",
+            'CURRENT VITALS',
             style: GoogleFonts.manrope(
               fontSize: 10,
               fontWeight: FontWeight.w900,
@@ -525,11 +683,23 @@ class _CurrentVitalsCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              _vitalItem("Weight", "28 kg", Colors.red),
+              _vitalItem(
+                'Weight',
+                '28 kg',
+                Colors.red,
+              ),
               const SizedBox(width: 8),
-              _vitalItem("Temp", "38.5°C", Colors.blue),
+              _vitalItem(
+                'Temp',
+                '38.5°C',
+                Colors.blue,
+              ),
               const SizedBox(width: 8),
-              _vitalItem("HR", "80 bpm", Colors.orange),
+              _vitalItem(
+                'HR',
+                '80 bpm',
+                Colors.orange,
+              ),
             ],
           ),
         ],
@@ -537,12 +707,18 @@ class _CurrentVitalsCard extends StatelessWidget {
     );
   }
 
-  Widget _vitalItem(String label, String value, Color color) {
+  Widget _vitalItem(
+    String label,
+    String value,
+    Color color,
+  ) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+        ),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.05),
+          color: color.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(14),
         ),
         child: Column(
@@ -550,15 +726,20 @@ class _CurrentVitalsCard extends StatelessWidget {
             Text(
               label.toUpperCase(),
               style: GoogleFonts.manrope(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                  color: color.withOpacity(0.6)),
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                color:
+                    color.withValues(alpha: 0.6),
+              ),
             ),
             const SizedBox(height: 4),
             Text(
               value,
               style: GoogleFonts.manrope(
-                  fontSize: 14, fontWeight: FontWeight.w900, color: color),
+                fontSize: 14,
+                fontWeight: FontWeight.w900,
+                color: color,
+              ),
             ),
           ],
         ),
@@ -577,13 +758,20 @@ class _BottomStickyActions extends StatelessWidget {
       left: 0,
       right: 0,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+        padding: const EdgeInsets.fromLTRB(
+          20,
+          20,
+          20,
+          40,
+        ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              kcBackgroundColor.withOpacity(0),
+              kcBackgroundColor.withValues(
+                alpha: 0,
+              ),
               kcBackgroundColor,
               kcBackgroundColor,
             ],
@@ -593,12 +781,14 @@ class _BottomStickyActions extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius:
+                BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black
+                    .withValues(alpha: 0.1),
                 blurRadius: 30,
-              )
+              ),
             ],
           ),
           child: Row(
@@ -608,23 +798,32 @@ class _BottomStickyActions extends StatelessWidget {
                   height: 56,
                   decoration: BoxDecoration(
                     color: kcPrimaryColor,
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius:
+                        BorderRadius.circular(18),
                     boxShadow: [
                       BoxShadow(
-                        color: kcPrimaryColor.withOpacity(0.3),
+                        color: kcPrimaryColor
+                            .withValues(
+                          alpha: 0.3,
+                        ),
                         blurRadius: 12,
-                      )
+                      ),
                     ],
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.play_arrow_rounded, color: kcNeutral900),
+                      const Icon(
+                        Icons.play_arrow_rounded,
+                        color: kcNeutral900,
+                      ),
                       const SizedBox(width: 4),
                       Text(
-                        "In-Progress",
+                        'In-Progress',
                         style: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w900,
+                          fontWeight:
+                              FontWeight.w900,
                           fontSize: 15,
                           color: kcNeutral900,
                         ),
@@ -638,18 +837,25 @@ class _BottomStickyActions extends StatelessWidget {
                 child: Container(
                   height: 56,
                   decoration: BoxDecoration(
-                    color: kcVeryLightGrey.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(18),
+                    color: kcVeryLightGrey
+                        .withValues(alpha: 0.4),
+                    borderRadius:
+                        BorderRadius.circular(18),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.check_rounded, color: kcDarkGreyColor),
+                      const Icon(
+                        Icons.check_rounded,
+                        color: kcDarkGreyColor,
+                      ),
                       const SizedBox(width: 4),
                       Text(
-                        "Complete",
+                        'Complete',
                         style: GoogleFonts.manrope(
-                          fontWeight: FontWeight.w900,
+                          fontWeight:
+                              FontWeight.w900,
                           fontSize: 15,
                           color: kcDarkGreyColor,
                         ),
@@ -663,10 +869,16 @@ class _BottomStickyActions extends StatelessWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: kcVeryLightGrey.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(18),
+                  color: kcVeryLightGrey.withValues(
+                    alpha: 0.4,
+                  ),
+                  borderRadius:
+                      BorderRadius.circular(18),
                 ),
-                child: const Icon(Icons.person_off_rounded, color: kcLightGrey),
+                child: const Icon(
+                  Icons.person_off_rounded,
+                  color: kcLightGrey,
+                ),
               ),
             ],
           ),

@@ -17,7 +17,7 @@ import 'test_helpers.mocks.dart';
 )
 void registerServices() {
   getAndRegisterNavigationService();
-  getAndRegisterBottomSheetService();
+  getAndRegisterBottomSheetService<dynamic>();
   getAndRegisterDialogService();
   // @stacked-mock-register
 }

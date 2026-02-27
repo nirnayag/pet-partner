@@ -11,13 +11,13 @@ void main() {
   HomeViewModel getModel() => HomeViewModel();
 
   group('HomeViewmodelTest -', () {
-    setUp(() => registerServices());
-    tearDown(() => locator.reset());
+    setUp(registerServices);
+    tearDown(locator.reset);
 
     group('incrementCounter -', () {
       test('When called once should return  Counter is: 1', () {
-        final model = getModel();
-        model.incrementCounter();
+        final model = getModel()
+          ..incrementCounter();
         expect(model.counterLabel, 'Counter is: 1');
       });
     });
@@ -26,12 +26,12 @@ void main() {
       test(
         'When called, should show custom bottom sheet using notice variant',
         () {
-          final bottomSheetService = getAndRegisterBottomSheetService();
+          final bottomSheetService =
+              getAndRegisterBottomSheetService<dynamic>();
 
-          final model = getModel();
-          model.showBottomSheet();
+          getModel().showBottomSheet();
           verify(
-            bottomSheetService.showCustomSheet(
+            bottomSheetService.showCustomSheet<dynamic, dynamic>(
               variant: BottomSheetType.notice,
               title: ksHomeBottomSheetTitle,
               description: ksHomeBottomSheetDescription,

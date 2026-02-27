@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/ui/common/app_colors.dart';
+import 'package:partner/ui/views/verify_otp/verify_otp_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import 'verify_otp_viewmodel.dart';
-
-class VerifyOtpView extends StackedView<VerifyOtpViewModel> {
-  const VerifyOtpView({Key? key}) : super(key: key);
+class VerifyOtpView
+    extends StackedView<VerifyOtpViewModel> {
+  const VerifyOtpView({super.key});
 
   @override
   Widget builder(
@@ -29,20 +29,26 @@ class _VerifyOtpBody extends StatefulWidget {
   const _VerifyOtpBody();
 
   @override
-  State<_VerifyOtpBody> createState() => _VerifyOtpBodyState();
+  State<_VerifyOtpBody> createState() =>
+      _VerifyOtpBodyState();
 }
 
-class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
-  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+class _VerifyOtpBodyState
+    extends State<_VerifyOtpBody> {
+  final List<FocusNode> _focusNodes =
+      List.generate(4, (index) => FocusNode());
   final List<TextEditingController> _controllers =
-      List.generate(4, (index) => TextEditingController());
+      List.generate(
+    4,
+    (index) => TextEditingController(),
+  );
 
   @override
   void dispose() {
-    for (var node in _focusNodes) {
+    for (final node in _focusNodes) {
       node.dispose();
     }
-    for (var controller in _controllers) {
+    for (final controller in _controllers) {
       controller.dispose();
     }
     super.dispose();
@@ -50,7 +56,10 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = getParentViewModel<VerifyOtpViewModel>(context);
+    final viewModel =
+        getParentViewModel<VerifyOtpViewModel>(
+      context,
+    );
 
     return Scaffold(
       backgroundColor: kcBackgroundColor,
@@ -71,7 +80,10 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
               /// Back Button
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: GestureDetector(
@@ -85,12 +97,18 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 10,
-                            color: Colors.black.withOpacity(.05),
-                          )
+                            color: Colors.black
+                                .withValues(
+                              alpha: .05,
+                            ),
+                          ),
                         ],
                       ),
-                      child: const Icon(Icons.arrow_back_ios_new_rounded,
-                          size: 18),
+                      child: const Icon(
+                        Icons
+                            .arrow_back_ios_new_rounded,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -98,7 +116,9 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
 
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment:
+                      MainAxisAlignment
+                          .spaceBetween,
                   children: [
                     /// TOP CONTENT
                     Column(
@@ -109,14 +129,23 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
                         Container(
                           height: 90,
                           width: 90,
-                          decoration: BoxDecoration(
-                            color: kcPrimaryColor.withOpacity(.1),
-                            borderRadius: BorderRadius.circular(28),
+                          decoration:
+                              BoxDecoration(
+                            color: kcPrimaryColor
+                                .withValues(
+                              alpha: .1,
+                            ),
+                            borderRadius:
+                                BorderRadius
+                                    .circular(28),
                             boxShadow: [
                               BoxShadow(
-                                color: kcPrimaryColor.withOpacity(.2),
+                                color: kcPrimaryColor
+                                    .withValues(
+                                  alpha: .2,
+                                ),
                                 blurRadius: 30,
-                              )
+                              ),
                             ],
                           ),
                           child: const Icon(
@@ -129,10 +158,12 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
                         const SizedBox(height: 30),
 
                         Text(
-                          "Verify Mobile",
-                          style: GoogleFonts.manrope(
+                          'Verify Mobile',
+                          style:
+                              GoogleFonts.manrope(
                             fontSize: 30,
-                            fontWeight: FontWeight.bold,
+                            fontWeight:
+                                FontWeight.bold,
                             color: kcDarkGreyColor,
                           ),
                         ),
@@ -140,8 +171,10 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
                         const SizedBox(height: 10),
 
                         Text(
-                          "Enter the 4-digit code sent to",
-                          style: GoogleFonts.manrope(
+                          'Enter the 4-digit code '
+                          'sent to',
+                          style:
+                              GoogleFonts.manrope(
                             fontSize: 14,
                             color: kcMediumGrey,
                           ),
@@ -150,9 +183,11 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
                         const SizedBox(height: 4),
 
                         Text(
-                          "+1 234-567-8900",
-                          style: GoogleFonts.manrope(
-                            fontWeight: FontWeight.bold,
+                          '+1 234-567-8900',
+                          style:
+                              GoogleFonts.manrope(
+                            fontWeight:
+                                FontWeight.bold,
                             fontSize: 16,
                             color: kcDarkGreyColor,
                           ),
@@ -162,13 +197,19 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
 
                         /// OTP Boxes
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .center,
                           children: List.generate(
                             4,
                             (index) => Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: _otpBox(index),
+                                  const EdgeInsets
+                                      .symmetric(
+                                horizontal: 8,
+                              ),
+                              child:
+                                  _otpBox(index),
                             ),
                           ),
                         ),
@@ -180,102 +221,167 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
                           children: [
                             RichText(
                               text: TextSpan(
-                                text: "Resend code in ",
-                                style: GoogleFonts.manrope(
-                                  color: kcMediumGrey,
+                                text:
+                                    'Resend code in ',
+                                style: GoogleFonts
+                                    .manrope(
+                                  color:
+                                      kcMediumGrey,
                                   fontSize: 14,
                                 ),
                                 children: const [
                                   TextSpan(
-                                    text: "0:45",
-                                    style: TextStyle(
-                                      color: kcPrimaryColor,
-                                      fontWeight: FontWeight.bold,
+                                    text: '0:45',
+                                    style:
+                                        TextStyle(
+                                      color:
+                                          kcPrimaryColor,
+                                      fontWeight:
+                                          FontWeight
+                                              .bold,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(
+                              height: 8,
+                            ),
                             TextButton(
                               onPressed: () {},
                               child: Text(
-                                "RESEND CODE",
-                                style: GoogleFonts.manrope(
+                                'RESEND CODE',
+                                style: GoogleFonts
+                                    .manrope(
                                   fontSize: 12,
                                   letterSpacing: 1,
-                                  color: kcMediumGrey.withOpacity(0.5),
-                                  fontWeight: FontWeight.w700,
+                                  color: kcMediumGrey
+                                      .withValues(
+                                    alpha: 0.5,
+                                  ),
+                                  fontWeight:
+                                      FontWeight
+                                          .w700,
                                 ),
                               ),
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
 
                     /// BOTTOM BUTTON
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 20),
+                      padding:
+                          const EdgeInsets
+                              .symmetric(
+                        horizontal: 24,
+                        vertical: 20,
+                      ),
                       child: Column(
                         children: [
                           GestureDetector(
                             onTap: () {
-                              String otp =
-                                  _controllers.map((c) => c.text).join();
-                              viewModel.verifyOtp(otp);
+                              final otp =
+                                  _controllers
+                                      .map(
+                                        (c) =>
+                                            c.text,
+                                      )
+                                      .join();
+                              viewModel
+                                  .verifyOtp(otp);
                             },
                             child: Container(
                               height: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(22),
-                                gradient: const LinearGradient(
-                                  colors: [kcPrimaryColor, kcPrimaryColorDark],
+                              decoration:
+                                  BoxDecoration(
+                                borderRadius:
+                                    BorderRadius
+                                        .circular(
+                                  22,
+                                ),
+                                gradient:
+                                    const LinearGradient(
+                                  colors: [
+                                    kcPrimaryColor,
+                                    kcPrimaryColorDark,
+                                  ],
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: kcPrimaryColor.withOpacity(.4),
+                                    color: kcPrimaryColor
+                                        .withValues(
+                                      alpha: .4,
+                                    ),
                                     blurRadius: 20,
-                                    offset: const Offset(0, 8),
-                                  )
+                                    offset:
+                                        const Offset(
+                                      0,
+                                      8,
+                                    ),
+                                  ),
                                 ],
                               ),
                               child: const Center(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .center,
                                   children: [
                                     Text(
-                                      "Verify & Continue",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                      'Verify & '
+                                      'Continue',
+                                      style:
+                                          TextStyle(
+                                        fontSize:
+                                            16,
+                                        fontWeight:
+                                            FontWeight
+                                                .bold,
+                                        color: Colors
+                                            .white,
                                       ),
                                     ),
-                                    SizedBox(width: 8),
-                                    Icon(Icons.arrow_forward_rounded,
-                                        color: Colors.white)
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Icon(
+                                      Icons
+                                          .arrow_forward_rounded,
+                                      color: Colors
+                                          .white,
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(
+                            height: 16,
+                          ),
                           Text(
-                            "By verifying, you agree to our Terms of Service & Privacy Policy.",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.manrope(
+                            'By verifying, you '
+                            'agree to our Terms of '
+                            'Service & Privacy '
+                            'Policy.',
+                            textAlign:
+                                TextAlign.center,
+                            style:
+                                GoogleFonts.manrope(
                               fontSize: 11,
-                              color: kcMediumGrey.withOpacity(0.6),
+                              color: kcMediumGrey
+                                  .withValues(
+                                alpha: 0.6,
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -304,17 +410,23 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
-          hintText: "-",
-          hintStyle: TextStyle(color: kcMediumGrey.withOpacity(0.3)),
+          hintText: '-',
+          hintStyle: TextStyle(
+            color: kcMediumGrey.withValues(
+              alpha: 0.3,
+            ),
+          ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius:
+                BorderRadius.circular(20),
             borderSide: const BorderSide(
               color: Color(0xFFE0E0E0),
               width: 1.5,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius:
+                BorderRadius.circular(20),
             borderSide: const BorderSide(
               color: kcPrimaryColor,
               width: 2,
@@ -324,9 +436,13 @@ class _VerifyOtpBodyState extends State<_VerifyOtpBody> {
         ),
         onChanged: (value) {
           if (value.isNotEmpty && index < 3) {
-            FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
+            FocusScope.of(context).requestFocus(
+              _focusNodes[index + 1],
+            );
           } else if (value.isEmpty && index > 0) {
-            FocusScope.of(context).requestFocus(_focusNodes[index - 1]);
+            FocusScope.of(context).requestFocus(
+              _focusNodes[index - 1],
+            );
           }
         },
       ),

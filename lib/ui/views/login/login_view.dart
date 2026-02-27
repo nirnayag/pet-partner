@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:partner/core/utils/ui_helpers.dart';
 import 'package:partner/ui/common/app_colors.dart';
-import 'package:partner/ui/common/ui_helpers.dart';
+import 'package:partner/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import 'login_viewmodel.dart';
-
 class LoginView extends StackedView<LoginViewModel> {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   Widget builder(
@@ -34,9 +33,13 @@ class LoginView extends StackedView<LoginViewModel> {
               /// Back Button
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment:
+                      Alignment.centerLeft,
                   child: GestureDetector(
                     onTap: viewModel.goBack,
                     child: Container(
@@ -48,12 +51,18 @@ class LoginView extends StackedView<LoginViewModel> {
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 10,
-                            color: Colors.black.withOpacity(.05),
-                          )
+                            color: Colors.black
+                                .withValues(
+                              alpha: .05,
+                            ),
+                          ),
                         ],
                       ),
-                      child: const Icon(Icons.arrow_back_ios_new_rounded,
-                          size: 18),
+                      child: const Icon(
+                        Icons
+                            .arrow_back_ios_new_rounded,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -61,18 +70,24 @@ class LoginView extends StackedView<LoginViewModel> {
 
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding:
+                      const EdgeInsets.symmetric(
+                    horizontal: 24,
+                  ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
 
                       /// Title
                       Text(
-                        "Welcome\nBack",
-                        style: GoogleFonts.manrope(
+                        'Welcome\nBack',
+                        style:
+                            GoogleFonts.manrope(
                           fontSize: 32,
-                          fontWeight: FontWeight.w800,
+                          fontWeight:
+                              FontWeight.w800,
                           height: 1.2,
                           color: kcDarkGreyColor,
                         ),
@@ -81,8 +96,10 @@ class LoginView extends StackedView<LoginViewModel> {
                       const SizedBox(height: 12),
 
                       Text(
-                        "Enter your mobile number to access your account",
-                        style: GoogleFonts.manrope(
+                        'Enter your mobile number'
+                        ' to access your account',
+                        style:
+                            GoogleFonts.manrope(
                           fontSize: 15,
                           color: kcMediumGrey,
                         ),
@@ -92,10 +109,12 @@ class LoginView extends StackedView<LoginViewModel> {
 
                       /// Mobile Label
                       Text(
-                        "Mobile Number",
-                        style: GoogleFonts.manrope(
+                        'Mobile Number',
+                        style:
+                            GoogleFonts.manrope(
                           fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontWeight:
+                              FontWeight.w700,
                           color: kcDarkGreyColor,
                         ),
                       ),
@@ -107,46 +126,101 @@ class LoginView extends StackedView<LoginViewModel> {
                           /// Country Code Box
                           Container(
                             height: 56,
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            decoration: _inputDecoration(),
+                            padding:
+                                const EdgeInsets
+                                    .symmetric(
+                              horizontal: 14,
+                            ),
+                            decoration:
+                                _inputDecoration(),
                             child: const Row(
                               children: [
-                                Text("🇺🇸", style: TextStyle(fontSize: 18)),
-                                SizedBox(width: 6),
-                                Text("+1",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 15)),
-                                Icon(Icons.keyboard_arrow_down_rounded,
-                                    size: 20),
+                                Text(
+                                  '\ud83c\uddfa\ud83c\uddf8',
+                                  style:
+                                      TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 6,
+                                ),
+                                Text(
+                                  '+1',
+                                  style:
+                                      TextStyle(
+                                    fontWeight:
+                                        FontWeight
+                                            .w600,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons
+                                      .keyboard_arrow_down_rounded,
+                                  size: 20,
+                                ),
                               ],
                             ),
                           ),
 
-                          const SizedBox(width: 12),
+                          const SizedBox(
+                            width: 12,
+                          ),
 
                           /// Mobile Input
                           Expanded(
                             child: Container(
                               height: 56,
-                              decoration: _inputDecoration(),
+                              decoration:
+                                  _inputDecoration(),
                               child: TextField(
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  prefixIcon: Icon(Icons.smartphone_outlined,
-                                      color: kcMediumGrey.withOpacity(0.5),
-                                      size: 22),
-                                  hintText: "000 000 0000",
-                                  hintStyle: GoogleFonts.manrope(
-                                      color: kcMediumGrey.withOpacity(0.3),
-                                      fontWeight: FontWeight.w500),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 16),
+                                keyboardType:
+                                    TextInputType
+                                        .phone,
+                                decoration:
+                                    InputDecoration(
+                                  border:
+                                      InputBorder
+                                          .none,
+                                  prefixIcon:
+                                      Icon(
+                                    Icons
+                                        .smartphone_outlined,
+                                    color: kcMediumGrey
+                                        .withValues(
+                                      alpha: 0.5,
+                                    ),
+                                    size: 22,
+                                  ),
+                                  hintText:
+                                      '000 000 0000',
+                                  hintStyle:
+                                      GoogleFonts
+                                          .manrope(
+                                    color: kcMediumGrey
+                                        .withValues(
+                                      alpha: 0.3,
+                                    ),
+                                    fontWeight:
+                                        FontWeight
+                                            .w500,
+                                  ),
+                                  contentPadding:
+                                      const EdgeInsets
+                                          .symmetric(
+                                    horizontal:
+                                        16,
+                                    vertical: 16,
+                                  ),
                                 ),
-                                style: GoogleFonts.manrope(
-                                  fontWeight: FontWeight.w600,
-                                  color: kcDarkGreyColor,
+                                style: GoogleFonts
+                                    .manrope(
+                                  fontWeight:
+                                      FontWeight
+                                          .w600,
+                                  color:
+                                      kcDarkGreyColor,
                                 ),
                               ),
                             ),
@@ -158,37 +232,64 @@ class LoginView extends StackedView<LoginViewModel> {
 
                       /// Get OTP Button
                       GestureDetector(
-                        onTap: viewModel.navigateToOtp,
+                        onTap: viewModel
+                            .navigateToOtp,
                         child: Container(
                           height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: kbrLarge,
-                            gradient: const LinearGradient(
-                              colors: [kcPrimaryColor, kcPrimaryColorDark],
+                          decoration:
+                              BoxDecoration(
+                            borderRadius:
+                                kbrLarge,
+                            gradient:
+                                const LinearGradient(
+                              colors: [
+                                kcPrimaryColor,
+                                kcPrimaryColorDark,
+                              ],
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: kcPrimaryColor.withOpacity(.3),
+                                color: kcPrimaryColor
+                                    .withValues(
+                                  alpha: .3,
+                                ),
                                 blurRadius: 20,
-                                offset: const Offset(0, 8),
-                              )
+                                offset:
+                                    const Offset(
+                                  0,
+                                  8,
+                                ),
+                              ),
                             ],
                           ),
                           child: Center(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .center,
                               children: [
                                 Text(
-                                  "Get OTP",
-                                  style: GoogleFonts.manrope(
+                                  'Get OTP',
+                                  style:
+                                      GoogleFonts
+                                          .manrope(
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    fontWeight:
+                                        FontWeight
+                                            .bold,
+                                    color: Colors
+                                        .white,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                const Icon(Icons.arrow_forward_rounded,
-                                    color: Colors.white)
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                const Icon(
+                                  Icons
+                                      .arrow_forward_rounded,
+                                  color: Colors
+                                      .white,
+                                ),
                               ],
                             ),
                           ),
@@ -203,24 +304,34 @@ class LoginView extends StackedView<LoginViewModel> {
 
               /// Bottom Sign Up Text
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(
+                  bottom: 30,
+                ),
                 child: GestureDetector(
-                  onTap: viewModel.navigateToSignUp,
+                  onTap:
+                      viewModel.navigateToSignUp,
                   child: RichText(
                     text: TextSpan(
-                      style: GoogleFonts.manrope(
+                      style:
+                          GoogleFonts.manrope(
                         color: kcMediumGrey,
                         fontSize: 15,
                       ),
                       children: const [
-                        TextSpan(text: "Don’t have an account? "),
                         TextSpan(
-                          text: "Sign Up",
+                          text:
+                              "Don't have an "
+                              'account? ',
+                        ),
+                        TextSpan(
+                          text: 'Sign Up',
                           style: TextStyle(
-                            color: kcPrimaryColor,
-                            fontWeight: FontWeight.w800,
+                            color:
+                                kcPrimaryColor,
+                            fontWeight:
+                                FontWeight.w800,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -239,10 +350,12 @@ class LoginView extends StackedView<LoginViewModel> {
       borderRadius: kbrLarge,
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(.03),
+          color: Colors.black.withValues(
+            alpha: .03,
+          ),
           blurRadius: 10,
           offset: const Offset(0, 4),
-        )
+        ),
       ],
     );
   }

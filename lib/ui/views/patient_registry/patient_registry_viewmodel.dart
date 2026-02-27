@@ -1,17 +1,21 @@
-import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class PatientRegistryViewModel extends BaseViewModel {
-  final _navigationService = locator<NavigationService>();
+  final _navigationService =
+      locator<NavigationService>();
 
   void navigateToHomeView() {
-    _navigationService.clearStackAndShow(Routes.homeView);
+    _navigationService
+        .clearStackAndShow<void>(Routes.homeView);
   }
 
   void navigateToScheduleView() {
-    _navigationService.clearStackAndShow(Routes.scheduleView);
+    _navigationService.clearStackAndShow<void>(
+      Routes.scheduleView,
+    );
   }
 
   void navigateToPatientRegistryView() {
@@ -19,6 +23,7 @@ class PatientRegistryViewModel extends BaseViewModel {
   }
 
   void navigateToPatientProfileView() {
-    _navigationService.navigateToPatientProfileView();
+    _navigationService
+        .navigateToPatientProfileView();
   }
 }
