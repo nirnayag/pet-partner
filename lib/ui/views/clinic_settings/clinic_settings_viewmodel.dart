@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/clinic/clinic.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/clinic_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,7 +11,8 @@ import 'package:stacked_services/stacked_services.dart';
 /// Loads clinic info and settings, then saves
 /// updates back to the API.
 class ClinicSettingsViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   final _clinicService = locator<ClinicService>();
   final _navigationService =
       locator<NavigationService>();
@@ -57,10 +58,8 @@ class ClinicSettingsViewModel
   /// The loaded clinic settings map.
   Map<String, dynamic> get settings => _settings;
 
-  String? _errorMessage;
-
-  /// Error message, or `null`.
-  String? get errorMessage => _errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   bool _isSaving = false;
 
@@ -75,15 +74,20 @@ class ClinicSettingsViewModel
   /// Loads clinic info and settings.
   Future<void> initialise() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _clinic = await _clinicService
-          .getClinicInfo();
-      _settings = await _clinicService
-          .getClinicSettings();
-      _populateFields();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
+    clearError();
+    final result = await runSafe(
+      () async {
+        _clinic = await _clinicService
+            .getClinicInfo();
+        _settings = await _clinicService
+            .getClinicSettings();
+        _populateFields();
+      },
+    );
+    if (result == null && !hasError) {
+      setError(
+        'Failed to load clinic settings.',
+      );
     }
     setBusy(false);
   }
@@ -110,30 +114,31 @@ class ClinicSettingsViewModel
   /// Saves the clinic info updates.
   Future<void> saveClinicInfo() async {
     _isSaving = true;
-    _errorMessage = null;
+    clearError();
     successMessage = null;
     notifyListeners();
-    try {
-      final data = <String, dynamic>{
-        'name': nameController.text.trim(),
-        'email': emailController.text.trim(),
-        'phone': phoneController.text.trim(),
-        'address': <String, dynamic>{
-          'street': streetController.text.trim(),
-          'city': cityController.text.trim(),
-          'state': stateController.text.trim(),
-          'zipCode':
-              zipCodeController.text.trim(),
-          'country':
-              countryController.text.trim(),
-        },
-      };
 
-      _clinic = await _clinicService
-          .updateClinicInfo(data);
+    final data = <String, dynamic>{
+      'name': nameController.text.trim(),
+      'email': emailController.text.trim(),
+      'phone': phoneController.text.trim(),
+      'address': <String, dynamic>{
+        'street': streetController.text.trim(),
+        'city': cityController.text.trim(),
+        'state': stateController.text.trim(),
+        'zipCode':
+            zipCodeController.text.trim(),
+        'country':
+            countryController.text.trim(),
+      },
+    };
+
+    final result = await runSafe(
+      () => _clinicService.updateClinicInfo(data),
+    );
+    if (result != null) {
+      _clinic = result;
       successMessage = 'Clinic info saved.';
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
     }
     _isSaving = false;
     notifyListeners();
@@ -144,15 +149,17 @@ class ClinicSettingsViewModel
     Map<String, dynamic> data,
   ) async {
     _isSaving = true;
-    _errorMessage = null;
+    clearError();
     successMessage = null;
     notifyListeners();
-    try {
-      _settings = await _clinicService
-          .updateClinicSettings(data);
+
+    final result = await runSafe(
+      () => _clinicService
+          .updateClinicSettings(data),
+    );
+    if (result != null) {
+      _settings = result;
       successMessage = 'Settings saved.';
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
     }
     _isSaving = false;
     notifyListeners();

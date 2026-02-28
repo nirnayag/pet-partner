@@ -1,9 +1,9 @@
 import 'package:partner/app/app.locator.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/pet_owner_service.dart';
 import 'package:partner/services/pet_service.dart';
 import 'package:partner/services/user_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 
 /// ViewModel for the reports / analytics
@@ -11,7 +11,8 @@ import 'package:stacked/stacked.dart';
 ///
 /// Computes overview stats from existing API
 /// endpoints (no dedicated analytics endpoint).
-class ReportsViewModel extends BaseViewModel {
+class ReportsViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _petService = locator<PetService>();
   final _petOwnerService =
       locator<PetOwnerService>();
@@ -60,11 +61,6 @@ class ReportsViewModel extends BaseViewModel {
   /// The selected period label.
   String get selectedPeriod => _selectedPeriod;
 
-  String? _errorMessage;
-
-  /// Error message, or `null`.
-  String? get errorMessage => _errorMessage;
-
   /// Available period options.
   static const periodOptions = <String>[
     'Week',
@@ -88,8 +84,7 @@ class ReportsViewModel extends BaseViewModel {
   /// Loads stats from multiple API calls.
   Future<void> loadStats() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
+    await runSafe(() async {
       final results = await Future.wait([
         _petService.getPets(limit: 1),
         _petOwnerService.getPetOwners(limit: 1),
@@ -107,14 +102,12 @@ class ReportsViewModel extends BaseViewModel {
 
       // Load appointment breakdown
       await _loadAppointmentBreakdown();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
   Future<void> _loadAppointmentBreakdown() async {
-    try {
+    await runSafe(() async {
       final pending = await _appointmentService
           .getAppointments(
         limit: 1,
@@ -130,9 +123,7 @@ class ReportsViewModel extends BaseViewModel {
       );
       _completedAppointments =
           completed.pagination.total;
-    } on ApiException {
-      // Non-critical, silently ignore
-    }
+    });
   }
 
   /// Changes the selected period and reloads.
@@ -145,7 +136,7 @@ class ReportsViewModel extends BaseViewModel {
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     await loadStats();
   }
 }

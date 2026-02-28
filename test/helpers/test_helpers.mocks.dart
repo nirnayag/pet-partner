@@ -9,6 +9,8 @@ import 'dart:typed_data' as _i31;
 import 'dart:ui' as _i20;
 
 import 'package:flutter/material.dart' as _i18;
+import 'package:image_cropper/image_cropper.dart' as _i41;
+import 'package:image_picker/image_picker.dart' as _i40;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i17;
 import 'package:partner/core/enums/user_role.dart' as _i23;
@@ -33,7 +35,9 @@ import 'package:partner/services/api_client.dart' as _i21;
 import 'package:partner/services/appointment_service.dart' as _i26;
 import 'package:partner/services/auth_service.dart' as _i22;
 import 'package:partner/services/clinic_service.dart' as _i36;
+import 'package:partner/services/connectivity_service.dart' as _i38;
 import 'package:partner/services/document_service.dart' as _i33;
+import 'package:partner/services/image_upload_service.dart' as _i39;
 import 'package:partner/services/medical_record_service.dart' as _i29;
 import 'package:partner/services/pet_owner_service.dart' as _i25;
 import 'package:partner/services/pet_service.dart' as _i24;
@@ -2905,4 +2909,177 @@ class MockReminderService extends _i1.Mock implements _i37.ReminderService {
           ),
         )),
       ) as _i19.Future<_i15.SendResult>);
+}
+
+/// A class which mocks [ConnectivityService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockConnectivityService extends _i1.Mock
+    implements _i38.ConnectivityService {
+  @override
+  bool get isConnected => (super.noSuchMethod(
+        Invocation.getter(#isConnected),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i19.Future<void> init() => (super.noSuchMethod(
+        Invocation.method(
+          #init,
+          [],
+        ),
+        returnValue: _i19.Future<void>.value(),
+        returnValueForMissingStub: _i19.Future<void>.value(),
+      ) as _i19.Future<void>);
+
+  @override
+  _i19.Future<bool> checkConnectivity() => (super.noSuchMethod(
+        Invocation.method(
+          #checkConnectivity,
+          [],
+        ),
+        returnValue: _i19.Future<bool>.value(false),
+        returnValueForMissingStub: _i19.Future<bool>.value(false),
+      ) as _i19.Future<bool>);
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [ImageUploadService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockImageUploadService extends _i1.Mock
+    implements _i39.ImageUploadService {
+  @override
+  _i19.Future<_i34.File?> pickAndCropImage({
+    required _i40.ImageSource? source,
+    double? maxWidth = 1024.0,
+    double? maxHeight = 1024.0,
+    _i41.CropAspectRatio? aspectRatio,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #pickAndCropImage,
+          [],
+          {
+            #source: source,
+            #maxWidth: maxWidth,
+            #maxHeight: maxHeight,
+            #aspectRatio: aspectRatio,
+          },
+        ),
+        returnValue: _i19.Future<_i34.File?>.value(),
+        returnValueForMissingStub: _i19.Future<_i34.File?>.value(),
+      ) as _i19.Future<_i34.File?>);
+
+  @override
+  _i19.Future<String> uploadPetPhoto(
+    String? petId,
+    _i34.File? imageFile,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #uploadPetPhoto,
+          [
+            petId,
+            imageFile,
+          ],
+        ),
+        returnValue: _i19.Future<String>.value(_i17.dummyValue<String>(
+          this,
+          Invocation.method(
+            #uploadPetPhoto,
+            [
+              petId,
+              imageFile,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<String>.value(_i17.dummyValue<String>(
+          this,
+          Invocation.method(
+            #uploadPetPhoto,
+            [
+              petId,
+              imageFile,
+            ],
+          ),
+        )),
+      ) as _i19.Future<String>);
+
+  @override
+  _i19.Future<String> uploadAvatar(_i34.File? imageFile) => (super.noSuchMethod(
+        Invocation.method(
+          #uploadAvatar,
+          [imageFile],
+        ),
+        returnValue: _i19.Future<String>.value(_i17.dummyValue<String>(
+          this,
+          Invocation.method(
+            #uploadAvatar,
+            [imageFile],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i19.Future<String>.value(_i17.dummyValue<String>(
+          this,
+          Invocation.method(
+            #uploadAvatar,
+            [imageFile],
+          ),
+        )),
+      ) as _i19.Future<String>);
 }

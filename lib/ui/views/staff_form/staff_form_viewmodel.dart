@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/enums/user_role.dart';
 import 'package:partner/core/models/auth/user.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/user_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a staff
 /// member.
-class StaffFormViewModel extends BaseViewModel {
+class StaffFormViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [StaffFormViewModel].
   ///
   /// When [user] is provided the form opens in
@@ -64,8 +65,8 @@ class StaffFormViewModel extends BaseViewModel {
   bool get showVetFields =>
       _selectedRole == UserRole.veterinarian;
 
-  /// Validation error message, if any.
-  String? errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   // ---- Lifecycle ----
 
@@ -97,7 +98,7 @@ class StaffFormViewModel extends BaseViewModel {
 
   /// Validates and saves the staff member.
   Future<void> save() async {
-    errorMessage = null;
+    clearError();
 
     final firstName =
         firstNameController.text.trim();
@@ -106,27 +107,23 @@ class StaffFormViewModel extends BaseViewModel {
     final email = emailController.text.trim();
 
     if (firstName.isEmpty) {
-      errorMessage = 'First name is required.';
-      notifyListeners();
+      setError('First name is required.');
       return;
     }
 
     if (lastName.isEmpty) {
-      errorMessage = 'Last name is required.';
-      notifyListeners();
+      setError('Last name is required.');
       return;
     }
 
     if (email.isEmpty) {
-      errorMessage = 'Email is required.';
-      notifyListeners();
+      setError('Email is required.');
       return;
     }
 
     if (!isEditMode &&
         passwordController.text.trim().isEmpty) {
-      errorMessage = 'Password is required.';
-      notifyListeners();
+      setError('Password is required.');
       return;
     }
 
@@ -160,20 +157,22 @@ class StaffFormViewModel extends BaseViewModel {
     }
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _userService.updateUser(
-          user!.id,
-          data,
-        );
-      } else {
-        await _userService.createUser(data);
-      }
-      _navigationService.back();
-    } on ApiException catch (e) {
-      errorMessage = e.message;
-    }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _userService.updateUser(
+            user!.id,
+            data,
+          );
+        } else {
+          await _userService.createUser(data);
+        }
+      },
+    );
     setBusy(false);
+    if (result != null) {
+      _navigationService.back();
+    }
   }
 
   @override

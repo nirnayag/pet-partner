@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/pet/pet.dart';
 import 'package:partner/core/utils/permission_utils.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/auth_service.dart';
 import 'package:partner/services/pet_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Fetches a single pet by ID and exposes its data
 /// plus permission checks for the current user.
-class PatientProfileViewModel extends BaseViewModel {
+class PatientProfileViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [PatientProfileViewModel].
   ///
   /// Requires [petId] to load the correct pet.
@@ -35,11 +36,6 @@ class PatientProfileViewModel extends BaseViewModel {
 
   /// The loaded pet, or `null` while loading.
   Pet? get pet => _pet;
-
-  String? _errorMessage;
-
-  /// Error message from the last load attempt.
-  String? get errorMessage => _errorMessage;
 
   int _currentTabIndex = 0;
 
@@ -81,24 +77,19 @@ class PatientProfileViewModel extends BaseViewModel {
 
   Future<void> _loadPet() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
+    await runSafe(() async {
       _pet = await _petService.getPetById(petId);
       unawaited(_loadMedicalSummary());
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
   Future<void> _loadMedicalSummary() async {
-    try {
+    await runSafe(() async {
       _medicalSummary = await _petService
           .getPetMedicalSummary(petId);
       notifyListeners();
-    } on ApiException catch (_) {
-      // Non-critical -- silently ignore.
-    }
+    });
   }
 
   /// Retry loading after an error.

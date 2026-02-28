@@ -2,10 +2,10 @@ import 'package:intl/intl.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/appointment/appointment.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/auth_service.dart';
 import 'package:partner/services/layout_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Loads today's appointments and summary stats
 /// from the API.
-class HomeViewModel extends BaseViewModel {
+class HomeViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _appointmentService =
       locator<AppointmentService>();
   final _authService = locator<AuthService>();
@@ -48,11 +49,6 @@ class HomeViewModel extends BaseViewModel {
   /// Number of completed appointments today.
   int get completedCount => _completedCount;
 
-  String? _errorMessage;
-
-  /// Error from loading.
-  String? get errorMessage => _errorMessage;
-
   /// The greeting name from the logged-in user.
   String get userName =>
       _authService.cachedUser?.firstName ??
@@ -80,8 +76,7 @@ class HomeViewModel extends BaseViewModel {
   /// summary stats.
   Future<void> loadDashboard() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
+    await runSafe(() async {
       final dateStr = DateFormat('yyyy-MM-dd')
           .format(DateTime.now());
       final response =
@@ -108,9 +103,7 @@ class HomeViewModel extends BaseViewModel {
                 a.status.value == 'completed',
           )
           .length;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 

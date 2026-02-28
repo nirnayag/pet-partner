@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
+import 'package:partner/core/config/app_constants.dart';
 import 'package:partner/core/models/pet_owner.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/pet_owner_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -12,7 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Provides paginated loading, debounced search,
 /// and navigation to create / detail views.
-class PetOwnerListViewModel extends BaseViewModel {
+class PetOwnerListViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _petOwnerService =
       locator<PetOwnerService>();
   final _navigationService =
@@ -47,11 +49,6 @@ class PetOwnerListViewModel extends BaseViewModel {
   /// Whether a load-more request is active.
   bool get isLoadingMore => _isLoadingMore;
 
-  String? _errorMessage;
-
-  /// An error message to display, or `null`.
-  String? get errorMessage => _errorMessage;
-
   int _totalCount = 0;
 
   /// Total owners matching the current query.
@@ -81,9 +78,8 @@ class PetOwnerListViewModel extends BaseViewModel {
   /// Loads the first page, resetting state.
   Future<void> loadOwners() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _currentPage = 1;
+    _currentPage = 1;
+    await runSafe(() async {
       final response =
           await _petOwnerService.getPetOwners(
         search: _searchQuery.isNotEmpty
@@ -94,9 +90,7 @@ class PetOwnerListViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -105,7 +99,7 @@ class PetOwnerListViewModel extends BaseViewModel {
     if (_isLoadingMore || !_hasMore) return;
     _isLoadingMore = true;
     notifyListeners();
-    try {
+    await runSafe(() async {
       final response =
           await _petOwnerService.getPetOwners(
         page: _currentPage + 1,
@@ -118,9 +112,7 @@ class PetOwnerListViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     _isLoadingMore = false;
     notifyListeners();
   }
@@ -130,14 +122,17 @@ class PetOwnerListViewModel extends BaseViewModel {
     _searchQuery = query;
     _debounce?.cancel();
     _debounce = Timer(
-      const Duration(milliseconds: 400),
+      Duration(
+        milliseconds:
+            AppConstants.searchDebounceMs,
+      ),
       loadOwners,
     );
   }
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     await loadOwners();
   }
 

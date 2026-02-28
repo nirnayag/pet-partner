@@ -1,8 +1,8 @@
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/auth/user.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/user_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -10,7 +10,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Loads clinic staff with role and status
 /// filtering plus pagination.
-class StaffListViewModel extends BaseViewModel {
+class StaffListViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _userService = locator<UserService>();
   final _navigationService =
       locator<NavigationService>();
@@ -46,11 +47,6 @@ class StaffListViewModel extends BaseViewModel {
   /// Total number of matching staff members.
   int get totalCount => _totalCount;
 
-  String? _errorMessage;
-
-  /// Error message, or `null`.
-  String? get errorMessage => _errorMessage;
-
   // ------------------------------------------------
   // Lifecycle
   // ------------------------------------------------
@@ -67,9 +63,8 @@ class StaffListViewModel extends BaseViewModel {
   /// Loads the first page of staff members.
   Future<void> loadStaff() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _currentPage = 1;
+    _currentPage = 1;
+    await runSafe(() async {
       final response = await _userService.getUsers(
         role: _roleParam,
         isActive: _isActiveParam,
@@ -78,9 +73,7 @@ class StaffListViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -89,7 +82,7 @@ class StaffListViewModel extends BaseViewModel {
     if (_isLoadingMore || !_hasMore) return;
     _isLoadingMore = true;
     notifyListeners();
-    try {
+    await runSafe(() async {
       final response = await _userService.getUsers(
         page: _currentPage + 1,
         role: _roleParam,
@@ -100,16 +93,14 @@ class StaffListViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     _isLoadingMore = false;
     notifyListeners();
   }
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     await loadStaff();
   }
 

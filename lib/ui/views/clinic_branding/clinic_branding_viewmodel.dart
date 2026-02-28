@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/clinic/clinic_branding.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/clinic_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,7 +11,8 @@ import 'package:stacked_services/stacked_services.dart';
 /// Loads and saves the clinic's logo and primary
 /// colour.
 class ClinicBrandingViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   final _clinicService = locator<ClinicService>();
   final _navigationService =
       locator<NavigationService>();
@@ -33,10 +34,8 @@ class ClinicBrandingViewModel
   /// The selected primary colour as hex.
   String get primaryColor => _primaryColor;
 
-  String? _errorMessage;
-
-  /// Error message, or `null`.
-  String? get errorMessage => _errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   bool _isSaving = false;
 
@@ -51,15 +50,15 @@ class ClinicBrandingViewModel
   /// Loads the clinic branding info.
   Future<void> initialise() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _branding = await _clinicService
-          .getClinicBranding();
+    clearError();
+    final result = await runSafe(
+      () => _clinicService.getClinicBranding(),
+    );
+    if (result != null) {
+      _branding = result;
       _logoUrl = _branding?.logoUrl;
       _primaryColor =
           _branding?.primaryColor ?? '#13EC13';
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
     }
     setBusy(false);
   }
@@ -83,21 +82,22 @@ class ClinicBrandingViewModel
   /// Saves the branding changes.
   Future<void> save() async {
     _isSaving = true;
-    _errorMessage = null;
+    clearError();
     successMessage = null;
     notifyListeners();
-    try {
-      _branding = await _clinicService
-          .updateClinicBranding(
+
+    final result = await runSafe(
+      () => _clinicService.updateClinicBranding(
         <String, dynamic>{
           'primaryColor': _primaryColor,
           if (_logoUrl != null)
             'logoUrl': _logoUrl,
         },
-      );
+      ),
+    );
+    if (result != null) {
+      _branding = result;
       successMessage = 'Branding saved.';
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
     }
     _isSaving = false;
     notifyListeners();

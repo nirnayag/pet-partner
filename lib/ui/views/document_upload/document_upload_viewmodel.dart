@@ -4,14 +4,15 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/enums/document_type.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/document_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for uploading a document.
 class DocumentUploadViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [DocumentUploadViewModel].
   DocumentUploadViewModel({
     this.petId,
@@ -62,8 +63,8 @@ class DocumentUploadViewModel
   String? get selectedFileName =>
       _selectedFile?.path.split('/').last;
 
-  /// Validation / API error message.
-  String? errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   double _uploadProgress = 0;
 
@@ -117,26 +118,23 @@ class DocumentUploadViewModel
 
   /// Validates and uploads the document.
   Future<void> upload() async {
-    errorMessage = null;
+    clearError();
 
     if (_selectedFile == null) {
-      errorMessage = 'Please select a file.';
-      notifyListeners();
+      setError('Please select a file.');
       return;
     }
 
     final title = titleController.text.trim();
     if (title.isEmpty) {
-      errorMessage = 'Title is required.';
-      notifyListeners();
+      setError('Title is required.');
       return;
     }
 
     final resolvedPetId =
         petIdController.text.trim();
     if (resolvedPetId.isEmpty) {
-      errorMessage = 'Pet ID is required.';
-      notifyListeners();
+      setError('Pet ID is required.');
       return;
     }
 
@@ -152,8 +150,8 @@ class DocumentUploadViewModel
     _uploadProgress = 0.3;
     notifyListeners();
 
-    try {
-      await _documentService.uploadDocument(
+    final result = await runSafe(
+      () => _documentService.uploadDocument(
         file: _selectedFile!,
         petId: resolvedPetId,
         documentType: _selectedType.value,
@@ -162,16 +160,17 @@ class DocumentUploadViewModel
             ? description
             : null,
         medicalRecordId: medicalRecordId,
-      );
+      ),
+    );
+
+    _isUploading = false;
+    if (result != null) {
       _uploadProgress = 1;
       notifyListeners();
       _navigationService.back<void>();
-    } on ApiException catch (e) {
-      errorMessage = e.message;
+    } else {
+      notifyListeners();
     }
-
-    _isUploading = false;
-    notifyListeners();
   }
 
   /// Navigates back without uploading.

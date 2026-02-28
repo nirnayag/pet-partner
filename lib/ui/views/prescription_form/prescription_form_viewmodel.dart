@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/medical/prescription.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/prescription_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a
 /// prescription.
 class PrescriptionFormViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [PrescriptionFormViewModel].
   PrescriptionFormViewModel({
     this.prescription,
@@ -73,10 +74,8 @@ class PrescriptionFormViewModel
   /// Whether this is edit mode.
   bool get isEditMode => prescription != null;
 
-  String? _errorMessage;
-
-  /// Error message from the last operation.
-  String? get errorMessage => _errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   // ---- Lifecycle ----
 
@@ -127,7 +126,7 @@ class PrescriptionFormViewModel
 
   /// Validates and saves the prescription.
   Future<void> savePrescription() async {
-    _errorMessage = null;
+    clearError();
 
     final name =
         medicationNameController.text.trim();
@@ -137,20 +136,15 @@ class PrescriptionFormViewModel
         frequencyController.text.trim();
 
     if (name.isEmpty) {
-      _errorMessage =
-          'Medication name is required.';
-      notifyListeners();
+      setError('Medication name is required.');
       return;
     }
     if (dosage.isEmpty) {
-      _errorMessage = 'Dosage is required.';
-      notifyListeners();
+      setError('Dosage is required.');
       return;
     }
     if (frequency.isEmpty) {
-      _errorMessage =
-          'Frequency is required.';
-      notifyListeners();
+      setError('Frequency is required.');
       return;
     }
 
@@ -189,22 +183,24 @@ class PrescriptionFormViewModel
     }
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _prescriptionService
-            .updatePrescription(
-          prescription!.id,
-          data,
-        );
-      } else {
-        await _prescriptionService
-            .createPrescription(data);
-      }
-      _navigationService.back<void>();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _prescriptionService
+              .updatePrescription(
+            prescription!.id,
+            data,
+          );
+        } else {
+          await _prescriptionService
+              .createPrescription(data);
+        }
+      },
+    );
     setBusy(false);
+    if (result != null) {
+      _navigationService.back<void>();
+    }
   }
 
   @override

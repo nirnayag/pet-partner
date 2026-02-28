@@ -8,13 +8,15 @@ import 'package:partner/core/models/pet_owner.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/pet_owner_service.dart';
 import 'package:partner/services/pet_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing an
 /// appointment.
 class AppointmentFormViewmodel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates an [AppointmentFormViewmodel].
   ///
   /// When [appointment] is provided the form
@@ -117,8 +119,8 @@ class AppointmentFormViewmodel
   /// Whether the form is in edit mode.
   bool get isEditMode => appointment != null;
 
-  /// Validation error message, if any.
-  String? errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   /// Owner search error, if any.
   String? ownerSearchError;
@@ -176,23 +178,23 @@ class AppointmentFormViewmodel
     _ownerPets = <Pet>[];
     notifyListeners();
 
-    try {
-      final owner = await _petOwnerService
-          .lookupByPhone(phone);
+    final owner = await runSafe(
+      () => _petOwnerService.lookupByPhone(phone),
+    );
 
-      if (owner == null) {
-        ownerSearchError =
-            'No owner found with this number.';
-      } else {
-        _selectedOwner = owner;
-        await _loadOwnerPets(owner.id);
-      }
-    } on Exception catch (e) {
-      ownerSearchError = e.toString();
-    } finally {
-      _isSearchingOwner = false;
-      notifyListeners();
+    if (hasError) {
+      ownerSearchError = errorMessage;
+      clearError();
+    } else if (owner == null) {
+      ownerSearchError =
+          'No owner found with this number.';
+    } else {
+      _selectedOwner = owner;
+      await _loadOwnerPets(owner.id);
     }
+
+    _isSearchingOwner = false;
+    notifyListeners();
   }
 
   Future<void> _loadOwnerPets(
@@ -219,38 +221,34 @@ class AppointmentFormViewmodel
   /// Validates required fields and saves the
   /// appointment.
   Future<void> saveAppointment() async {
-    errorMessage = null;
+    clearError();
 
     final title = titleController.text.trim();
     if (title.isEmpty) {
-      errorMessage = 'Title is required.';
-      notifyListeners();
+      setError('Title is required.');
       return;
     }
 
     if (_selectedOwner == null) {
-      errorMessage =
-          'Please search and select an owner.';
-      notifyListeners();
+      setError(
+        'Please search and select an owner.',
+      );
       return;
     }
 
     if (_selectedPet == null &&
         _ownerPets.isNotEmpty) {
-      errorMessage = 'Please select a pet.';
-      notifyListeners();
+      setError('Please select a pet.');
       return;
     }
 
     if (_selectedDate == null) {
-      errorMessage = 'Please select a date.';
-      notifyListeners();
+      setError('Please select a date.');
       return;
     }
 
     if (_selectedTime == null) {
-      errorMessage = 'Please select a time.';
-      notifyListeners();
+      setError('Please select a time.');
       return;
     }
 
@@ -300,26 +298,25 @@ class AppointmentFormViewmodel
     }
 
     setBusy(true);
-    try {
-      final result = isEditMode
-          ? await _appointmentService
+    final result = await runSafe(
+      () async => isEditMode
+          ? _appointmentService
               .updateAppointment(
               appointment!.id,
               data,
             )
-          : await _appointmentService
-              .createAppointment(data);
+          : _appointmentService
+              .createAppointment(data),
+    );
+    setBusy(false);
 
+    if (result != null) {
       unawaited(
         _navigationService.replaceWith<void>(
           '/booking-success-view',
           arguments: result,
         ),
       );
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-    } finally {
-      setBusy(false);
     }
   }
 

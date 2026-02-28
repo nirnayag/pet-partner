@@ -5,9 +5,9 @@ import 'package:partner/core/enums/appointment_status.dart';
 import 'package:partner/core/enums/user_role.dart';
 import 'package:partner/core/models/appointment/appointment.dart';
 import 'package:partner/core/utils/permission_utils.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/auth_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -16,7 +16,8 @@ import 'package:stacked_services/stacked_services.dart';
 /// Fetches the appointment by ID and supports
 /// status transitions and approval actions.
 class AppointmentDetailViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates an [AppointmentDetailViewModel].
   ///
   /// Requires [appointmentId] to load the correct
@@ -44,11 +45,6 @@ class AppointmentDetailViewModel
 
   /// The loaded appointment, or `null`.
   Appointment? get appointment => _appointment;
-
-  String? _errorMessage;
-
-  /// Error from the last load attempt.
-  String? get errorMessage => _errorMessage;
 
   /// The active role of the current user.
   UserRole? get currentRole =>
@@ -94,13 +90,10 @@ class AppointmentDetailViewModel
 
   Future<void> _loadAppointment() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
+    await runSafe(() async {
       _appointment = await _appointmentService
           .getAppointmentById(appointmentId);
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -118,31 +111,25 @@ class AppointmentDetailViewModel
     AppointmentStatus newStatus,
   ) async {
     setBusyForObject(kStatusBusyKey, true);
-    try {
+    await runSafe(() async {
       _appointment = await _appointmentService
           .updateAppointmentStatus(
         appointmentId,
         newStatus.value,
       );
       notifyListeners();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-      notifyListeners();
-    }
+    });
     setBusyForObject(kStatusBusyKey, false);
   }
 
   /// Approves a pending appointment.
   Future<void> approveAppointment() async {
     setBusyForObject(kApproveBusyKey, true);
-    try {
+    await runSafe(() async {
       _appointment = await _appointmentService
           .approveAppointment(appointmentId);
       notifyListeners();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-      notifyListeners();
-    }
+    });
     setBusyForObject(kApproveBusyKey, false);
   }
 

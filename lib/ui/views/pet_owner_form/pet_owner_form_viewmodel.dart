@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/pet_owner.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/pet_owner_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a pet owner.
-class PetOwnerFormViewModel extends BaseViewModel {
+class PetOwnerFormViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [PetOwnerFormViewModel].
   ///
   /// When [owner] is provided the form opens in
@@ -44,8 +45,8 @@ class PetOwnerFormViewModel extends BaseViewModel {
   /// Whether the form is in edit mode.
   bool get isEditMode => owner != null;
 
-  /// Validation / API error message.
-  String? errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   PetOwner? _lookupResult;
 
@@ -82,14 +83,14 @@ class PetOwnerFormViewModel extends BaseViewModel {
     _lookupResult = null;
     notifyListeners();
 
-    try {
-      _lookupResult =
-          await _petOwnerService.lookupByPhone(
-        phone,
-      );
-    } on ApiException catch (e) {
-      errorMessage = e.message;
-    }
+    await runSafe<void>(
+      () async {
+        _lookupResult =
+            await _petOwnerService.lookupByPhone(
+          phone,
+        );
+      },
+    );
 
     _isLookingUp = false;
     notifyListeners();
@@ -106,7 +107,7 @@ class PetOwnerFormViewModel extends BaseViewModel {
   /// Validates fields and creates or updates
   /// the pet owner.
   Future<void> save() async {
-    errorMessage = null;
+    clearError();
 
     final firstName =
         firstNameController.text.trim();
@@ -115,18 +116,15 @@ class PetOwnerFormViewModel extends BaseViewModel {
     final phone = phoneController.text.trim();
 
     if (firstName.isEmpty) {
-      errorMessage = 'First name is required.';
-      notifyListeners();
+      setError('First name is required.');
       return;
     }
     if (lastName.isEmpty) {
-      errorMessage = 'Last name is required.';
-      notifyListeners();
+      setError('Last name is required.');
       return;
     }
     if (phone.isEmpty) {
-      errorMessage = 'Phone number is required.';
-      notifyListeners();
+      setError('Phone number is required.');
       return;
     }
 
@@ -140,21 +138,23 @@ class PetOwnerFormViewModel extends BaseViewModel {
     };
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _petOwnerService.updatePetOwner(
-          owner!.id,
-          data,
-        );
-      } else {
-        await _petOwnerService
-            .createPetOwner(data);
-      }
-      _navigationService.back<void>();
-    } on ApiException catch (e) {
-      errorMessage = e.message;
-    }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _petOwnerService.updatePetOwner(
+            owner!.id,
+            data,
+          );
+        } else {
+          await _petOwnerService
+              .createPetOwner(data);
+        }
+      },
+    );
     setBusy(false);
+    if (result != null) {
+      _navigationService.back<void>();
+    }
   }
 
   /// Navigates back without saving.

@@ -2,12 +2,14 @@ import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/appointment/appointment.dart';
 import 'package:partner/services/appointment_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for the pending appointments list.
 class PendingAppointmentsViewmodel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   final _appointmentService =
       locator<AppointmentService>();
   final _navigationService =
@@ -24,10 +26,10 @@ class PendingAppointmentsViewmodel
   int currentPage = 1;
 
   /// Whether more pages are available.
-  bool hasMore = true;
+  bool _hasMore = true;
 
-  /// Error message from the last operation.
-  String? errorMessage;
+  /// Whether more pages are available.
+  bool get hasMore => _hasMore;
 
   static const _busyLoadMore = 'loadMore';
   static const _pageSize = 20;
@@ -44,9 +46,7 @@ class PendingAppointmentsViewmodel
 
   Future<void> _loadPage(int page) async {
     setBusy(true);
-    errorMessage = null;
-
-    try {
+    await runSafe(() async {
       final response = await _appointmentService
           .getPendingAppointments(
         page: page,
@@ -62,23 +62,20 @@ class PendingAppointmentsViewmodel
       }
 
       currentPage = page;
-      hasMore =
+      _hasMore =
           response.items.length >= _pageSize;
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-    } finally {
-      setBusy(false);
-    }
+    });
+    setBusy(false);
   }
 
   /// Loads the next page of results and appends
   /// them to the list.
   Future<void> loadMore() async {
-    if (!hasMore) return;
+    if (!_hasMore) return;
     if (busy(_busyLoadMore)) return;
 
     setBusyForObject(_busyLoadMore, true);
-    try {
+    await runSafe(() async {
       final nextPage = currentPage + 1;
       final response = await _appointmentService
           .getPendingAppointments(
@@ -90,13 +87,10 @@ class PendingAppointmentsViewmodel
         ...response.items,
       ];
       currentPage = nextPage;
-      hasMore =
+      _hasMore =
           response.items.length >= _pageSize;
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-    } finally {
-      setBusyForObject(_busyLoadMore, false);
-    }
+    });
+    setBusyForObject(_busyLoadMore, false);
   }
 
   /// Whether a load-more operation is in
@@ -112,7 +106,7 @@ class PendingAppointmentsViewmodel
     String id,
   ) async {
     setBusyForObject(id, true);
-    try {
+    await runSafe(() async {
       await _appointmentService
           .approveAppointment(id);
 
@@ -120,12 +114,8 @@ class PendingAppointmentsViewmodel
         (a) => a.id == id,
       );
       notifyListeners();
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-      notifyListeners();
-    } finally {
-      setBusyForObject(id, false);
-    }
+    });
+    setBusyForObject(id, false);
   }
 
   /// Shows a reason dialog, then rejects (cancels)
@@ -146,7 +136,7 @@ class PendingAppointmentsViewmodel
     if (response?.confirmed != true) return;
 
     setBusyForObject(id, true);
-    try {
+    await runSafe(() async {
       await _appointmentService
           .updateAppointmentStatus(
         id,
@@ -157,12 +147,8 @@ class PendingAppointmentsViewmodel
         (a) => a.id == id,
       );
       notifyListeners();
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-      notifyListeners();
-    } finally {
-      setBusyForObject(id, false);
-    }
+    });
+    setBusyForObject(id, false);
   }
 
   /// Navigates to the appointment detail view.
@@ -176,7 +162,7 @@ class PendingAppointmentsViewmodel
   /// page.
   Future<void> refresh() async {
     currentPage = 1;
-    hasMore = true;
+    _hasMore = true;
     pendingAppointments = <Appointment>[];
     await _loadPage(1);
   }

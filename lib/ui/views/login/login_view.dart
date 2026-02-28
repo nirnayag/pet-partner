@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/core/utils/ui_helpers.dart';
 import 'package:partner/ui/common/app_colors.dart';
 import 'package:partner/ui/views/login/login_viewmodel.dart';
+import 'package:partner/ui/widgets/app_button.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginView extends StackedView<LoginViewModel> {
@@ -28,335 +29,225 @@ class LoginView extends StackedView<LoginViewModel> {
           ),
         ),
         child: SafeArea(
-          child: Column(
-            children: [
-              /// Back Button
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                child: Align(
-                  alignment:
-                      Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: viewModel.goBack,
+          child: Center(
+            child: SingleChildScrollView(
+              padding:
+                  const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  verticalSpaceLarge,
+
+                  // Logo / Branding
+                  Center(
                     child: Container(
-                      height: 44,
-                      width: 44,
+                      height: 80,
+                      width: 80,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 10,
-                            color: Colors.black
-                                .withValues(
-                              alpha: .05,
-                            ),
-                          ),
-                        ],
+                        color: kcPrimaryColor
+                            .withValues(alpha: .1),
+                        borderRadius:
+                            BorderRadius.circular(24),
                       ),
                       child: const Icon(
-                        Icons
-                            .arrow_back_ios_new_rounded,
-                        size: 18,
+                        Icons.pets,
+                        color: kcPrimaryColor,
+                        size: 40,
                       ),
                     ),
                   ),
-                ),
-              ),
 
-              Expanded(
-                child: SingleChildScrollView(
-                  padding:
-                      const EdgeInsets.symmetric(
-                    horizontal: 24,
+                  verticalSpaceMedium,
+
+                  Center(
+                    child: Text(
+                      'Pet Partner',
+                      style: GoogleFonts.manrope(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        color: kcDarkGreyColor,
+                      ),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
 
-                      /// Title
-                      Text(
-                        'Welcome\nBack',
-                        style:
-                            GoogleFonts.manrope(
-                          fontSize: 32,
-                          fontWeight:
-                              FontWeight.w800,
-                          height: 1.2,
-                          color: kcDarkGreyColor,
-                        ),
+                  const SizedBox(height: 8),
+
+                  Center(
+                    child: Text(
+                      'Sign in to your clinic account',
+                      style: GoogleFonts.manrope(
+                        fontSize: 15,
+                        color: kcMediumGrey,
                       ),
+                    ),
+                  ),
 
-                      const SizedBox(height: 12),
+                  const SizedBox(height: 40),
 
-                      Text(
-                        'Enter your mobile number'
-                        ' to access your account',
-                        style:
-                            GoogleFonts.manrope(
-                          fontSize: 15,
-                          color: kcMediumGrey,
-                        ),
+                  // Email
+                  _label('Email'),
+                  const SizedBox(height: 8),
+                  _buildTextField(
+                    controller:
+                        viewModel.emailController,
+                    hint: 'you@clinic.com',
+                    icon: Icons.email_outlined,
+                    keyboardType:
+                        TextInputType.emailAddress,
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Password
+                  _label('Password'),
+                  const SizedBox(height: 8),
+                  _buildTextField(
+                    controller:
+                        viewModel.passwordController,
+                    hint: 'Enter your password',
+                    icon: Icons.lock_outline,
+                    obscure: viewModel.obscurePassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        viewModel.obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: kcLightGrey,
+                        size: 22,
                       ),
+                      onPressed: viewModel
+                          .togglePasswordVisibility,
+                    ),
+                  ),
 
-                      const SizedBox(height: 40),
-
-                      /// Mobile Label
-                      Text(
-                        'Mobile Number',
-                        style:
-                            GoogleFonts.manrope(
-                          fontSize: 14,
-                          fontWeight:
-                              FontWeight.w700,
-                          color: kcDarkGreyColor,
-                        ),
+                  // Error message
+                  if (viewModel.hasError) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding:
+                          const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
                       ),
-
-                      const SizedBox(height: 8),
-
-                      Row(
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius:
+                            BorderRadius.circular(8),
+                      ),
+                      child: Row(
                         children: [
-                          /// Country Code Box
-                          Container(
-                            height: 56,
-                            padding:
-                                const EdgeInsets
-                                    .symmetric(
-                              horizontal: 14,
-                            ),
-                            decoration:
-                                _inputDecoration(),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  '\ud83c\uddfa\ud83c\uddf8',
-                                  style:
-                                      TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 6,
-                                ),
-                                Text(
-                                  '+1',
-                                  style:
-                                      TextStyle(
-                                    fontWeight:
-                                        FontWeight
-                                            .w600,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons
-                                      .keyboard_arrow_down_rounded,
-                                  size: 20,
-                                ),
-                              ],
-                            ),
+                          Icon(
+                            Icons.error_outline,
+                            color:
+                                Colors.red.shade700,
+                            size: 18,
                           ),
-
-                          const SizedBox(
-                            width: 12,
-                          ),
-
-                          /// Mobile Input
+                          const SizedBox(width: 8),
                           Expanded(
-                            child: Container(
-                              height: 56,
-                              decoration:
-                                  _inputDecoration(),
-                              child: TextField(
-                                keyboardType:
-                                    TextInputType
-                                        .phone,
-                                decoration:
-                                    InputDecoration(
-                                  border:
-                                      InputBorder
-                                          .none,
-                                  prefixIcon:
-                                      Icon(
-                                    Icons
-                                        .smartphone_outlined,
-                                    color: kcMediumGrey
-                                        .withValues(
-                                      alpha: 0.5,
-                                    ),
-                                    size: 22,
-                                  ),
-                                  hintText:
-                                      '000 000 0000',
-                                  hintStyle:
-                                      GoogleFonts
-                                          .manrope(
-                                    color: kcMediumGrey
-                                        .withValues(
-                                      alpha: 0.3,
-                                    ),
-                                    fontWeight:
-                                        FontWeight
-                                            .w500,
-                                  ),
-                                  contentPadding:
-                                      const EdgeInsets
-                                          .symmetric(
-                                    horizontal:
-                                        16,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                style: GoogleFonts
-                                    .manrope(
-                                  fontWeight:
-                                      FontWeight
-                                          .w600,
-                                  color:
-                                      kcDarkGreyColor,
-                                ),
+                            child: Text(
+                              viewModel.errorMessage ??
+                                  '',
+                              style:
+                                  GoogleFonts.manrope(
+                                fontSize: 13,
+                                color: Colors
+                                    .red.shade700,
                               ),
                             ),
                           ),
                         ],
                       ),
-
-                      const SizedBox(height: 40),
-
-                      /// Get OTP Button
-                      GestureDetector(
-                        onTap: viewModel
-                            .navigateToOtp,
-                        child: Container(
-                          height: 60,
-                          decoration:
-                              BoxDecoration(
-                            borderRadius:
-                                kbrLarge,
-                            gradient:
-                                const LinearGradient(
-                              colors: [
-                                kcPrimaryColor,
-                                kcPrimaryColorDark,
-                              ],
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: kcPrimaryColor
-                                    .withValues(
-                                  alpha: .3,
-                                ),
-                                blurRadius: 20,
-                                offset:
-                                    const Offset(
-                                  0,
-                                  8,
-                                ),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .center,
-                              children: [
-                                Text(
-                                  'Get OTP',
-                                  style:
-                                      GoogleFonts
-                                          .manrope(
-                                    fontSize: 18,
-                                    fontWeight:
-                                        FontWeight
-                                            .bold,
-                                    color: Colors
-                                        .white,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                const Icon(
-                                  Icons
-                                      .arrow_forward_rounded,
-                                  color: Colors
-                                      .white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 80),
-                    ],
-                  ),
-                ),
-              ),
-
-              /// Bottom Sign Up Text
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 30,
-                ),
-                child: GestureDetector(
-                  onTap:
-                      viewModel.navigateToSignUp,
-                  child: RichText(
-                    text: TextSpan(
-                      style:
-                          GoogleFonts.manrope(
-                        color: kcMediumGrey,
-                        fontSize: 15,
-                      ),
-                      children: const [
-                        TextSpan(
-                          text:
-                              "Don't have an "
-                              'account? ',
-                        ),
-                        TextSpan(
-                          text: 'Sign Up',
-                          style: TextStyle(
-                            color:
-                                kcPrimaryColor,
-                            fontWeight:
-                                FontWeight.w800,
-                          ),
-                        ),
-                      ],
                     ),
+                  ],
+
+                  const SizedBox(height: 32),
+
+                  // Login button
+                  AppButton(
+                    label: 'Sign In',
+                    isLoading: viewModel.isBusy,
+                    onPressed: viewModel.login,
                   ),
-                ),
+
+                  verticalSpaceLarge,
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  BoxDecoration _inputDecoration() {
-    return BoxDecoration(
-      color: Colors.white,
-      borderRadius: kbrLarge,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withValues(
-            alpha: .03,
+  Widget _label(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.manrope(
+        fontSize: 14,
+        fontWeight: FontWeight.w700,
+        color: kcDarkGreyColor,
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    TextInputType keyboardType =
+        TextInputType.text,
+    bool obscure = false,
+    Widget? suffixIcon,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(
+              alpha: .03,
+            ),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
-          blurRadius: 10,
-          offset: const Offset(0, 4),
+        ],
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: obscure,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          prefixIcon: Icon(
+            icon,
+            color: kcMediumGrey.withValues(
+              alpha: 0.5,
+            ),
+            size: 22,
+          ),
+          suffixIcon: suffixIcon,
+          hintText: hint,
+          hintStyle: GoogleFonts.manrope(
+            color: kcMediumGrey.withValues(
+              alpha: 0.3,
+            ),
+            fontWeight: FontWeight.w500,
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 16,
+          ),
         ),
-      ],
+        style: GoogleFonts.manrope(
+          fontWeight: FontWeight.w600,
+          color: kcDarkGreyColor,
+        ),
+      ),
     );
   }
 

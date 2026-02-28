@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/medical/vaccination.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/vaccination_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a
 /// vaccination record.
 class VaccinationFormViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [VaccinationFormViewModel].
   VaccinationFormViewModel({
     this.vaccination,
@@ -61,10 +62,8 @@ class VaccinationFormViewModel
   /// Whether this is edit mode.
   bool get isEditMode => vaccination != null;
 
-  String? _errorMessage;
-
-  /// Error message from the last operation.
-  String? get errorMessage => _errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   // ---- Lifecycle ----
 
@@ -107,14 +106,12 @@ class VaccinationFormViewModel
 
   /// Validates and saves the vaccination.
   Future<void> saveVaccination() async {
-    _errorMessage = null;
+    clearError();
 
     final name =
         vaccineNameController.text.trim();
     if (name.isEmpty) {
-      _errorMessage =
-          'Vaccine name is required.';
-      notifyListeners();
+      setError('Vaccine name is required.');
       return;
     }
 
@@ -152,22 +149,24 @@ class VaccinationFormViewModel
     }
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _vaccinationService
-            .updateVaccination(
-          vaccination!.id,
-          data,
-        );
-      } else {
-        await _vaccinationService
-            .createVaccination(data);
-      }
-      _navigationService.back<void>();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _vaccinationService
+              .updateVaccination(
+            vaccination!.id,
+            data,
+          );
+        } else {
+          await _vaccinationService
+              .createVaccination(data);
+        }
+      },
+    );
     setBusy(false);
+    if (result != null) {
+      _navigationService.back<void>();
+    }
   }
 
   @override

@@ -3,9 +3,9 @@ import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/appointment/appointment.dart';
 import 'package:partner/core/utils/permission_utils.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/auth_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -13,7 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Loads appointments for a selected date and
 /// supports day navigation.
-class ScheduleViewModel extends BaseViewModel {
+class ScheduleViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _appointmentService =
       locator<AppointmentService>();
   final _authService = locator<AuthService>();
@@ -35,11 +36,6 @@ class ScheduleViewModel extends BaseViewModel {
 
   /// The currently selected date.
   DateTime get selectedDate => _selectedDate;
-
-  String? _errorMessage;
-
-  /// Error message from the last fetch.
-  String? get errorMessage => _errorMessage;
 
   /// The user's display name for the header.
   String get userName =>
@@ -77,8 +73,7 @@ class ScheduleViewModel extends BaseViewModel {
   /// Fetches appointments for [_selectedDate].
   Future<void> loadAppointments() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
+    await runSafe(() async {
       final dateStr = DateFormat('yyyy-MM-dd')
           .format(_selectedDate);
       final response =
@@ -87,9 +82,7 @@ class ScheduleViewModel extends BaseViewModel {
         limit: 50,
       );
       _appointments = response.items;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
