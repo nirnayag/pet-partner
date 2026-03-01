@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/medical/medical_record.dart';
 import 'package:partner/core/models/pet/pet.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/medical_record_service.dart';
 import 'package:partner/services/pet_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a
 /// medical record.
 class MedicalRecordFormViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [MedicalRecordFormViewModel].
   MedicalRecordFormViewModel({
     this.record,
@@ -82,10 +83,8 @@ class MedicalRecordFormViewModel
   /// Whether this is edit mode.
   bool get isEditMode => record != null;
 
-  String? _errorMessage;
-
-  /// Error message from the last operation.
-  String? get errorMessage => _errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   Pet? _pet;
 
@@ -139,15 +138,14 @@ class MedicalRecordFormViewModel
   }
 
   Future<void> _loadPet() async {
-    final id =
-        petId ?? record?.petId;
+    final id = petId ?? record?.petId;
     if (id == null) return;
-    try {
-      _pet = await _petService.getPetById(id);
-      notifyListeners();
-    } on ApiException catch (_) {
-      // Non-critical.
-    }
+    _pet = await runSafe(
+      () => _petService.getPetById(id),
+    );
+    // Non-critical — clear any error.
+    clearError();
+    notifyListeners();
   }
 
   // ---- Setters ----
@@ -174,14 +172,12 @@ class MedicalRecordFormViewModel
 
   /// Validates and saves the medical record.
   Future<void> saveRecord() async {
-    _errorMessage = null;
+    clearError();
 
     final visitReason =
         visitReasonController.text.trim();
     if (visitReason.isEmpty) {
-      _errorMessage =
-          'Visit reason is required.';
-      notifyListeners();
+      setError('Visit reason is required.');
       return;
     }
 
@@ -237,22 +233,24 @@ class MedicalRecordFormViewModel
     }
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _medicalRecordService
-            .updateMedicalRecord(
-          record!.id,
-          data,
-        );
-      } else {
-        await _medicalRecordService
-            .createMedicalRecord(data);
-      }
-      _navigationService.back<void>();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _medicalRecordService
+              .updateMedicalRecord(
+            record!.id,
+            data,
+          );
+        } else {
+          await _medicalRecordService
+              .createMedicalRecord(data);
+        }
+      },
+    );
     setBusy(false);
+    if (result != null) {
+      _navigationService.back<void>();
+    }
   }
 
   /// Deletes the current record after
@@ -273,14 +271,14 @@ class MedicalRecordFormViewModel
     if (response?.confirmed != true) return;
 
     setBusy(true);
-    try {
-      await _medicalRecordService
-          .deleteMedicalRecord(record!.id);
-      _navigationService.back<void>();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    await runSafe<void>(
+      () => _medicalRecordService
+          .deleteMedicalRecord(record!.id),
+    );
     setBusy(false);
+    if (!hasError) {
+      _navigationService.back<void>();
+    }
   }
 
   @override

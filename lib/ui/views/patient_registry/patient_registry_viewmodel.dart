@@ -2,18 +2,20 @@ import 'dart:async';
 
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
+import 'package:partner/core/config/app_constants.dart';
 import 'package:partner/core/models/pet/pet.dart';
 import 'package:partner/core/utils/permission_utils.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/auth_service.dart';
 import 'package:partner/services/pet_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for the patient registry (pet list)
 /// screen. Loads pets from the API with search,
 /// filtering, pagination, and pull-to-refresh.
-class PatientRegistryViewModel extends BaseViewModel {
+class PatientRegistryViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _petService = locator<PetService>();
   final _navigationService =
       locator<NavigationService>();
@@ -47,11 +49,6 @@ class PatientRegistryViewModel extends BaseViewModel {
 
   /// Whether a "load more" request is in progress.
   bool get isLoadingMore => _isLoadingMore;
-
-  String? _errorMessage;
-
-  /// An error message to display, or `null`.
-  String? get errorMessage => _errorMessage;
 
   String _activeFilter = 'All';
 
@@ -101,9 +98,8 @@ class PatientRegistryViewModel extends BaseViewModel {
   /// Loads the first page of pets, resetting state.
   Future<void> loadPets() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _currentPage = 1;
+    _currentPage = 1;
+    await runSafe(() async {
       final species = _speciesFromFilter(
         _activeFilter,
       );
@@ -114,9 +110,7 @@ class PatientRegistryViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -125,7 +119,7 @@ class PatientRegistryViewModel extends BaseViewModel {
     if (_isLoadingMore || !_hasMore) return;
     _isLoadingMore = true;
     notifyListeners();
-    try {
+    await runSafe(() async {
       final species = _speciesFromFilter(
         _activeFilter,
       );
@@ -138,9 +132,7 @@ class PatientRegistryViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     _isLoadingMore = false;
     notifyListeners();
   }
@@ -150,7 +142,10 @@ class PatientRegistryViewModel extends BaseViewModel {
     _searchQuery = query;
     _debounce?.cancel();
     _debounce = Timer(
-      const Duration(milliseconds: 400),
+      Duration(
+        milliseconds:
+            AppConstants.searchDebounceMs,
+      ),
       loadPets,
     );
   }
@@ -165,7 +160,7 @@ class PatientRegistryViewModel extends BaseViewModel {
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     await loadPets();
   }
 

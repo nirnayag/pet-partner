@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/pet/pet.dart';
 import 'package:partner/services/pet_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a pet.
-class PetFormViewmodel extends BaseViewModel {
+class PetFormViewmodel extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [PetFormViewmodel].
   ///
   /// When [pet] is provided the form opens in edit
@@ -106,8 +108,8 @@ class PetFormViewmodel extends BaseViewModel {
   /// Whether the form is in edit mode.
   bool get isEditMode => pet != null;
 
-  /// Validation error message, if any.
-  String? errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   // ---- Lifecycle ----
 
@@ -173,18 +175,17 @@ class PetFormViewmodel extends BaseViewModel {
     _isActive = !_isActive;
     notifyListeners();
 
-    try {
-      await _petService.updatePet(
+    await runSafe(
+      () => _petService.updatePet(
         pet!.id,
         <String, dynamic>{
           'isActive': _isActive,
         },
-      );
-    } on Exception catch (e) {
-      _isActive = !_isActive;
-      errorMessage = e.toString();
-      notifyListeners();
-    }
+      ),
+      onError: () {
+        _isActive = !_isActive;
+      },
+    );
   }
 
   /// Marks the pet as deceased after confirmation.
@@ -204,16 +205,15 @@ class PetFormViewmodel extends BaseViewModel {
     if (response?.confirmed != true) return;
 
     setBusy(true);
-    try {
-      await _petService.updatePet(
+    final result = await runSafe(
+      () => _petService.updatePet(
         pet!.id,
         <String, dynamic>{'isDeceased': true},
-      );
+      ),
+    );
+    setBusy(false);
+    if (result != null) {
       _navigationService.back<void>();
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-    } finally {
-      setBusy(false);
     }
   }
 
@@ -221,12 +221,11 @@ class PetFormViewmodel extends BaseViewModel {
 
   /// Validates required fields and saves the pet.
   Future<void> savePet() async {
-    errorMessage = null;
+    clearError();
 
     final name = nameController.text.trim();
     if (name.isEmpty) {
-      errorMessage = 'Pet name is required.';
-      notifyListeners();
+      setError('Pet name is required.');
       return;
     }
 
@@ -285,20 +284,21 @@ class PetFormViewmodel extends BaseViewModel {
     }
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _petService.updatePet(
-          pet!.id,
-          data,
-        );
-      } else {
-        await _petService.createPet(data);
-      }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _petService.updatePet(
+            pet!.id,
+            data,
+          );
+        } else {
+          await _petService.createPet(data);
+        }
+      },
+    );
+    setBusy(false);
+    if (result != null) {
       _navigationService.back<void>();
-    } on Exception catch (e) {
-      errorMessage = e.toString();
-    } finally {
-      setBusy(false);
     }
   }
 

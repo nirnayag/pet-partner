@@ -2,8 +2,8 @@ import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/clinic/send_result.dart';
 import 'package:partner/core/models/reminder/reminder.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/reminder_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,8 +11,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Loads reminders with status filtering and
 /// pagination.
-class ReminderListViewModel
-    extends BaseViewModel {
+class ReminderListViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _reminderService =
       locator<ReminderService>();
   final _navigationService =
@@ -44,11 +44,6 @@ class ReminderListViewModel
   /// Total number of matching reminders.
   int get totalCount => _totalCount;
 
-  String? _errorMessage;
-
-  /// Error message, or `null`.
-  String? get errorMessage => _errorMessage;
-
   SendResult? _lastSendResult;
 
   /// The result from the last send operation.
@@ -76,9 +71,8 @@ class ReminderListViewModel
   /// Loads the first page of reminders.
   Future<void> loadReminders() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _currentPage = 1;
+    _currentPage = 1;
+    await runSafe(() async {
       final response =
           await _reminderService.getReminders(
         status: _statusParam,
@@ -87,9 +81,7 @@ class ReminderListViewModel
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -98,7 +90,7 @@ class ReminderListViewModel
     if (_isLoadingMore || !_hasMore) return;
     _isLoadingMore = true;
     notifyListeners();
-    try {
+    await runSafe(() async {
       final response =
           await _reminderService.getReminders(
         page: _currentPage + 1,
@@ -109,16 +101,14 @@ class ReminderListViewModel
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     _isLoadingMore = false;
     notifyListeners();
   }
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     _lastSendResult = null;
     await loadReminders();
   }
@@ -142,15 +132,12 @@ class ReminderListViewModel
   /// Sends all pending reminders.
   Future<void> sendPendingReminders() async {
     _isSending = true;
-    _errorMessage = null;
     notifyListeners();
-    try {
+    await runSafe(() async {
       _lastSendResult = await _reminderService
           .sendPendingReminders();
       await loadReminders();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     _isSending = false;
     notifyListeners();
   }
@@ -160,7 +147,7 @@ class ReminderListViewModel
   Future<void> deleteReminder(
     Reminder reminder,
   ) async {
-    try {
+    await runSafe(() async {
       await _reminderService.deleteReminder(
         reminder.id,
       );
@@ -169,10 +156,7 @@ class ReminderListViewModel
       );
       _totalCount--;
       notifyListeners();
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-      notifyListeners();
-    }
+    });
   }
 
   // ------------------------------------------------

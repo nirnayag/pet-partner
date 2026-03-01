@@ -16,7 +16,9 @@ import '../services/api_client.dart';
 import '../services/appointment_service.dart';
 import '../services/auth_service.dart';
 import '../services/clinic_service.dart';
+import '../services/connectivity_service.dart';
 import '../services/document_service.dart';
+import '../services/image_upload_service.dart';
 import '../services/layout_service.dart';
 import '../services/medical_record_service.dart';
 import '../services/pet_owner_service.dart';
@@ -57,4 +59,6 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => UserService());
   locator.registerLazySingleton(() => ClinicService());
   locator.registerLazySingleton(() => ReminderService());
+  locator.registerLazySingleton(() => ConnectivityService());
+  locator.registerLazySingleton(() => ImageUploadService());
 }

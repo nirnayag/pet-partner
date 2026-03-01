@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/enums/reminder_type.dart';
 import 'package:partner/core/models/reminder/reminder.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/reminder_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for creating or editing a reminder.
 class ReminderFormViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [ReminderFormViewModel].
   ///
   /// When [reminder] is provided the form opens
@@ -68,8 +69,8 @@ class ReminderFormViewModel
   /// Whether the form is in edit mode.
   bool get isEditMode => reminder != null;
 
-  /// Validation error message, if any.
-  String? errorMessage;
+  // errorMessage and hasError provided by
+  // ErrorHandlingMixin.
 
   /// Available channel options.
   static const channelOptions = <String>[
@@ -123,25 +124,21 @@ class ReminderFormViewModel
 
   /// Validates and saves the reminder.
   Future<void> save() async {
-    errorMessage = null;
+    clearError();
 
     final title = titleController.text.trim();
     if (title.isEmpty) {
-      errorMessage = 'Title is required.';
-      notifyListeners();
+      setError('Title is required.');
       return;
     }
 
     if (_scheduledFor == null) {
-      errorMessage = 'Schedule date is required.';
-      notifyListeners();
+      setError('Schedule date is required.');
       return;
     }
 
     if (_selectedChannels.isEmpty) {
-      errorMessage =
-          'Select at least one channel.';
-      notifyListeners();
+      setError('Select at least one channel.');
       return;
     }
 
@@ -172,22 +169,24 @@ class ReminderFormViewModel
     }
 
     setBusy(true);
-    try {
-      if (isEditMode) {
-        await _reminderService.updateReminder(
-          reminder!.id,
-          data,
-        );
-      } else {
-        await _reminderService.createReminder(
-          data,
-        );
-      }
-      _navigationService.back();
-    } on ApiException catch (e) {
-      errorMessage = e.message;
-    }
+    final result = await runSafe(
+      () async {
+        if (isEditMode) {
+          await _reminderService.updateReminder(
+            reminder!.id,
+            data,
+          );
+        } else {
+          await _reminderService.createReminder(
+            data,
+          );
+        }
+      },
+    );
     setBusy(false);
+    if (result != null) {
+      _navigationService.back();
+    }
   }
 
   @override

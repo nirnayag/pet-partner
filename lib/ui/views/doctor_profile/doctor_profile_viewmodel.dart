@@ -1,6 +1,7 @@
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/auth/user.dart';
 import 'package:partner/services/auth_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -8,7 +9,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Reads the current user from [AuthService] and
 /// provides notification toggle state.
-class DoctorProfileViewModel extends BaseViewModel {
+class DoctorProfileViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   final _navigationService =
       locator<NavigationService>();
   final _authService = locator<AuthService>();
@@ -80,11 +82,13 @@ class DoctorProfileViewModel extends BaseViewModel {
   // Actions
   // --------------------------------------------------
 
-  /// Logs out the current user and navigates to the
-  /// login screen.
+  /// Logs out the current user and navigates
+  /// to the login screen.
   Future<void> logout() async {
     setBusy(true);
-    await _authService.logout();
+    await runSafe(
+      () => _authService.logout(),
+    );
     setBusy(false);
   }
 

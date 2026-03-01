@@ -5,7 +5,9 @@ import 'package:partner/services/api_client.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/auth_service.dart';
 import 'package:partner/services/clinic_service.dart';
+import 'package:partner/services/connectivity_service.dart';
 import 'package:partner/services/document_service.dart';
+import 'package:partner/services/image_upload_service.dart';
 import 'package:partner/services/medical_record_service.dart';
 import 'package:partner/services/pet_owner_service.dart';
 import 'package:partner/services/pet_service.dart';
@@ -69,6 +71,13 @@ import 'test_helpers.mocks.dart';
     MockSpec<ReminderService>(
       onMissingStub: OnMissingStub.returnDefault,
     ),
+    // Phase 6
+    MockSpec<ConnectivityService>(
+      onMissingStub: OnMissingStub.returnDefault,
+    ),
+    MockSpec<ImageUploadService>(
+      onMissingStub: OnMissingStub.returnDefault,
+    ),
     // @stacked-mock-spec
   ],
 )
@@ -88,6 +97,8 @@ void registerServices() {
   getAndRegisterUserService();
   getAndRegisterClinicService();
   getAndRegisterReminderService();
+  getAndRegisterConnectivityService();
+  getAndRegisterImageUploadService();
   // @stacked-mock-register
 }
 
@@ -294,6 +305,30 @@ MockReminderService
       ReminderService>();
   final service = MockReminderService();
   locator.registerSingleton<ReminderService>(
+    service,
+  );
+  return service;
+}
+
+MockConnectivityService
+    getAndRegisterConnectivityService() {
+  _removeRegistrationIfExists<
+      ConnectivityService>();
+  final service = MockConnectivityService();
+  locator
+      .registerSingleton<ConnectivityService>(
+    service,
+  );
+  return service;
+}
+
+MockImageUploadService
+    getAndRegisterImageUploadService() {
+  _removeRegistrationIfExists<
+      ImageUploadService>();
+  final service = MockImageUploadService();
+  locator
+      .registerSingleton<ImageUploadService>(
     service,
   );
   return service;

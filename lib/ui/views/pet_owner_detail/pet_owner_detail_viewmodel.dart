@@ -2,15 +2,16 @@ import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/pet/pet.dart';
 import 'package:partner/core/models/pet_owner.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/pet_owner_service.dart';
 import 'package:partner/services/pet_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for the pet-owner detail screen.
 class PetOwnerDetailViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [PetOwnerDetailViewModel].
   PetOwnerDetailViewModel({
     required this.ownerId,
@@ -39,11 +40,6 @@ class PetOwnerDetailViewModel
   /// Pets belonging to this owner.
   List<Pet> get pets => _pets;
 
-  String? _errorMessage;
-
-  /// An error message, or `null`.
-  String? get errorMessage => _errorMessage;
-
   // ------------------------------------------------
   // Lifecycle
   // ------------------------------------------------
@@ -51,22 +47,19 @@ class PetOwnerDetailViewModel
   /// Loads the owner details and their pets.
   Future<void> initialise() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
+    await runSafe(() async {
       _owner = await _petOwnerService
           .getPetOwnerById(ownerId);
       final petResponse =
           await _petService.getPets();
       _pets = petResponse.items;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     await initialise();
   }
 

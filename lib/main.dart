@@ -3,6 +3,7 @@ import 'package:partner/app/app.bottomsheets.dart';
 import 'package:partner/app/app.dialogs.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
+import 'package:partner/services/connectivity_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 Future<void> main() async {
@@ -10,6 +11,7 @@ Future<void> main() async {
   await setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
+  await locator<ConnectivityService>().init();
   runApp(const MainApp());
 }
 

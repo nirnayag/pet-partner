@@ -2,8 +2,8 @@ import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
 import 'package:partner/core/enums/document_type.dart';
 import 'package:partner/core/models/document/document.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/document_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,7 +11,8 @@ import 'package:stacked_services/stacked_services.dart';
 ///
 /// Supports paginated loading with document-type
 /// filtering.
-class DocumentListViewModel extends BaseViewModel {
+class DocumentListViewModel extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [DocumentListViewModel].
   DocumentListViewModel({
     this.petId,
@@ -53,11 +54,6 @@ class DocumentListViewModel extends BaseViewModel {
   /// Whether a load-more request is active.
   bool get isLoadingMore => _isLoadingMore;
 
-  String? _errorMessage;
-
-  /// An error message, or `null`.
-  String? get errorMessage => _errorMessage;
-
   int _totalCount = 0;
 
   /// Total documents matching the filter.
@@ -93,9 +89,8 @@ class DocumentListViewModel extends BaseViewModel {
   /// Loads the first page, resetting state.
   Future<void> loadDocuments() async {
     setBusy(true);
-    _errorMessage = null;
-    try {
-      _currentPage = 1;
+    _currentPage = 1;
+    await runSafe(() async {
       final response =
           await _documentService.getDocuments(
         petId: petId,
@@ -108,9 +103,7 @@ class DocumentListViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -119,7 +112,7 @@ class DocumentListViewModel extends BaseViewModel {
     if (_isLoadingMore || !_hasMore) return;
     _isLoadingMore = true;
     notifyListeners();
-    try {
+    await runSafe(() async {
       final response =
           await _documentService.getDocuments(
         page: _currentPage + 1,
@@ -134,9 +127,7 @@ class DocumentListViewModel extends BaseViewModel {
       _totalCount = response.pagination.total;
       _hasMore =
           response.pagination.hasNext ?? false;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     _isLoadingMore = false;
     notifyListeners();
   }
@@ -151,7 +142,7 @@ class DocumentListViewModel extends BaseViewModel {
 
   /// Pull-to-refresh handler.
   Future<void> refresh() async {
-    _errorMessage = null;
+    clearError();
     await loadDocuments();
   }
 

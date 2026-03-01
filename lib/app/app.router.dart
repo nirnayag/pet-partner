@@ -7,76 +7,70 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as _i34;
-import 'package:partner/core/models/appointment/appointment.dart' as _i36;
-import 'package:partner/core/models/auth/user.dart' as _i41;
-import 'package:partner/core/models/medical/medical_record.dart' as _i37;
-import 'package:partner/core/models/medical/prescription.dart' as _i38;
-import 'package:partner/core/models/medical/vaccination.dart' as _i39;
-import 'package:partner/core/models/pet/pet.dart' as _i35;
-import 'package:partner/core/models/pet_owner.dart' as _i40;
-import 'package:partner/core/models/reminder/reminder.dart' as _i42;
+import 'package:flutter/material.dart' as _i32;
+import 'package:partner/core/models/appointment/appointment.dart' as _i34;
+import 'package:partner/core/models/auth/user.dart' as _i39;
+import 'package:partner/core/models/medical/medical_record.dart' as _i35;
+import 'package:partner/core/models/medical/prescription.dart' as _i36;
+import 'package:partner/core/models/medical/vaccination.dart' as _i37;
+import 'package:partner/core/models/pet/pet.dart' as _i33;
+import 'package:partner/core/models/pet_owner.dart' as _i38;
+import 'package:partner/core/models/reminder/reminder.dart' as _i40;
 import 'package:partner/ui/views/appointment_detail/appointment_detail_view.dart'
-    as _i8;
+    as _i6;
 import 'package:partner/ui/views/appointment_form/appointment_form_view.dart'
-    as _i14;
+    as _i12;
 import 'package:partner/ui/views/booking_success/booking_success_view.dart'
-    as _i15;
+    as _i13;
 import 'package:partner/ui/views/clinic_branding/clinic_branding_view.dart'
-    as _i30;
+    as _i28;
 import 'package:partner/ui/views/clinic_settings/clinic_settings_view.dart'
-    as _i29;
+    as _i27;
 import 'package:partner/ui/views/doctor_profile/doctor_profile_view.dart'
-    as _i11;
-import 'package:partner/ui/views/document_list/document_list_view.dart' as _i25;
-import 'package:partner/ui/views/document_upload/document_upload_view.dart'
-    as _i26;
-import 'package:partner/ui/views/home/home_view.dart' as _i2;
-import 'package:partner/ui/views/login/login_view.dart' as _i6;
-import 'package:partner/ui/views/main/main_view.dart' as _i12;
-import 'package:partner/ui/views/medical_record_form/medical_record_form_view.dart'
-    as _i17;
-import 'package:partner/ui/views/patient_profile/patient_profile_view.dart'
-    as _i10;
-import 'package:partner/ui/views/patient_registry/patient_registry_view.dart'
     as _i9;
-import 'package:partner/ui/views/pending_appointments/pending_appointments_view.dart'
-    as _i16;
-import 'package:partner/ui/views/pet_form/pet_form_view.dart' as _i13;
-import 'package:partner/ui/views/pet_owner_detail/pet_owner_detail_view.dart'
-    as _i23;
-import 'package:partner/ui/views/pet_owner_form/pet_owner_form_view.dart'
+import 'package:partner/ui/views/document_list/document_list_view.dart' as _i23;
+import 'package:partner/ui/views/document_upload/document_upload_view.dart'
     as _i24;
-import 'package:partner/ui/views/pet_owner_list/pet_owner_list_view.dart'
+import 'package:partner/ui/views/home/home_view.dart' as _i2;
+import 'package:partner/ui/views/login/login_view.dart' as _i4;
+import 'package:partner/ui/views/main/main_view.dart' as _i10;
+import 'package:partner/ui/views/medical_record_form/medical_record_form_view.dart'
+    as _i15;
+import 'package:partner/ui/views/patient_profile/patient_profile_view.dart'
+    as _i8;
+import 'package:partner/ui/views/patient_registry/patient_registry_view.dart'
+    as _i7;
+import 'package:partner/ui/views/pending_appointments/pending_appointments_view.dart'
+    as _i14;
+import 'package:partner/ui/views/pet_form/pet_form_view.dart' as _i11;
+import 'package:partner/ui/views/pet_owner_detail/pet_owner_detail_view.dart'
+    as _i21;
+import 'package:partner/ui/views/pet_owner_form/pet_owner_form_view.dart'
     as _i22;
+import 'package:partner/ui/views/pet_owner_list/pet_owner_list_view.dart'
+    as _i20;
 import 'package:partner/ui/views/prescription_form/prescription_form_view.dart'
-    as _i19;
+    as _i17;
 import 'package:partner/ui/views/prescription_list/prescription_list_view.dart'
-    as _i18;
-import 'package:partner/ui/views/register/register_view.dart' as _i4;
-import 'package:partner/ui/views/reminder_form/reminder_form_view.dart' as _i32;
-import 'package:partner/ui/views/reminder_list/reminder_list_view.dart' as _i31;
-import 'package:partner/ui/views/reports/reports_view.dart' as _i33;
-import 'package:partner/ui/views/schedule/schedule_view.dart' as _i7;
-import 'package:partner/ui/views/staff_form/staff_form_view.dart' as _i28;
-import 'package:partner/ui/views/staff_list/staff_list_view.dart' as _i27;
+    as _i16;
+import 'package:partner/ui/views/reminder_form/reminder_form_view.dart' as _i30;
+import 'package:partner/ui/views/reminder_list/reminder_list_view.dart' as _i29;
+import 'package:partner/ui/views/reports/reports_view.dart' as _i31;
+import 'package:partner/ui/views/schedule/schedule_view.dart' as _i5;
+import 'package:partner/ui/views/staff_form/staff_form_view.dart' as _i26;
+import 'package:partner/ui/views/staff_list/staff_list_view.dart' as _i25;
 import 'package:partner/ui/views/startup/startup_view.dart' as _i3;
 import 'package:partner/ui/views/vaccination_form/vaccination_form_view.dart'
-    as _i21;
+    as _i19;
 import 'package:partner/ui/views/vaccination_list/vaccination_list_view.dart'
-    as _i20;
-import 'package:partner/ui/views/verify_otp/verify_otp_view.dart' as _i5;
+    as _i18;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i43;
+import 'package:stacked_services/stacked_services.dart' as _i41;
 
 class Routes {
   static const homeView = '/home-view';
 
   static const startupView = '/startup-view';
-
-  static const registerView = '/register-view';
-
-  static const verifyOtpView = '/verify-otp-view';
 
   static const loginView = '/login-view';
 
@@ -137,8 +131,6 @@ class Routes {
   static const all = <String>{
     homeView,
     startupView,
-    registerView,
-    verifyOtpView,
     loginView,
     scheduleView,
     appointmentDetailView,
@@ -174,42 +166,40 @@ class StackedRouter extends _i1.RouterBase {
   final _routes = <_i1.RouteDef>[
     _i1.RouteDef(Routes.homeView, page: _i2.HomeView),
     _i1.RouteDef(Routes.startupView, page: _i3.StartupView),
-    _i1.RouteDef(Routes.registerView, page: _i4.RegisterView),
-    _i1.RouteDef(Routes.verifyOtpView, page: _i5.VerifyOtpView),
-    _i1.RouteDef(Routes.loginView, page: _i6.LoginView),
-    _i1.RouteDef(Routes.scheduleView, page: _i7.ScheduleView),
-    _i1.RouteDef(Routes.appointmentDetailView, page: _i8.AppointmentDetailView),
-    _i1.RouteDef(Routes.patientRegistryView, page: _i9.PatientRegistryView),
-    _i1.RouteDef(Routes.patientProfileView, page: _i10.PatientProfileView),
-    _i1.RouteDef(Routes.doctorProfileView, page: _i11.DoctorProfileView),
-    _i1.RouteDef(Routes.mainView, page: _i12.MainView),
-    _i1.RouteDef(Routes.petFormView, page: _i13.PetFormView),
-    _i1.RouteDef(Routes.appointmentFormView, page: _i14.AppointmentFormView),
-    _i1.RouteDef(Routes.bookingSuccessView, page: _i15.BookingSuccessView),
+    _i1.RouteDef(Routes.loginView, page: _i4.LoginView),
+    _i1.RouteDef(Routes.scheduleView, page: _i5.ScheduleView),
+    _i1.RouteDef(Routes.appointmentDetailView, page: _i6.AppointmentDetailView),
+    _i1.RouteDef(Routes.patientRegistryView, page: _i7.PatientRegistryView),
+    _i1.RouteDef(Routes.patientProfileView, page: _i8.PatientProfileView),
+    _i1.RouteDef(Routes.doctorProfileView, page: _i9.DoctorProfileView),
+    _i1.RouteDef(Routes.mainView, page: _i10.MainView),
+    _i1.RouteDef(Routes.petFormView, page: _i11.PetFormView),
+    _i1.RouteDef(Routes.appointmentFormView, page: _i12.AppointmentFormView),
+    _i1.RouteDef(Routes.bookingSuccessView, page: _i13.BookingSuccessView),
     _i1.RouteDef(
       Routes.pendingAppointmentsView,
-      page: _i16.PendingAppointmentsView,
+      page: _i14.PendingAppointmentsView,
     ),
     _i1.RouteDef(
       Routes.medicalRecordFormView,
-      page: _i17.MedicalRecordFormView,
+      page: _i15.MedicalRecordFormView,
     ),
-    _i1.RouteDef(Routes.prescriptionListView, page: _i18.PrescriptionListView),
-    _i1.RouteDef(Routes.prescriptionFormView, page: _i19.PrescriptionFormView),
-    _i1.RouteDef(Routes.vaccinationListView, page: _i20.VaccinationListView),
-    _i1.RouteDef(Routes.vaccinationFormView, page: _i21.VaccinationFormView),
-    _i1.RouteDef(Routes.petOwnerListView, page: _i22.PetOwnerListView),
-    _i1.RouteDef(Routes.petOwnerDetailView, page: _i23.PetOwnerDetailView),
-    _i1.RouteDef(Routes.petOwnerFormView, page: _i24.PetOwnerFormView),
-    _i1.RouteDef(Routes.documentListView, page: _i25.DocumentListView),
-    _i1.RouteDef(Routes.documentUploadView, page: _i26.DocumentUploadView),
-    _i1.RouteDef(Routes.staffListView, page: _i27.StaffListView),
-    _i1.RouteDef(Routes.staffFormView, page: _i28.StaffFormView),
-    _i1.RouteDef(Routes.clinicSettingsView, page: _i29.ClinicSettingsView),
-    _i1.RouteDef(Routes.clinicBrandingView, page: _i30.ClinicBrandingView),
-    _i1.RouteDef(Routes.reminderListView, page: _i31.ReminderListView),
-    _i1.RouteDef(Routes.reminderFormView, page: _i32.ReminderFormView),
-    _i1.RouteDef(Routes.reportsView, page: _i33.ReportsView),
+    _i1.RouteDef(Routes.prescriptionListView, page: _i16.PrescriptionListView),
+    _i1.RouteDef(Routes.prescriptionFormView, page: _i17.PrescriptionFormView),
+    _i1.RouteDef(Routes.vaccinationListView, page: _i18.VaccinationListView),
+    _i1.RouteDef(Routes.vaccinationFormView, page: _i19.VaccinationFormView),
+    _i1.RouteDef(Routes.petOwnerListView, page: _i20.PetOwnerListView),
+    _i1.RouteDef(Routes.petOwnerDetailView, page: _i21.PetOwnerDetailView),
+    _i1.RouteDef(Routes.petOwnerFormView, page: _i22.PetOwnerFormView),
+    _i1.RouteDef(Routes.documentListView, page: _i23.DocumentListView),
+    _i1.RouteDef(Routes.documentUploadView, page: _i24.DocumentUploadView),
+    _i1.RouteDef(Routes.staffListView, page: _i25.StaffListView),
+    _i1.RouteDef(Routes.staffFormView, page: _i26.StaffFormView),
+    _i1.RouteDef(Routes.clinicSettingsView, page: _i27.ClinicSettingsView),
+    _i1.RouteDef(Routes.clinicBrandingView, page: _i28.ClinicBrandingView),
+    _i1.RouteDef(Routes.reminderListView, page: _i29.ReminderListView),
+    _i1.RouteDef(Routes.reminderFormView, page: _i30.ReminderFormView),
+    _i1.RouteDef(Routes.reportsView, page: _i31.ReportsView),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
@@ -217,7 +207,7 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<HomeViewArguments>(
         orElse: () => const HomeViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) => _i2.HomeView(key: args.key),
         settings: data,
       );
@@ -226,98 +216,80 @@ class StackedRouter extends _i1.RouterBase {
       final args = data.getArgs<StartupViewArguments>(
         orElse: () => const StartupViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) => _i3.StartupView(key: args.key),
         settings: data,
       );
     },
-    _i4.RegisterView: (data) {
-      final args = data.getArgs<RegisterViewArguments>(
-        orElse: () => const RegisterViewArguments(),
-      );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i4.RegisterView(key: args.key),
-        settings: data,
-      );
-    },
-    _i5.VerifyOtpView: (data) {
-      final args = data.getArgs<VerifyOtpViewArguments>(
-        orElse: () => const VerifyOtpViewArguments(),
-      );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i5.VerifyOtpView(key: args.key),
-        settings: data,
-      );
-    },
-    _i6.LoginView: (data) {
+    _i4.LoginView: (data) {
       final args = data.getArgs<LoginViewArguments>(
         orElse: () => const LoginViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i6.LoginView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i4.LoginView(key: args.key),
         settings: data,
       );
     },
-    _i7.ScheduleView: (data) {
+    _i5.ScheduleView: (data) {
       final args = data.getArgs<ScheduleViewArguments>(
         orElse: () => const ScheduleViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i7.ScheduleView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i5.ScheduleView(key: args.key),
         settings: data,
       );
     },
-    _i8.AppointmentDetailView: (data) {
+    _i6.AppointmentDetailView: (data) {
       final args = data.getArgs<AppointmentDetailViewArguments>(nullOk: false);
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i8.AppointmentDetailView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i6.AppointmentDetailView(
           appointmentId: args.appointmentId,
           key: args.key,
         ),
         settings: data,
       );
     },
-    _i9.PatientRegistryView: (data) {
+    _i7.PatientRegistryView: (data) {
       final args = data.getArgs<PatientRegistryViewArguments>(
         orElse: () => const PatientRegistryViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i9.PatientRegistryView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i7.PatientRegistryView(key: args.key),
         settings: data,
       );
     },
-    _i10.PatientProfileView: (data) {
+    _i8.PatientProfileView: (data) {
       final args = data.getArgs<PatientProfileViewArguments>(nullOk: false);
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i10.PatientProfileView(petId: args.petId, key: args.key),
+            _i8.PatientProfileView(petId: args.petId, key: args.key),
         settings: data,
       );
     },
-    _i11.DoctorProfileView: (data) {
+    _i9.DoctorProfileView: (data) {
       final args = data.getArgs<DoctorProfileViewArguments>(
         orElse: () => const DoctorProfileViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i11.DoctorProfileView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.DoctorProfileView(key: args.key),
         settings: data,
       );
     },
-    _i12.MainView: (data) {
+    _i10.MainView: (data) {
       final args = data.getArgs<MainViewArguments>(
         orElse: () => const MainViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i12.MainView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i10.MainView(key: args.key),
         settings: data,
       );
     },
-    _i13.PetFormView: (data) {
+    _i11.PetFormView: (data) {
       final args = data.getArgs<PetFormViewArguments>(
         orElse: () => const PetFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i13.PetFormView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i11.PetFormView(
           pet: args.pet,
           ownerId: args.ownerId,
           key: args.key,
@@ -325,43 +297,43 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i14.AppointmentFormView: (data) {
+    _i12.AppointmentFormView: (data) {
       final args = data.getArgs<AppointmentFormViewArguments>(
         orElse: () => const AppointmentFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i14.AppointmentFormView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i12.AppointmentFormView(
           appointment: args.appointment,
           key: args.key,
         ),
         settings: data,
       );
     },
-    _i15.BookingSuccessView: (data) {
+    _i13.BookingSuccessView: (data) {
       final args = data.getArgs<BookingSuccessViewArguments>(nullOk: false);
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i15.BookingSuccessView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i13.BookingSuccessView(
           appointment: args.appointment,
           key: args.key,
         ),
         settings: data,
       );
     },
-    _i16.PendingAppointmentsView: (data) {
+    _i14.PendingAppointmentsView: (data) {
       final args = data.getArgs<PendingAppointmentsViewArguments>(
         orElse: () => const PendingAppointmentsViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i16.PendingAppointmentsView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i14.PendingAppointmentsView(key: args.key),
         settings: data,
       );
     },
-    _i17.MedicalRecordFormView: (data) {
+    _i15.MedicalRecordFormView: (data) {
       final args = data.getArgs<MedicalRecordFormViewArguments>(
         orElse: () => const MedicalRecordFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i17.MedicalRecordFormView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i15.MedicalRecordFormView(
           record: args.record,
           petId: args.petId,
           appointmentId: args.appointmentId,
@@ -370,22 +342,22 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i18.PrescriptionListView: (data) {
+    _i16.PrescriptionListView: (data) {
       final args = data.getArgs<PrescriptionListViewArguments>(
         orElse: () => const PrescriptionListViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i18.PrescriptionListView(petId: args.petId, key: args.key),
+            _i16.PrescriptionListView(petId: args.petId, key: args.key),
         settings: data,
       );
     },
-    _i19.PrescriptionFormView: (data) {
+    _i17.PrescriptionFormView: (data) {
       final args = data.getArgs<PrescriptionFormViewArguments>(
         orElse: () => const PrescriptionFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i19.PrescriptionFormView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i17.PrescriptionFormView(
           prescription: args.prescription,
           petId: args.petId,
           medicalRecordId: args.medicalRecordId,
@@ -394,22 +366,22 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i20.VaccinationListView: (data) {
+    _i18.VaccinationListView: (data) {
       final args = data.getArgs<VaccinationListViewArguments>(
         orElse: () => const VaccinationListViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i20.VaccinationListView(petId: args.petId, key: args.key),
+            _i18.VaccinationListView(petId: args.petId, key: args.key),
         settings: data,
       );
     },
-    _i21.VaccinationFormView: (data) {
+    _i19.VaccinationFormView: (data) {
       final args = data.getArgs<VaccinationFormViewArguments>(
         orElse: () => const VaccinationFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i21.VaccinationFormView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i19.VaccinationFormView(
           vaccination: args.vaccination,
           petId: args.petId,
           key: args.key,
@@ -417,39 +389,39 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i22.PetOwnerListView: (data) {
+    _i20.PetOwnerListView: (data) {
       final args = data.getArgs<PetOwnerListViewArguments>(
         orElse: () => const PetOwnerListViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i22.PetOwnerListView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i20.PetOwnerListView(key: args.key),
         settings: data,
       );
     },
-    _i23.PetOwnerDetailView: (data) {
+    _i21.PetOwnerDetailView: (data) {
       final args = data.getArgs<PetOwnerDetailViewArguments>(nullOk: false);
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i23.PetOwnerDetailView(ownerId: args.ownerId, key: args.key),
+            _i21.PetOwnerDetailView(ownerId: args.ownerId, key: args.key),
         settings: data,
       );
     },
-    _i24.PetOwnerFormView: (data) {
+    _i22.PetOwnerFormView: (data) {
       final args = data.getArgs<PetOwnerFormViewArguments>(
         orElse: () => const PetOwnerFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i24.PetOwnerFormView(owner: args.owner, key: args.key),
+            _i22.PetOwnerFormView(owner: args.owner, key: args.key),
         settings: data,
       );
     },
-    _i25.DocumentListView: (data) {
+    _i23.DocumentListView: (data) {
       final args = data.getArgs<DocumentListViewArguments>(
         orElse: () => const DocumentListViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i25.DocumentListView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i23.DocumentListView(
           petId: args.petId,
           medicalRecordId: args.medicalRecordId,
           key: args.key,
@@ -457,12 +429,12 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i26.DocumentUploadView: (data) {
+    _i24.DocumentUploadView: (data) {
       final args = data.getArgs<DocumentUploadViewArguments>(
         orElse: () => const DocumentUploadViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i26.DocumentUploadView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i24.DocumentUploadView(
           petId: args.petId,
           medicalRecordId: args.medicalRecordId,
           key: args.key,
@@ -470,58 +442,58 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i27.StaffListView: (data) {
+    _i25.StaffListView: (data) {
       final args = data.getArgs<StaffListViewArguments>(
         orElse: () => const StaffListViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i27.StaffListView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i25.StaffListView(key: args.key),
         settings: data,
       );
     },
-    _i28.StaffFormView: (data) {
+    _i26.StaffFormView: (data) {
       final args = data.getArgs<StaffFormViewArguments>(
         orElse: () => const StaffFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
+      return _i32.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i28.StaffFormView(user: args.user, key: args.key),
+            _i26.StaffFormView(user: args.user, key: args.key),
         settings: data,
       );
     },
-    _i29.ClinicSettingsView: (data) {
+    _i27.ClinicSettingsView: (data) {
       final args = data.getArgs<ClinicSettingsViewArguments>(
         orElse: () => const ClinicSettingsViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i29.ClinicSettingsView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i27.ClinicSettingsView(key: args.key),
         settings: data,
       );
     },
-    _i30.ClinicBrandingView: (data) {
+    _i28.ClinicBrandingView: (data) {
       final args = data.getArgs<ClinicBrandingViewArguments>(
         orElse: () => const ClinicBrandingViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i30.ClinicBrandingView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i28.ClinicBrandingView(key: args.key),
         settings: data,
       );
     },
-    _i31.ReminderListView: (data) {
+    _i29.ReminderListView: (data) {
       final args = data.getArgs<ReminderListViewArguments>(
         orElse: () => const ReminderListViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i31.ReminderListView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i29.ReminderListView(key: args.key),
         settings: data,
       );
     },
-    _i32.ReminderFormView: (data) {
+    _i30.ReminderFormView: (data) {
       final args = data.getArgs<ReminderFormViewArguments>(
         orElse: () => const ReminderFormViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i32.ReminderFormView(
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i30.ReminderFormView(
           reminder: args.reminder,
           petId: args.petId,
           ownerId: args.ownerId,
@@ -530,12 +502,12 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i33.ReportsView: (data) {
+    _i31.ReportsView: (data) {
       final args = data.getArgs<ReportsViewArguments>(
         orElse: () => const ReportsViewArguments(),
       );
-      return _i34.MaterialPageRoute<dynamic>(
-        builder: (context) => _i33.ReportsView(key: args.key),
+      return _i32.MaterialPageRoute<dynamic>(
+        builder: (context) => _i31.ReportsView(key: args.key),
         settings: data,
       );
     },
@@ -551,7 +523,7 @@ class StackedRouter extends _i1.RouterBase {
 class HomeViewArguments {
   const HomeViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -573,7 +545,7 @@ class HomeViewArguments {
 class StartupViewArguments {
   const StartupViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -592,54 +564,10 @@ class StartupViewArguments {
   }
 }
 
-class RegisterViewArguments {
-  const RegisterViewArguments({this.key});
-
-  final _i34.Key? key;
-
-  @override
-  String toString() {
-    return '{"key": "$key"}';
-  }
-
-  @override
-  bool operator ==(covariant RegisterViewArguments other) {
-    if (identical(this, other)) return true;
-    return other.key == key;
-  }
-
-  @override
-  int get hashCode {
-    return key.hashCode;
-  }
-}
-
-class VerifyOtpViewArguments {
-  const VerifyOtpViewArguments({this.key});
-
-  final _i34.Key? key;
-
-  @override
-  String toString() {
-    return '{"key": "$key"}';
-  }
-
-  @override
-  bool operator ==(covariant VerifyOtpViewArguments other) {
-    if (identical(this, other)) return true;
-    return other.key == key;
-  }
-
-  @override
-  int get hashCode {
-    return key.hashCode;
-  }
-}
-
 class LoginViewArguments {
   const LoginViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -661,7 +589,7 @@ class LoginViewArguments {
 class ScheduleViewArguments {
   const ScheduleViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -685,7 +613,7 @@ class AppointmentDetailViewArguments {
 
   final String appointmentId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -707,7 +635,7 @@ class AppointmentDetailViewArguments {
 class PatientRegistryViewArguments {
   const PatientRegistryViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -731,7 +659,7 @@ class PatientProfileViewArguments {
 
   final String petId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -753,7 +681,7 @@ class PatientProfileViewArguments {
 class DoctorProfileViewArguments {
   const DoctorProfileViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -775,7 +703,7 @@ class DoctorProfileViewArguments {
 class MainViewArguments {
   const MainViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -797,11 +725,11 @@ class MainViewArguments {
 class PetFormViewArguments {
   const PetFormViewArguments({this.pet, this.ownerId, this.key});
 
-  final _i35.Pet? pet;
+  final _i33.Pet? pet;
 
   final String? ownerId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -823,9 +751,9 @@ class PetFormViewArguments {
 class AppointmentFormViewArguments {
   const AppointmentFormViewArguments({this.appointment, this.key});
 
-  final _i36.Appointment? appointment;
+  final _i34.Appointment? appointment;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -847,9 +775,9 @@ class AppointmentFormViewArguments {
 class BookingSuccessViewArguments {
   const BookingSuccessViewArguments({required this.appointment, this.key});
 
-  final _i36.Appointment appointment;
+  final _i34.Appointment appointment;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -871,7 +799,7 @@ class BookingSuccessViewArguments {
 class PendingAppointmentsViewArguments {
   const PendingAppointmentsViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -898,13 +826,13 @@ class MedicalRecordFormViewArguments {
     this.key,
   });
 
-  final _i37.MedicalRecord? record;
+  final _i35.MedicalRecord? record;
 
   final String? petId;
 
   final String? appointmentId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -934,7 +862,7 @@ class PrescriptionListViewArguments {
 
   final String? petId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -961,13 +889,13 @@ class PrescriptionFormViewArguments {
     this.key,
   });
 
-  final _i38.Prescription? prescription;
+  final _i36.Prescription? prescription;
 
   final String? petId;
 
   final String? medicalRecordId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -997,7 +925,7 @@ class VaccinationListViewArguments {
 
   final String? petId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1019,11 +947,11 @@ class VaccinationListViewArguments {
 class VaccinationFormViewArguments {
   const VaccinationFormViewArguments({this.vaccination, this.petId, this.key});
 
-  final _i39.Vaccination? vaccination;
+  final _i37.Vaccination? vaccination;
 
   final String? petId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1047,7 +975,7 @@ class VaccinationFormViewArguments {
 class PetOwnerListViewArguments {
   const PetOwnerListViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1071,7 +999,7 @@ class PetOwnerDetailViewArguments {
 
   final String ownerId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1093,9 +1021,9 @@ class PetOwnerDetailViewArguments {
 class PetOwnerFormViewArguments {
   const PetOwnerFormViewArguments({this.owner, this.key});
 
-  final _i40.PetOwner? owner;
+  final _i38.PetOwner? owner;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1121,7 +1049,7 @@ class DocumentListViewArguments {
 
   final String? medicalRecordId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1153,7 +1081,7 @@ class DocumentUploadViewArguments {
 
   final String? medicalRecordId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1177,7 +1105,7 @@ class DocumentUploadViewArguments {
 class StaffListViewArguments {
   const StaffListViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1199,9 +1127,9 @@ class StaffListViewArguments {
 class StaffFormViewArguments {
   const StaffFormViewArguments({this.user, this.key});
 
-  final _i41.User? user;
+  final _i39.User? user;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1223,7 +1151,7 @@ class StaffFormViewArguments {
 class ClinicSettingsViewArguments {
   const ClinicSettingsViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1245,7 +1173,7 @@ class ClinicSettingsViewArguments {
 class ClinicBrandingViewArguments {
   const ClinicBrandingViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1267,7 +1195,7 @@ class ClinicBrandingViewArguments {
 class ReminderListViewArguments {
   const ReminderListViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1294,13 +1222,13 @@ class ReminderFormViewArguments {
     this.key,
   });
 
-  final _i42.Reminder? reminder;
+  final _i40.Reminder? reminder;
 
   final String? petId;
 
   final String? ownerId;
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1325,7 +1253,7 @@ class ReminderFormViewArguments {
 class ReportsViewArguments {
   const ReportsViewArguments({this.key});
 
-  final _i34.Key? key;
+  final _i32.Key? key;
 
   @override
   String toString() {
@@ -1344,9 +1272,9 @@ class ReportsViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i43.NavigationService {
+extension NavigatorStateExtension on _i41.NavigationService {
   Future<dynamic> navigateToHomeView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1364,7 +1292,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToStartupView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1381,44 +1309,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
     );
   }
 
-  Future<dynamic> navigateToRegisterView({
-    _i34.Key? key,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo<dynamic>(
-      Routes.registerView,
-      arguments: RegisterViewArguments(key: key),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
-  Future<dynamic> navigateToVerifyOtpView({
-    _i34.Key? key,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return navigateTo<dynamic>(
-      Routes.verifyOtpView,
-      arguments: VerifyOtpViewArguments(key: key),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
   Future<dynamic> navigateToLoginView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1436,7 +1328,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToScheduleView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1455,7 +1347,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> navigateToAppointmentDetailView({
     required String appointmentId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1476,7 +1368,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToPatientRegistryView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1495,7 +1387,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> navigateToPatientProfileView({
     required String petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1513,7 +1405,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToDoctorProfileView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1531,7 +1423,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToMainView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1549,9 +1441,9 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToPetFormView({
-    _i35.Pet? pet,
+    _i33.Pet? pet,
     String? ownerId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1569,8 +1461,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToAppointmentFormView({
-    _i36.Appointment? appointment,
-    _i34.Key? key,
+    _i34.Appointment? appointment,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1591,8 +1483,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToBookingSuccessView({
-    required _i36.Appointment appointment,
-    _i34.Key? key,
+    required _i34.Appointment appointment,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1613,7 +1505,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToPendingAppointmentsView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1631,10 +1523,10 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToMedicalRecordFormView({
-    _i37.MedicalRecord? record,
+    _i35.MedicalRecord? record,
     String? petId,
     String? appointmentId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1658,7 +1550,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> navigateToPrescriptionListView({
     String? petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1676,10 +1568,10 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToPrescriptionFormView({
-    _i38.Prescription? prescription,
+    _i36.Prescription? prescription,
     String? petId,
     String? medicalRecordId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1703,7 +1595,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> navigateToVaccinationListView({
     String? petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1721,9 +1613,9 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToVaccinationFormView({
-    _i39.Vaccination? vaccination,
+    _i37.Vaccination? vaccination,
     String? petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1745,7 +1637,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToPetOwnerListView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1764,7 +1656,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> navigateToPetOwnerDetailView({
     required String ownerId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1782,8 +1674,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToPetOwnerFormView({
-    _i40.PetOwner? owner,
-    _i34.Key? key,
+    _i38.PetOwner? owner,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1803,7 +1695,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   Future<dynamic> navigateToDocumentListView({
     String? petId,
     String? medicalRecordId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1827,7 +1719,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   Future<dynamic> navigateToDocumentUploadView({
     String? petId,
     String? medicalRecordId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1849,7 +1741,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToStaffListView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1867,8 +1759,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToStaffFormView({
-    _i41.User? user,
-    _i34.Key? key,
+    _i39.User? user,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1886,7 +1778,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToClinicSettingsView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1904,7 +1796,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToClinicBrandingView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1922,7 +1814,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToReminderListView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1940,10 +1832,10 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToReminderFormView({
-    _i42.Reminder? reminder,
+    _i40.Reminder? reminder,
     String? petId,
     String? ownerId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1966,7 +1858,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> navigateToReportsView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -1984,7 +1876,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithHomeView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2002,7 +1894,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithStartupView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2019,44 +1911,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
     );
   }
 
-  Future<dynamic> replaceWithRegisterView({
-    _i34.Key? key,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return replaceWith<dynamic>(
-      Routes.registerView,
-      arguments: RegisterViewArguments(key: key),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
-  Future<dynamic> replaceWithVerifyOtpView({
-    _i34.Key? key,
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  }) async {
-    return replaceWith<dynamic>(
-      Routes.verifyOtpView,
-      arguments: VerifyOtpViewArguments(key: key),
-      id: routerId,
-      preventDuplicates: preventDuplicates,
-      parameters: parameters,
-      transition: transition,
-    );
-  }
-
   Future<dynamic> replaceWithLoginView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2074,7 +1930,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithScheduleView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2093,7 +1949,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> replaceWithAppointmentDetailView({
     required String appointmentId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2114,7 +1970,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithPatientRegistryView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2133,7 +1989,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> replaceWithPatientProfileView({
     required String petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2151,7 +2007,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithDoctorProfileView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2169,7 +2025,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithMainView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2187,9 +2043,9 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithPetFormView({
-    _i35.Pet? pet,
+    _i33.Pet? pet,
     String? ownerId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2207,8 +2063,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithAppointmentFormView({
-    _i36.Appointment? appointment,
-    _i34.Key? key,
+    _i34.Appointment? appointment,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2229,8 +2085,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithBookingSuccessView({
-    required _i36.Appointment appointment,
-    _i34.Key? key,
+    required _i34.Appointment appointment,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2251,7 +2107,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithPendingAppointmentsView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2269,10 +2125,10 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithMedicalRecordFormView({
-    _i37.MedicalRecord? record,
+    _i35.MedicalRecord? record,
     String? petId,
     String? appointmentId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2296,7 +2152,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> replaceWithPrescriptionListView({
     String? petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2314,10 +2170,10 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithPrescriptionFormView({
-    _i38.Prescription? prescription,
+    _i36.Prescription? prescription,
     String? petId,
     String? medicalRecordId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2341,7 +2197,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> replaceWithVaccinationListView({
     String? petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2359,9 +2215,9 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithVaccinationFormView({
-    _i39.Vaccination? vaccination,
+    _i37.Vaccination? vaccination,
     String? petId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2383,7 +2239,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithPetOwnerListView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2402,7 +2258,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
 
   Future<dynamic> replaceWithPetOwnerDetailView({
     required String ownerId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2420,8 +2276,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithPetOwnerFormView({
-    _i40.PetOwner? owner,
-    _i34.Key? key,
+    _i38.PetOwner? owner,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2441,7 +2297,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   Future<dynamic> replaceWithDocumentListView({
     String? petId,
     String? medicalRecordId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2465,7 +2321,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   Future<dynamic> replaceWithDocumentUploadView({
     String? petId,
     String? medicalRecordId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2487,7 +2343,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithStaffListView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2505,8 +2361,8 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithStaffFormView({
-    _i41.User? user,
-    _i34.Key? key,
+    _i39.User? user,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2524,7 +2380,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithClinicSettingsView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2542,7 +2398,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithClinicBrandingView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2560,7 +2416,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithReminderListView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2578,10 +2434,10 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithReminderFormView({
-    _i42.Reminder? reminder,
+    _i40.Reminder? reminder,
     String? petId,
     String? ownerId,
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -2604,7 +2460,7 @@ extension NavigatorStateExtension on _i43.NavigationService {
   }
 
   Future<dynamic> replaceWithReportsView({
-    _i34.Key? key,
+    _i32.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,

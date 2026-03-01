@@ -1,14 +1,15 @@
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/core/models/medical/vaccination.dart';
 import 'package:partner/core/models/pagination.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/vaccination_service.dart';
+import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 /// ViewModel for the vaccination list screen.
 class VaccinationListViewModel
-    extends BaseViewModel {
+    extends BaseViewModel
+    with ErrorHandlingMixin {
   /// Creates a [VaccinationListViewModel].
   VaccinationListViewModel({this.petId});
 
@@ -39,11 +40,6 @@ class VaccinationListViewModel
   /// The current page number.
   int get currentPage => _currentPage;
 
-  String? _errorMessage;
-
-  /// Error message from the last operation.
-  String? get errorMessage => _errorMessage;
-
   /// Whether more pages are available.
   bool get hasMore =>
       _pagination?.hasNext ?? false;
@@ -60,17 +56,13 @@ class VaccinationListViewModel
   /// Loads vaccinations.
   Future<void> loadVaccinations() async {
     setBusy(true);
-    _errorMessage = null;
     _currentPage = 1;
-
-    try {
+    await runSafe(() async {
       final response = await _vaccinationService
           .getVaccinations(petId: petId);
       _vaccinations = response.items;
       _pagination = response.pagination;
-    } on ApiException catch (e) {
-      _errorMessage = e.message;
-    }
+    });
     setBusy(false);
   }
 
@@ -81,18 +73,19 @@ class VaccinationListViewModel
 
     setBusyForObject(loadMoreKey, true);
     _currentPage++;
-    try {
-      final response = await _vaccinationService
-          .getVaccinations(
-        page: _currentPage,
-        petId: petId,
-      );
-      _vaccinations.addAll(response.items);
-      _pagination = response.pagination;
-    } on ApiException catch (e) {
-      _currentPage--;
-      _errorMessage = e.message;
-    }
+    await runSafe(
+      () async {
+        final response =
+            await _vaccinationService
+                .getVaccinations(
+          page: _currentPage,
+          petId: petId,
+        );
+        _vaccinations.addAll(response.items);
+        _pagination = response.pagination;
+      },
+      onError: () => _currentPage--,
+    );
     setBusyForObject(loadMoreKey, false);
   }
 

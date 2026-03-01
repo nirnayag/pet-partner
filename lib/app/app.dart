@@ -2,7 +2,9 @@ import 'package:partner/services/api_client.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/auth_service.dart';
 import 'package:partner/services/clinic_service.dart';
+import 'package:partner/services/connectivity_service.dart';
 import 'package:partner/services/document_service.dart';
+import 'package:partner/services/image_upload_service.dart';
 import 'package:partner/services/layout_service.dart';
 import 'package:partner/services/medical_record_service.dart';
 import 'package:partner/services/pet_owner_service.dart';
@@ -37,7 +39,6 @@ import 'package:partner/ui/views/pet_owner_form/pet_owner_form_view.dart';
 import 'package:partner/ui/views/pet_owner_list/pet_owner_list_view.dart';
 import 'package:partner/ui/views/prescription_form/prescription_form_view.dart';
 import 'package:partner/ui/views/prescription_list/prescription_list_view.dart';
-import 'package:partner/ui/views/register/register_view.dart';
 import 'package:partner/ui/views/reminder_form/reminder_form_view.dart';
 import 'package:partner/ui/views/reminder_list/reminder_list_view.dart';
 import 'package:partner/ui/views/reports/reports_view.dart';
@@ -47,7 +48,6 @@ import 'package:partner/ui/views/staff_list/staff_list_view.dart';
 import 'package:partner/ui/views/startup/startup_view.dart';
 import 'package:partner/ui/views/vaccination_form/vaccination_form_view.dart';
 import 'package:partner/ui/views/vaccination_list/vaccination_list_view.dart';
-import 'package:partner/ui/views/verify_otp/verify_otp_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 // @stacked-import
@@ -56,8 +56,6 @@ import 'package:stacked_services/stacked_services.dart';
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    MaterialRoute(page: RegisterView),
-    MaterialRoute(page: VerifyOtpView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: ScheduleView),
     MaterialRoute(page: AppointmentDetailView),
@@ -148,6 +146,13 @@ import 'package:stacked_services/stacked_services.dart';
     ),
     LazySingleton<ReminderService>(
       classType: ReminderService,
+    ),
+    // Phase 6: Polish
+    LazySingleton<ConnectivityService>(
+      classType: ConnectivityService,
+    ),
+    LazySingleton<ImageUploadService>(
+      classType: ImageUploadService,
     ),
     // @stacked-service
   ],
