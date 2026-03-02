@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
+import 'package:partner/core/enums/user_role.dart';
 import 'package:partner/core/models/appointment/appointment.dart';
 import 'package:partner/services/appointment_service.dart';
 import 'package:partner/services/auth_service.dart';
@@ -53,6 +54,16 @@ class HomeViewModel extends BaseViewModel
   String get userName =>
       _authService.cachedUser?.firstName ??
       'Doctor';
+
+  /// Display name with "Dr." prefix for vets only.
+  String get displayName {
+    final name = userName;
+    final role = _authService.currentRole;
+    if (role == UserRole.veterinarian) {
+      return 'Dr. $name';
+    }
+    return name;
+  }
 
   /// Today's date formatted for display.
   String get todayFormatted =>
@@ -137,7 +148,14 @@ class HomeViewModel extends BaseViewModel
   }
 
   /// Switches to the Doctor Profile tab.
+  ///
+  /// The profile tab index depends on the role:
+  /// vets have 4 tabs (index 3), others have 5
+  /// (index 4).
   void navigateToDoctorProfileView() {
-    _layoutService.setIndex(3);
+    final role = _authService.currentRole;
+    final profileIndex =
+        role == UserRole.veterinarian ? 3 : 4;
+    _layoutService.setIndex(profileIndex);
   }
 }

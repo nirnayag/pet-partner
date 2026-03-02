@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:partner/app/app.locator.dart';
 import 'package:partner/app/app.router.dart';
-import 'package:partner/services/api_client.dart';
 import 'package:partner/services/auth_service.dart';
+import 'package:partner/services/layout_service.dart';
 import 'package:partner/ui/common/error_handling_mixin.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -57,6 +57,7 @@ class LoginViewModel extends BaseViewModel
     setBusy(false);
 
     if (user != null) {
+      locator<LayoutService>().resetIndex();
       _navigationService.clearStackAndShow<void>(
         Routes.mainView,
       );

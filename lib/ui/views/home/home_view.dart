@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/ui/common/app_colors.dart';
+import 'package:partner/ui/common/app_snackbar.dart';
 import 'package:partner/ui/views/home/home_viewmodel.dart';
 import 'package:partner/ui/widgets/appointment_card.dart';
 import 'package:partner/ui/widgets/empty_state.dart';
@@ -84,7 +85,7 @@ class _DashboardHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'Dr. ${viewModel.userName}',
+                viewModel.displayName,
                 style: GoogleFonts.manrope(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -94,49 +95,40 @@ class _DashboardHeader extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius:
-                  BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      Colors.black.withValues(
-                    alpha: 0.05,
-                  ),
-                  blurRadius: 10,
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                const Icon(
-                  Icons
-                      .notifications_outlined,
-                  color: kcDarkGreyColor,
-                ),
-                if (viewModel.pendingCount >
-                    0)
-                  Positioned(
-                    right: 2,
-                    top: 2,
-                    child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration:
-                          const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
+          GestureDetector(
+            onTap: () => _showComingSoon(context),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        Colors.black.withValues(
+                      alpha: 0.05,
                     ),
+                    blurRadius: 10,
                   ),
-              ],
+                ],
+              ),
+              child: const Icon(
+                Icons
+                    .notifications_outlined,
+                color: kcDarkGreyColor,
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  void _showComingSoon(BuildContext context) {
+    AppSnackbar.showInfo(
+      context,
+      'Notifications coming soon',
     );
   }
 

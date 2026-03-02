@@ -5,6 +5,7 @@ import 'package:partner/ui/common/app_colors.dart';
 import 'package:partner/ui/views/doctor_profile/doctor_profile_view.dart';
 import 'package:partner/ui/views/home/home_view.dart';
 import 'package:partner/ui/views/main/main_viewmodel.dart';
+import 'package:partner/ui/views/more_menu/more_menu_view.dart';
 import 'package:partner/ui/views/patient_registry/patient_registry_view.dart';
 import 'package:partner/ui/views/schedule/schedule_view.dart';
 import 'package:stacked/stacked.dart';
@@ -63,6 +64,7 @@ class MainView extends StackedView<MainViewModel> {
           HomeView(),
           PatientRegistryView(),
           ScheduleView(),
+          MoreMenuView(),
           DoctorProfileView(),
         ];
       case UserRole.clinicAdmin:
@@ -70,6 +72,7 @@ class MainView extends StackedView<MainViewModel> {
           HomeView(),
           PatientRegistryView(),
           ScheduleView(),
+          MoreMenuView(),
           DoctorProfileView(),
         ];
     }
@@ -115,6 +118,10 @@ class MainView extends StackedView<MainViewModel> {
             label: 'Schedule',
           ),
           _TabItem(
+            icon: Icons.menu_rounded,
+            label: 'More',
+          ),
+          _TabItem(
             icon: Icons.person_rounded,
             label: 'Profile',
           ),
@@ -132,6 +139,10 @@ class MainView extends StackedView<MainViewModel> {
           _TabItem(
             icon: Icons.calendar_month_rounded,
             label: 'Schedule',
+          ),
+          _TabItem(
+            icon: Icons.dashboard_rounded,
+            label: 'Manage',
           ),
           _TabItem(
             icon: Icons.person_rounded,

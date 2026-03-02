@@ -242,9 +242,7 @@ class _ProfileHeader extends StatelessWidget {
               ),
               if (viewModel.canEditPet)
                 GestureDetector(
-                  onTap: () {
-                    // TODO(pets): navigate edit
-                  },
+                  onTap: viewModel.navigateToEditPet,
                   child: Text(
                     'Edit',
                     style: GoogleFonts.manrope(

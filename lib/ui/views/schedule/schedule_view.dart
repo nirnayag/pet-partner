@@ -27,9 +27,8 @@ class ScheduleView
       floatingActionButton:
           viewModel.canCreateAppointment
               ? FloatingActionButton(
-                  onPressed: () {
-                    // TODO(appts): add appointment
-                  },
+                  onPressed:
+                      viewModel.navigateToAddAppointment,
                   backgroundColor: kcPrimaryColor,
                   elevation: 8,
                   shape: const CircleBorder(),
@@ -368,9 +367,7 @@ class _AppointmentList extends StatelessWidget {
                 ? 'Add Appointment'
                 : null,
         onAction: viewModel.canCreateAppointment
-            ? () {
-                // TODO(appts): add appointment
-              }
+            ? viewModel.navigateToAddAppointment
             : null,
       );
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:partner/ui/common/app_colors.dart';
+import 'package:partner/ui/common/app_snackbar.dart';
 import 'package:partner/ui/views/doctor_profile/doctor_profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -98,9 +99,15 @@ class _Header extends StatelessWidget {
               color: kcDarkGreyColor,
             ),
           ),
-          const Icon(
-            Icons.settings_outlined,
-            color: kcDarkGreyColor,
+          GestureDetector(
+            onTap: () => AppSnackbar.showInfo(
+              context,
+              'Settings coming soon',
+            ),
+            child: const Icon(
+              Icons.settings_outlined,
+              color: kcDarkGreyColor,
+            ),
           ),
         ],
       ),
@@ -165,17 +172,25 @@ class _ProfileSection extends StatelessWidget {
             Positioned(
               bottom: 4,
               right: 4,
-              child: Container(
-                padding:
-                    const EdgeInsets.all(6),
-                decoration: const BoxDecoration(
-                  color: kcPrimaryColor,
-                  shape: BoxShape.circle,
+              child: GestureDetector(
+                onTap: () =>
+                    AppSnackbar.showInfo(
+                  context,
+                  'Photo upload coming soon',
                 ),
-                child: const Icon(
-                  Icons.edit,
-                  size: 14,
-                  color: Colors.white,
+                child: Container(
+                  padding:
+                      const EdgeInsets.all(6),
+                  decoration:
+                      const BoxDecoration(
+                    color: kcPrimaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.edit,
+                    size: 14,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -263,12 +278,19 @@ class _WorkingHours extends StatelessWidget {
                 color: kcDarkGreyColor,
               ),
             ),
-            Text(
-              'Manage',
-              style: GoogleFonts.manrope(
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-                color: kcPrimaryColor,
+            GestureDetector(
+              onTap: () => AppSnackbar.showInfo(
+                context,
+                'Working hours management'
+                ' coming soon',
+              ),
+              child: Text(
+                'Manage',
+                style: GoogleFonts.manrope(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: kcPrimaryColor,
+                ),
               ),
             ),
           ],
@@ -538,41 +560,48 @@ class _HelpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 16,
+    return GestureDetector(
+      onTap: () => AppSnackbar.showInfo(
+        context,
+        'Help & Support coming soon',
       ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: kcVeryLightGrey.withValues(
-            alpha: 0.5,
-          ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
         ),
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.help_outline_rounded,
-            color: kcLightGrey,
-          ),
-          const SizedBox(width: 12),
-          Text(
-            'Help & Support',
-            style: GoogleFonts.manrope(
-              fontSize: 15,
-              fontWeight: FontWeight.w800,
-              color: kcDarkGreyColor,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:
+              BorderRadius.circular(20),
+          border: Border.all(
+            color: kcVeryLightGrey.withValues(
+              alpha: 0.5,
             ),
           ),
-          const Spacer(),
-          const Icon(
-            Icons.chevron_right_rounded,
-            color: kcLightGrey,
-          ),
-        ],
+        ),
+        child: Row(
+          children: [
+            const Icon(
+              Icons.help_outline_rounded,
+              color: kcLightGrey,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'Help & Support',
+              style: GoogleFonts.manrope(
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
+                color: kcDarkGreyColor,
+              ),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: kcLightGrey,
+            ),
+          ],
+        ),
       ),
     );
   }

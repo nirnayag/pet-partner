@@ -176,6 +176,11 @@ class PatientRegistryViewModel extends BaseViewModel
     );
   }
 
+  /// Navigates to the add pet form.
+  void navigateToAddPet() {
+    _navigationService.navigateToPetFormView();
+  }
+
   // --------------------------------------------------
   // Helpers
   // --------------------------------------------------

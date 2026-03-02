@@ -123,6 +123,12 @@ class ScheduleViewModel extends BaseViewModel
     );
   }
 
+  /// Navigates to the new appointment form.
+  void navigateToAddAppointment() {
+    _navigationService
+        .navigateToAppointmentFormView();
+  }
+
   /// Pops back.
   void goBack() {
     _navigationService.back<dynamic>();

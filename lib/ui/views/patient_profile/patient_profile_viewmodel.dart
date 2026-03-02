@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:partner/app/app.locator.dart';
+import 'package:partner/app/app.router.dart';
 import 'package:partner/core/models/pet/pet.dart';
 import 'package:partner/core/utils/permission_utils.dart';
 import 'package:partner/services/auth_service.dart';
@@ -110,6 +111,14 @@ class PatientProfileViewModel extends BaseViewModel
   // --------------------------------------------------
   // Navigation
   // --------------------------------------------------
+
+  /// Navigates to the edit form for the current pet.
+  void navigateToEditPet() {
+    if (_pet == null) return;
+    _navigationService.navigateToPetFormView(
+      pet: _pet,
+    );
+  }
 
   /// Pops back to the previous screen.
   void goBack() {
