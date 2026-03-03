@@ -1297,64 +1297,67 @@ class _LabResultCard extends StatelessWidget {
             mainAxisAlignment:
                 MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: iconColor.withValues(
-                        alpha: 0.1,
-                      ),
-                      borderRadius:
-                          BorderRadius.circular(
-                        12,
-                      ),
-                    ),
-                    child: Icon(
-                      icon,
-                      color: iconColor,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(
-                                  context,
-                                ).size.width *
-                            0.45,
-                        child: Text(
-                          title,
-                          style:
-                              GoogleFonts.manrope(
-                            fontSize: 15,
-                            fontWeight:
-                                FontWeight.w800,
-                            color: kcDarkGreyColor,
-                          ),
-                          overflow:
-                              TextOverflow.ellipsis,
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      padding:
+                          const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color:
+                            iconColor.withValues(
+                          alpha: 0.1,
+                        ),
+                        borderRadius:
+                            BorderRadius.circular(
+                          12,
                         ),
                       ),
-                      Text(
-                        lab,
-                        style: GoogleFonts.manrope(
-                          fontSize: 12,
-                          fontWeight:
-                              FontWeight.w600,
-                          color: const Color(
-                            0xFF13EC13,
-                          ),
-                        ),
+                      child: Icon(
+                        icon,
+                        color: iconColor,
+                        size: 20,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment
+                                .start,
+                        children: [
+                          Text(
+                            title,
+                            style: GoogleFonts
+                                .manrope(
+                              fontSize: 15,
+                              fontWeight:
+                                  FontWeight.w800,
+                              color:
+                                  kcDarkGreyColor,
+                            ),
+                            overflow: TextOverflow
+                                .ellipsis,
+                          ),
+                          Text(
+                            lab,
+                            style: GoogleFonts
+                                .manrope(
+                              fontSize: 12,
+                              fontWeight:
+                                  FontWeight.w600,
+                              color: const Color(
+                                0xFF13EC13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               Container(
                 padding:
                     const EdgeInsets.symmetric(
@@ -1404,6 +1407,7 @@ class _LabResultCard extends StatelessWidget {
           Row(
             children: [
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(
                     Icons
@@ -1423,28 +1427,37 @@ class _LabResultCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(width: 20),
-              Row(
-                children: [
-                  Icon(
-                    isPending
-                        ? Icons.timer_outlined
-                        : Icons
-                            .person_outline_rounded,
-                    size: 14,
-                    color: kcLightGrey,
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    isPending
-                        ? 'ETA: $eta'
-                        : doctor!,
-                    style: GoogleFonts.manrope(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: kcMediumGrey,
+              Expanded(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isPending
+                          ? Icons.timer_outlined
+                          : Icons
+                              .person_outline_rounded,
+                      size: 14,
+                      color: kcLightGrey,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        isPending
+                            ? 'ETA: $eta'
+                            : doctor!,
+                        style:
+                            GoogleFonts.manrope(
+                          fontSize: 12,
+                          fontWeight:
+                              FontWeight.w600,
+                          color: kcMediumGrey,
+                        ),
+                        overflow:
+                            TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

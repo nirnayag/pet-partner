@@ -29,7 +29,10 @@ class AppointmentService {
       if (petId != null) 'petId': petId,
       if (veterinarianId != null)
         'veterinarianId': veterinarianId,
-      if (date != null) 'date': date,
+      if (date != null) ...{
+        'startDate': '${date}T00:00:00.000Z',
+        'endDate': '${date}T23:59:59.999Z',
+      },
     };
 
     final body = await _apiClient.get(

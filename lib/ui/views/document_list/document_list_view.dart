@@ -97,13 +97,26 @@ class _Header extends StatelessWidget {
         crossAxisAlignment:
             CrossAxisAlignment.start,
         children: [
-          Text(
-            'Documents',
-            style: GoogleFonts.manrope(
-              fontSize: 24,
-              fontWeight: FontWeight.w800,
-              color: kcDarkGreyColor,
-            ),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () =>
+                    Navigator.of(context).pop(),
+                child: const Icon(
+                  Icons.arrow_back_rounded,
+                  color: kcDarkGreyColor,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Documents',
+                style: GoogleFonts.manrope(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: kcDarkGreyColor,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
           DocumentFilterChips(

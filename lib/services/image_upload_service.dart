@@ -12,8 +12,12 @@ class ImageUploadService {
   final _apiClient = locator<ApiClient>();
   final _picker = ImagePicker();
 
-  /// Picks an image from [source] and optionally
-  /// crops it.
+  /// Picks an image from [source] and crops it.
+  ///
+  /// Use [cropStyle] to switch between rectangle
+  /// (default, for pet photos) and circle (for
+  /// avatars). [aspectRatioPresets] controls the
+  /// ratios shown in the crop menu.
   ///
   /// Returns the processed [File] or `null` if the
   /// user cancelled.
@@ -22,6 +26,15 @@ class ImageUploadService {
     double maxWidth = 1024,
     double maxHeight = 1024,
     CropAspectRatio? aspectRatio,
+    CropStyle cropStyle = CropStyle.rectangle,
+    bool lockAspectRatio = false,
+    List<CropAspectRatioPresetData> aspectRatioPresets =
+        const [
+      CropAspectRatioPreset.original,
+      CropAspectRatioPreset.square,
+      CropAspectRatioPreset.ratio4x3,
+      CropAspectRatioPreset.ratio16x9,
+    ],
   }) async {
     final picked = await _picker.pickImage(
       source: source,
@@ -37,6 +50,20 @@ class ImageUploadService {
       compressQuality: 85,
       maxWidth: maxWidth.toInt(),
       maxHeight: maxHeight.toInt(),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Image',
+          lockAspectRatio: lockAspectRatio,
+          cropStyle: cropStyle,
+          aspectRatioPresets: aspectRatioPresets,
+        ),
+        IOSUiSettings(
+          title: 'Crop Image',
+          aspectRatioLockEnabled: lockAspectRatio,
+          cropStyle: cropStyle,
+          aspectRatioPresets: aspectRatioPresets,
+        ),
+      ],
     );
     if (cropped == null) return null;
 

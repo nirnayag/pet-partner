@@ -13,6 +13,11 @@ class MedicalRecordSheet extends StatelessWidget {
   final void Function(SheetResponse<dynamic>)? completer;
   final SheetRequest<dynamic> request;
 
+  Map<String, dynamic> get _petData =>
+      request.data is Map<String, dynamic>
+          ? request.data as Map<String, dynamic>
+          : <String, dynamic>{};
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +37,11 @@ class MedicalRecordSheet extends StatelessWidget {
             onClose: () => completer?.call(
               SheetResponse(),
             ),
+            petName: _petData['petName']
+                    as String? ??
+                'Unknown',
+            petAge:
+                _petData['petAge'] as String?,
           ),
           Expanded(
             child: ListView(
@@ -78,12 +88,21 @@ class _DragHandle extends StatelessWidget {
 }
 
 class _SheetHeader extends StatelessWidget {
-  const _SheetHeader({required this.onClose});
+  const _SheetHeader({
+    required this.onClose,
+    required this.petName,
+    this.petAge,
+  });
 
   final VoidCallback onClose;
+  final String petName;
+  final String? petAge;
 
   @override
   Widget build(BuildContext context) {
+    final subtitle = petAge != null
+        ? '$petName \u2022 $petAge'
+        : petName;
     return Padding(
       padding:
           const EdgeInsets.fromLTRB(20, 12, 20, 20),
@@ -104,7 +123,7 @@ class _SheetHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'Bella \u2022 4 Years Old',
+                subtitle,
                 style: GoogleFonts.manrope(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

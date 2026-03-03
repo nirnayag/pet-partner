@@ -1,0 +1,43 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "pet-partner",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "pet-partner (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "pet-partner (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "agent-a3c4a8ea",
+            "cwd": ".claude/worktrees/agent-a3c4a8ea",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "agent-a9dccaa9",
+            "cwd": ".claude/worktrees/agent-a9dccaa9",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "agent-ad424378",
+            "cwd": ".claude/worktrees/agent-ad424378",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}

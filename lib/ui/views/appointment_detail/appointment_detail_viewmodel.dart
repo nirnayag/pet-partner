@@ -135,10 +135,32 @@ class AppointmentDetailViewModel
 
   /// Shows the medical record bottom sheet.
   void showMedicalRecordSheet() {
+    final pet = _appointment?.pet;
     _bottomSheetService
-        .showCustomSheet<void, void>(
+        .showCustomSheet<void, Map<String, dynamic>>(
       variant: BottomSheetType.medicalRecord,
+      data: <String, dynamic>{
+        'petId': _appointment?.petId,
+        'petName': pet?.name ?? 'Unknown',
+        'petAge': pet?.dateOfBirth != null
+            ? _formatAge(pet!.dateOfBirth!)
+            : null,
+      },
     );
+  }
+
+  String _formatAge(DateTime dob) {
+    final now = DateTime.now();
+    final years = now.year - dob.year;
+    if (years > 0) {
+      return '$years Year${years == 1 ? '' : 's'}'
+          ' Old';
+    }
+    final months = (now.year - dob.year) * 12 +
+        now.month -
+        dob.month;
+    return '$months Month'
+        '${months == 1 ? '' : 's'} Old';
   }
 
   // --------------------------------------------------

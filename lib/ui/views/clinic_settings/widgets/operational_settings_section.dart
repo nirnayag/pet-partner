@@ -45,22 +45,87 @@ class OperationalSettingsSection
         _SettingTile(
           icon: Icons.calendar_today_rounded,
           title: 'Working Days',
-          subtitle:
-              settings['workingDays']?.toString() ??
-                  'Mon - Sat',
+          subtitle: _formatWorkingDays(
+            settings['workingDays'],
+          ),
         ),
         const SizedBox(height: 8),
         _SettingTile(
           icon: Icons.schedule_rounded,
           title: 'Working Hours',
-          subtitle:
-              settings['workingHours']
-                      ?.toString() ??
-                  '9:00 AM - 6:00 PM',
+          subtitle: _formatWorkingHours(
+            settings['workingHours'] ??
+                settings['businessHours'],
+          ),
         ),
       ],
     );
   }
+}
+
+const _dayLabels = <String, String>{
+  'monday': 'Mon',
+  'tuesday': 'Tue',
+  'wednesday': 'Wed',
+  'thursday': 'Thu',
+  'friday': 'Fri',
+  'saturday': 'Sat',
+  'sunday': 'Sun',
+};
+
+String _formatWorkingDays(dynamic value) {
+  if (value == null) return 'Mon - Sat';
+  if (value is List) {
+    final names = value
+        .map(
+          (e) =>
+              _dayLabels[e.toString().toLowerCase()]
+                  ?? e.toString(),
+        )
+        .toList();
+    return names.join(', ');
+  }
+  return value.toString();
+}
+
+String _formatWorkingHours(dynamic value) {
+  if (value == null || value is! Map) {
+    return '9:00 AM - 6:00 PM';
+  }
+  final hours = value as Map<String, dynamic>;
+
+  // Find open days and summarise hours.
+  final openDays = <String, String>{};
+  for (final entry in hours.entries) {
+    final day = entry.key;
+    final info = entry.value;
+    if (info is Map) {
+      final closed = info['closed'] == true;
+      if (closed) continue;
+      final open = info['open'] ?? '';
+      final close = info['close'] ?? '';
+      openDays[_dayLabels[day] ?? day] =
+          '$open - $close';
+    }
+  }
+  if (openDays.isEmpty) return 'Closed';
+
+  // Group consecutive days with same hours.
+  final uniqueHours = openDays.values.toSet();
+  if (uniqueHours.length == 1) {
+    return uniqueHours.first;
+  }
+
+  final buf = StringBuffer();
+  for (final h in uniqueHours) {
+    final days = openDays.entries
+        .where((e) => e.value == h)
+        .map((e) => e.key)
+        .join(', ');
+    if (buf.isNotEmpty) buf.write('\n');
+    buf.write('$days: $h');
+  }
+  return buf.toString();
 }
 
 class _SettingTile extends StatelessWidget {

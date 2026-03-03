@@ -75,20 +75,27 @@ class ClinicSettingsViewModel
   Future<void> initialise() async {
     setBusy(true);
     clearError();
-    final result = await runSafe(
-      () async {
-        _clinic = await _clinicService
-            .getClinicInfo();
-        _settings = await _clinicService
-            .getClinicSettings();
-        _populateFields();
-      },
+
+    // Load clinic info first.
+    final clinic = await runSafe(
+      () => _clinicService.getClinicInfo(),
+      fallbackMessage:
+          'Failed to load clinic info.',
     );
-    if (result == null && !hasError) {
-      setError(
-        'Failed to load clinic settings.',
-      );
+    if (clinic != null) {
+      _clinic = clinic;
+      _populateFields();
     }
+
+    final settings = await runSafe(
+      () => _clinicService.getClinicSettings(),
+      fallbackMessage:
+          'Failed to load clinic settings.',
+    );
+    if (settings != null) {
+      _settings = settings;
+    }
+
     setBusy(false);
   }
 

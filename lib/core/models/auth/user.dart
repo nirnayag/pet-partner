@@ -18,7 +18,6 @@ class User {
     this.avatarUrl,
     this.specialization,
     this.bio,
-    this.createdAt,
   });
 
   /// Deserialises from a stored JSON string.
@@ -30,13 +29,17 @@ class User {
 
   /// Parses a [User] from JSON.
   factory User.fromJson(Map<String, dynamic> json) {
+    final role = json['role'] as String? ??
+        (throw const FormatException(
+          'Missing "role" in user JSON',
+        ));
     return User(
       id: json['id'] as String,
-      role: json['role'] as String,
+      role: role,
       roles: (json['roles'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
-          <String>[json['role'] as String],
+          <String>[role],
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       isActive: json['isActive'] as bool? ?? true,
@@ -47,11 +50,6 @@ class User {
       specialization:
           json['specialization'] as String?,
       bio: json['bio'] as String?,
-      createdAt: json['createdAt'] != null
-          ? DateTime.parse(
-              json['createdAt'] as String,
-            )
-          : null,
     );
   }
 
@@ -92,9 +90,6 @@ class User {
   /// Whether the account is active.
   final bool isActive;
 
-  /// Timestamp when the user was created.
-  final DateTime? createdAt;
-
   // -- Computed getters ------------------------------------
 
   /// The user's full name.
@@ -126,8 +121,6 @@ class User {
       if (specialization != null)
         'specialization': specialization,
       if (bio != null) 'bio': bio,
-      if (createdAt != null)
-        'createdAt': createdAt!.toIso8601String(),
     };
   }
 

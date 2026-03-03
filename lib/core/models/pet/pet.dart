@@ -7,8 +7,6 @@ class Pet {
     required this.species,
     required this.isActive,
     required this.isDeceased,
-    required this.createdAt,
-    required this.updatedAt,
     this.breed,
     this.gender,
     this.color,
@@ -31,12 +29,6 @@ class Pet {
       species: json['species'] as String,
       isActive: json['isActive'] as bool? ?? true,
       isDeceased: json['isDeceased'] as bool? ?? false,
-      createdAt: DateTime.parse(
-        json['createdAt'] as String,
-      ),
-      updatedAt: DateTime.parse(
-        json['updatedAt'] as String,
-      ),
       breed: json['breed'] as String?,
       gender: json['gender'] as String?,
       color: json['color'] as String?,
@@ -45,7 +37,7 @@ class Pet {
               json['dateOfBirth'] as String,
             )
           : null,
-      weight: (json['weight'] as num?)?.toDouble(),
+      weight: _parseWeight(json['weight']),
       weightUnit: json['weightUnit'] as String?,
       photoUrl: json['photoUrl'] as String?,
       microchipNumber:
@@ -110,12 +102,6 @@ class Pet {
   /// Freeform notes.
   final String? notes;
 
-  /// Timestamp when the record was created.
-  final DateTime createdAt;
-
-  /// Timestamp when the record was last updated.
-  final DateTime updatedAt;
-
   /// Serialises this pet back to JSON.
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -124,8 +110,6 @@ class Pet {
       'species': species,
       'isActive': isActive,
       'isDeceased': isDeceased,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
       if (breed != null) 'breed': breed,
       if (gender != null) 'gender': gender,
       if (color != null) 'color': color,
@@ -143,6 +127,15 @@ class Pet {
         'currentMedications': currentMedications,
       if (notes != null) 'notes': notes,
     };
+  }
+
+  static double? _parseWeight(dynamic value) {
+    if (value == null) return null;
+    if (value is num) return value.toDouble();
+    if (value is String) {
+      return double.tryParse(value);
+    }
+    return null;
   }
 
   static List<String> _parseStringList(dynamic value) {

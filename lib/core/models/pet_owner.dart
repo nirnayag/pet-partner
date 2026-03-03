@@ -14,17 +14,31 @@ class PetOwner {
   });
 
   /// Parses a [PetOwner] from JSON.
+  ///
+  /// Handles both flat responses (pet-owners list) and
+  /// nested responses (inside appointments where user
+  /// details are in an `owner.user` sub-object).
   factory PetOwner.fromJson(Map<String, dynamic> json) {
+    final user =
+        json['user'] as Map<String, dynamic>? ?? {};
     return PetOwner(
       id: json['id'] as String,
-      userId: json['userId'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      phone: json['phone'] as String,
-      createdAt: DateTime.parse(
-        json['createdAt'] as String,
-      ),
-      email: json['email'] as String?,
+      userId: (json['userId'] ?? user['id'] ?? '')
+          as String,
+      firstName: (json['firstName'] ??
+          user['firstName'] ??
+          '') as String,
+      lastName: (json['lastName'] ??
+          user['lastName'] ??
+          '') as String,
+      phone: (json['phone'] ??
+          user['phone'] ??
+          '') as String,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now(),
+      email: (json['email'] ?? user['email'])
+          as String?,
       avatarUrl: json['avatarUrl'] as String?,
       petCount: json['petCount'] as int?,
     );

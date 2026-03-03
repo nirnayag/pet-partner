@@ -16,8 +16,6 @@ enum UserRole {
 
   /// Parses a role string from the API into a [UserRole].
   ///
-  /// Throws [ArgumentError] if [role] does not match any
-  /// known value.
   static UserRole fromString(String role) {
     return UserRole.values.firstWhere(
       (e) => e.value == role,

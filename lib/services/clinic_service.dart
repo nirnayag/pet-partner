@@ -64,8 +64,10 @@ class ClinicService {
       ApiConfig.brandingEndpoint,
     ) as Map<String, dynamic>;
 
+    final data =
+        body['data'] as Map<String, dynamic>;
     return ClinicBranding.fromJson(
-      body['data'] as Map<String, dynamic>,
+      data['branding'] as Map<String, dynamic>,
     );
   }
 
